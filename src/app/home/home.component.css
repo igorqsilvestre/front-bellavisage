@@ -1,0 +1,62 @@
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 0.7em 0;
+}
+
+
+.cabecalho-login{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.cabecalho-login img{
+    margin-right: 0.5em;
+}
+
+.cabecalho-login a{
+    font-family: "Public Sans", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: underline;
+    color:#950341;
+}
+
+.painel-logo{
+    position: absolute;
+    top: 6em;
+    left: 14em;
+}
+
+.card-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+}
+
+.card {
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: #E7EBEF;
+    margin: 3em 0;
+  }
+  
+.card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content span {
+    margin-top: 0;
+}

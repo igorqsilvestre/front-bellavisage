@@ -1,0 +1,27 @@
+<header class="cabecalho"> 
+    <img src="../../assets/logo-pequeno-bellavisage.png" width="107px" alt="logo da bellavisage">
+    <div class="cabecalho-login">
+        <img src="../../assets/logo-usuario.png" width="30px">
+        <span><a href="#">Entrar</a></span>
+    </div>
+</header>
+
+<main>
+    <div class="painel">
+        <img src="../../assets/logo-grande-bellavisage.png" width="50%" class="painel-logo">
+        <img src="../../assets/painel-bellavisage.png" width="100%">
+    </div>
+
+<div class="card-container">
+    <div class="card" *ngFor="let nome of nomeCards">
+        <img src="imagem.jpg" alt="Imagem do Card">
+        <div class="card-content">
+            <span>{{ nome }}</span>
+        </div>
+    </div>
+</div>
+</main>
+
+<footer>
+</footer>
+

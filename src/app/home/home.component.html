@@ -1,25 +1,31 @@
-<header class="cabecalho"> 
-    <img src="../../assets/logo-pequeno-bellavisage.png" width="107px" alt="logo da bellavisage">
-    <div class="cabecalho-login">
-        <img src="../../assets/logo-usuario.png" width="30px">
-        <span><a href="#">Entrar</a></span>
-    </div>
+<header class="cabecalho">
+    <img src="../../assets/logo-pequeno-bellavisage.png" alt="logo da bellavisage">
+    <nav class="cabecalho-nav">
+      <ul class="cabecalho-lista">
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Tratamentos</a></li>
+        <li><a href="#">Especialistas</a></li>
+        <li><a href="#">Clínicas</a></li>
+        <li><a href="#">Faturamento</a></li>
+        <li><a href="#">Dashbord</a></li>
+        <li><a href="#">Agendar</a></li>
+      </ul>
+    </nav>
 </header>
 
 <main>
-    <div class="painel">
-        <img src="../../assets/logo-grande-bellavisage.png" width="50%" class="painel-logo">
-        <img src="../../assets/painel-bellavisage.png" width="100%">
-    </div>
 
-<div class="card-container">
-    <div class="card" *ngFor="let nome of nomeCards">
-        <img src="imagem.jpg" alt="Imagem do Card">
-        <div class="card-content">
-            <span>{{ nome }}</span>
-        </div>
-    </div>
-</div>
+  <img src="../../assets/logo-fundo-bellavisage.png" width="100%" class="painel-fundo">
+  <div class="card-container">
+      <div class="card" *ngFor="let nome of nomeCards">
+          <img *ngIf="nome == 'Faturamento'" src="../../assets/icone-faturamento.png" style="padding-bottom: 0.2em;" alt="Imagem do Card">
+          <img *ngIf="nome == 'Avalie o serviço'" src="../../assets/icone-servico.png" style="padding-bottom: 0.2em;" alt="Imagem do Card">
+          <img *ngIf="nome != 'Faturamento' && nome != 'Avalie o serviço'" src="../../assets/icone-gerenciar.png" alt="Imagem do Card">
+          <div class="card-conteudo">
+              <a>{{ nome }}</a>
+          </div>
+      </div>
+  </div>
 </main>
 
 <footer>

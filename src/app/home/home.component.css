@@ -1,33 +1,34 @@
 .cabecalho {
     display: flex;
     justify-content: space-between;
-    width: 90%;
-    padding: 0.7em 0;
-}
-
-
-.cabecalho-login{
-    display: flex;
     align-items: center;
-    text-align: center;
+    padding: 1em 0;
 }
 
-.cabecalho-login img{
-    margin-right: 0.5em;
+.cabecalho-nav{
+  width: 70%;
 }
 
-.cabecalho-login a{
-    font-family: "Public Sans", sans-serif;
-    font-size: 12px;
-    font-weight: bold;
-    text-decoration: underline;
-    color:#950341;
+.cabecalho-lista{
+    list-style-type: none;
+    display: flex;
+    gap: 2em;
+}
+
+.cabecalho-lista a{
+  text-decoration: none;
+  color: #950341;
+  font-family: 'Public Sans';
+  font-weight: bold;
+
+}
+
+.cabecalho-lista a:hover{
+  text-decoration: underline;
 }
 
 .painel-logo{
-    position: absolute;
-    top: 6em;
-    left: 14em;
+  background-color: aqua;
 }
 
 .card-container{
@@ -38,25 +39,26 @@
 }
 
 .card {
-    width: 300px;
+    width: 20em;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
     background-color: #E7EBEF;
-    margin: 3em 0;
+    margin: 3em;
+    padding: 2em 0;
+    text-align: center;
   }
-  
-.card img {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ddd;
+
+
+.card-conteudo a{
+  text-decoration: none;
+  font-family: 'Public Sans';
+  color: #1b82d1;
+  font-weight: bold;
 }
 
-.card-content {
-    padding: 20px;
+.card-conteudo a:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.card-content span {
-    margin-top: 0;
-}

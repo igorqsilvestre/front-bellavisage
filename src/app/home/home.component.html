@@ -14,17 +14,19 @@
 </header>
 
 <main>
-  <img src="../../assets/logo-fundo-bellavisage.png" width="100%" class="painel-fundo">
+  <img src="../../assets/logo-fundo-bellavisage.png" width="100%">
+
   <div class="card-container">
       <div class="card" *ngFor="let nome of nomeCards">
-          <img *ngIf="nome == 'Faturamento'" src="../../assets/icone-faturamento.png" style="padding-bottom: 0.2em;" alt="Imagem do Card">
-          <img *ngIf="nome == 'Avalie o serviço'" src="../../assets/icone-servico.png" style="padding-bottom: 0.2em;" alt="Imagem do Card">
-          <img *ngIf="nome != 'Faturamento' && nome != 'Avalie o serviço'" src="../../assets/icone-gerenciar.png" alt="Imagem do Card">
+          <img *ngIf="nome == 'Faturamento'" src="../../assets/icone-faturamento.png" style="padding-bottom: 0.2em;" height="83px" width="98px" alt="Imagem do Card">
+          <img *ngIf="nome == 'Avalie o serviço'" src="../../assets/icone-servico.png" style="padding-bottom: 0.2em;" height="54px" width="60px" alt="Imagem do Card">
+          <img *ngIf="nome != 'Faturamento' && nome != 'Avalie o serviço'" src="../../assets/icone-gerenciar.png"  height="62px" width="52px" alt="Imagem do Card">
           <div class="card-conteudo">
               <a>{{ nome }}</a>
           </div>
       </div>
   </div>
+
 </main>
 
 <footer class="rodape">

@@ -27,9 +27,7 @@
   text-decoration: underline;
 }
 
-.painel-logo{
-  background-color: aqua;
-}
+
 
 .card-container{
     display: flex;
@@ -37,6 +35,7 @@
     flex-wrap: wrap;
 
 }
+
 
 .card {
     width: 20em;
@@ -47,7 +46,8 @@
     margin: 3em;
     padding: 2em 0;
     text-align: center;
-  }
+    align-items: center;
+}
 
 
 .card-conteudo a{

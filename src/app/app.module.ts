@@ -12,12 +12,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
+import { CabecalhoComponent } from './shared/cabecalho/cabecalho.component';
+import { RodapeComponent } from './shared/rodape/rodape.component';
+import { PacienteComponent } from './paciente/paciente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CabecalhoComponent,
+    RodapeComponent,
+    PacienteComponent
   ],
   imports: [
     BrowserModule,

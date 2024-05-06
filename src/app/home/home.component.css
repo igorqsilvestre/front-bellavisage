@@ -62,23 +62,3 @@
   cursor: pointer;
 }
 
-.rodape{
-  text-align: center;
-  background-color: #950341;
-  margin-top: 5em;
-  padding: 1em 0;
-}
-
-.rodape-lista{
-  list-style-type: none;
-  display: flex;
-  gap:1.2em;
-  justify-content: center;
-  margin: 0.3em 0;
-}
-
-.rodape span{
-  font-family: 'Public Sans';
-  color:#E7EBEF;
-  font-size: x-small;
-}

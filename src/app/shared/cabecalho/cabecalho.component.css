@@ -1,0 +1,28 @@
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 0;
+}
+
+.cabecalho-nav{
+width: 70%;
+}
+
+.cabecalho-lista{
+  list-style-type: none;
+  display: flex;
+  gap: 2em;
+}
+
+.cabecalho-lista a{
+text-decoration: none;
+color: #950341;
+font-family: 'Public Sans';
+font-weight: bold;
+
+}
+
+.cabecalho-lista a:hover{
+text-decoration: underline;
+}

@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginComponent } from './login/login.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { PasswordModule } from 'primeng/password';
+
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
 import { CabecalhoComponent } from './shared/cabecalho/cabecalho.component';
 import { RodapeComponent } from './shared/rodape/rodape.component';
-import { PacienteComponent } from './paciente/paciente.component';
+import { InputGenericoComponent } from './shared/input-generico/input-generico.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +21,7 @@ import { PacienteComponent } from './paciente/paciente.component';
     LoginComponent,
     CabecalhoComponent,
     RodapeComponent,
-    PacienteComponent
+    InputGenericoComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +29,6 @@ import { PacienteComponent } from './paciente/paciente.component';
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    InputTextModule,
-    ButtonModule,
-    PasswordModule
   ],
   providers: [],
   bootstrap: [AppComponent]

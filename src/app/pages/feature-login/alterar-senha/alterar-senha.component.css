@@ -1,0 +1,32 @@
+.principal{
+  display: flex;
+}
+
+.principal-login{
+  width: 80%;
+  text-align: center;
+  padding: 5em 0;
+}
+
+.principal-titulo{
+  margin-top: 0.3em;
+  font-family: 'Public Sans';
+  font-family: 1em;
+  color: #6B6E71;
+}
+
+.principal-formulario{
+  margin: 0 10em;
+}
+
+.principal-formulario .campos{
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+
+}
+
+.principal-formulario .envio{
+  display: inline-block;
+}

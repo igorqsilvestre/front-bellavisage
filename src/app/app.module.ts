@@ -7,21 +7,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { CabecalhoComponent } from './shared/cabecalho/cabecalho.component';
-import { RodapeComponent } from './shared/rodape/rodape.component';
-import { InputGenericoComponent } from './shared/input-generico/input-generico.component';
+import { SharedModule } from './shared/shared.module';
+import { FeatureHomeModule } from './pages/feature-home/feature-home.module';
+import { FeatureLoginModule } from './pages/feature-login/feature-login.module';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    LoginComponent,
-    CabecalhoComponent,
-    RodapeComponent,
-    InputGenericoComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +23,9 @@ import { InputGenericoComponent } from './shared/input-generico/input-generico.c
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
+    FeatureLoginModule,
+    FeatureHomeModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

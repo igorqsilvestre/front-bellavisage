@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputGenericoComponent } from './input-generico.component';
+import { AlterarSenhaComponent } from './alterar-senha.component';
 
-describe('InputGenericoComponent', () => {
-  let component: InputGenericoComponent;
-  let fixture: ComponentFixture<InputGenericoComponent>;
+describe('AlterarSenhaComponent', () => {
+  let component: AlterarSenhaComponent;
+  let fixture: ComponentFixture<AlterarSenhaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InputGenericoComponent]
+      declarations: [AlterarSenhaComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(InputGenericoComponent);
+    fixture = TestBed.createComponent(AlterarSenhaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,65 @@
+<header>
+  <app-cabecalho></app-cabecalho>
+</header>
+<main>
+  <section class="sessao-principal">
+
+    <h2 class="titulo">Cadastro do administrador</h2>
+    <h3 class="subtitulo">Insira os dados abaixo:</h3>
+    <form class="principal-formulario">
+      <div class="campos">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome">
+
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Insira seu endere&ccedil;o de email">
+
+        <label for="senha" >Senha</label>
+        <input type="password" class="form-control" id="senha" placeholder="Crie uma senha">
+
+        <label for="rep-senha" >Confirme sua senha</label>
+        <input type="password" class="form-control" id="rep-senha" placeholder="Repita a senha">
+
+        <label for="telefone">Telefone</label>
+        <input type="text" class="form-control" id="telefone" placeholder="(DDD) XXXXX-XXXX">
+
+        <label for="cep" >Endere&ccedil;o</label>
+
+        <div class="input-group d-flex align-items-center ">
+          <div class="input-group-prepend" style="margin-right: 0.5em;">
+            <span class="input-group-text"><img src="../../../../assets/icone-localizacao.png"></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Insira o CEP"  >
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control"  placeholder="Rua">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control"  placeholder="Número">
+          </div>
+        </div>
+
+        <input type="text" class="form-control"  placeholder="Complemento">
+
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control"  placeholder="Cidade">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control"  placeholder="Estado">
+          </div>
+        </div>
+      </div>
+      <button type="submit">Cadastrar</button>
+    </form>
+
+
+  </section>
+</main>
+<footer>
+  <app-rodape></app-rodape>
+</footer>
+
+

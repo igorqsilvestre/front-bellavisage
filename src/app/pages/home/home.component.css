@@ -5,17 +5,18 @@
     padding: 1em 0;
 }
 
-.cabecalho-nav{
-  width: 70%;
-}
-
 .cabecalho-lista{
     list-style-type: none;
     display: flex;
     gap: 2em;
 }
 
-.cabecalho-lista a{
+
+.cabecalho-sair a{
+  padding: 0 0.8em;
+}
+
+.cabecalho-lista a, .cabecalho-sair a{
   text-decoration: none;
   color: #950341;
   font-family: 'Public Sans';
@@ -23,10 +24,9 @@
 
 }
 
-.cabecalho-lista a:hover{
+.cabecalho-lista a:hover, .cabecalho-sair a:hover{
   text-decoration: underline;
 }
-
 
 
 .card-container{

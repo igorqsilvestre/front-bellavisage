@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from './shared/shared.module';
-import { FeatureHomeModule } from './pages/feature-home/feature-home.module';
-import { FeatureLoginModule } from './pages/feature-login/feature-login.module';
+import { HomeModule } from './pages/home/home.module';
+import { LoginModule } from './pages/login/login.module';
 
 
 
@@ -23,9 +23,9 @@ import { FeatureLoginModule } from './pages/feature-login/feature-login.module';
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    FeatureLoginModule,
-    FeatureHomeModule,
-    SharedModule
+    SharedModule,
+    HomeModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,12 +1,12 @@
 <header>
-  <app-cabecalho></app-cabecalho>
+  <app-cabecalho barraNavegacao="visualizarBarraNav"></app-cabecalho>
 </header>
 <main>
   <section class="sessao-principal">
 
-    <h2 class="titulo">Cadastro do administrador</h2>
+    <h2 class="titulo">Cadastro do usuário</h2>
     <h3 class="subtitulo">Insira os dados abaixo:</h3>
-    <form class="principal-formulario">
+    <form class="principal-formulario" (ngSubmit)="onSubmit()">
       <div class="campos">
         <label for="nome">Nome</label>
         <input type="text" class="form-control" id="nome" placeholder="Informe seu nome">
@@ -51,10 +51,21 @@
             <input type="text" class="form-control"  placeholder="Estado">
           </div>
         </div>
+
+
+        <div class="row">
+          <div class="form-group">
+            <label for="opcoes">Escolha o perfil do usu&aacute;rio:</label>
+            <select id="opcoes" name="opcoes">
+                <option value="opcao1">Administrador</option>
+                <option value="opcao2">Cliente</option>
+            </select>
+          </div>
+        </div>
       </div>
+
       <button type="submit">Cadastrar</button>
     </form>
-
 
   </section>
 </main>

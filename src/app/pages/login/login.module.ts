@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AlterarSenhaFormComponent } from './alterar-senha-form/alterar-senha-form.component';
-import { AdministradorFormComponent } from './administrador-form/administrador-form.component';
 import { LoginRoutingModule } from './login-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 
 
 
@@ -12,10 +14,13 @@ import { LoginRoutingModule } from './login-routing.module';
   declarations: [
     LoginComponent,
     AlterarSenhaFormComponent,
-    AdministradorFormComponent
+    UsuarioFormComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     SharedModule,
     LoginRoutingModule
   ]

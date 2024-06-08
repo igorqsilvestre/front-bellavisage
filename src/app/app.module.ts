@@ -10,6 +10,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
+import { PacienteModule } from './pages/paciente/paciente.module'
+import { TratamentoModule } from './pages/tratamento/tratamento.module';
+import { EspecialistaModule } from './pages/especialista/especialista.module';
+import { AgendamentoModule } from './pages/agendamento/agendamento.module';
 
 
 
@@ -25,7 +29,11 @@ import { LoginModule } from './pages/login/login.module';
     BrowserAnimationsModule,
     SharedModule,
     HomeModule,
-    LoginModule
+    LoginModule,
+    PacienteModule,
+    TratamentoModule,
+    EspecialistaModule,
+    AgendamentoModule
   ],
   providers: [],
   bootstrap: [AppComponent]

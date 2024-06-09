@@ -12,7 +12,6 @@ import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +24,7 @@ import { LoginModule } from './pages/login/login.module';
     BrowserAnimationsModule,
     SharedModule,
     HomeModule,
-    LoginModule
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -87,32 +87,45 @@
               <input type="text" class="form-control"  formControlName="cidade" placeholder="Cidade">
             </div>
             <div class="col">
-              <select id="opcoes" formControlName="estado" >
-                  <option *ngFor="let estado of estados" value="estado">{{estado.nome}}</option>
+              <select class="form-control" id="opcoes" formControlName="estado" >
+                  <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
               </select>
             </div>
           </div>
 
           <div class="row">
+            <div class="col">
               <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cidade')?.touched && formulario.get('endereco.cidade')?.invalid"
               msgErro="Cidade é obrigatória.">
               </app-campo-control-erro>
+            </div>
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.estado')?.touched && formulario.get('endereco.estado')?.invalid"
+              msgErro="Estado é obrigatório.">
+              </app-campo-control-erro>
+            </div>
           </div>
         </div>
-
-
 
 
         <div class="row">
           <div class="form-group">
             <label for="opcoes">Escolha o perfil do usu&aacute;rio:</label>
-            <select id="opcoes" formControlName="perfilAcesso" name="opcoes">
-                <option value="opcao1">Administrador</option>
-                <option value="opcao2">Cliente</option>
+            <select class="form-control" id="opcoes" formControlName="perfilsAcesso" name="opcoes">
+                <option *ngFor="let perfil of perfilsAcesso" [value]="perfil.nome">{{ perfil.nome }}</option>
             </select>
           </div>
         </div>
+
+        <div class="row">
+          <div class="form-group">
+            <app-campo-control-erro [mostrarErro]="formulario.get('perfilsAcesso')?.touched && formulario.get('perfilsAcesso')?.invalid"
+            msgErro="Perfil de acesso é obrigatório.">
+            </app-campo-control-erro>
+          </div>
+        </div>
       </div>
+
 
       <button type="submit">Cadastrar</button>
     </form>

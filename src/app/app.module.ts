@@ -16,7 +16,6 @@ import { EspecialistaModule } from './pages/especialista/especialista.module';
 import { AgendamentoModule } from './pages/agendamento/agendamento.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

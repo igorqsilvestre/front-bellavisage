@@ -6,49 +6,104 @@
 
     <h2 class="titulo">Cadastro do usuário</h2>
     <h3 class="subtitulo">Insira os dados abaixo:</h3>
-    <form class="principal-formulario" (ngSubmit)="onSubmit()">
+    <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <div class="campos">
         <label for="nome">Nome</label>
-        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome">
+        <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Informe seu nome">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('nome')?.touched && formulario.get('nome')?.invalid"
+          msgErro="Nome é inválido!">
+        </app-campo-control-erro>
 
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Insira seu endere&ccedil;o de email">
+        <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched && formulario.get('email')?.invalid"
+          msgErro="Formato de email inválido!">
+        </app-campo-control-erro>
 
         <label for="senha" >Senha</label>
-        <input type="password" class="form-control" id="senha" placeholder="Crie uma senha">
+        <input type="password" class="form-control" formControlName="senha" id="senha" placeholder="Crie uma senha">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('senha')?.touched && formulario.get('senha')?.invalid"
+          msgErro="Senha é obrigatória! Precisa ter entre 3 e 16 caracteres">
+        </app-campo-control-erro>
 
         <label for="rep-senha" >Confirme sua senha</label>
-        <input type="password" class="form-control" id="rep-senha" placeholder="Repita a senha">
+        <input type="password" class="form-control" formControlName="confirmarSenha" id="rep-senha" placeholder="Repita a senha">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('confirmarSenha')?.touched &&
+        !(formulario.get('senha')?.value == formulario.get('confirmarSenha')?.value)"
+        msgErro="Precisa ser igual a senha!">
+        </app-campo-control-erro>
+
 
         <label for="telefone">Telefone</label>
-        <input type="text" class="form-control" id="telefone" placeholder="(DDD) XXXXX-XXXX">
+        <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX">
 
-        <label for="cep" >Endere&ccedil;o</label>
+        <app-campo-control-erro [mostrarErro]="formulario.get('telefone')?.touched && formulario.get('telefone')?.invalid"
+          msgErro="Telefone inválido! Precisa ter 11 caracteres e ser números.">
+        </app-campo-control-erro>
 
-        <div class="input-group d-flex align-items-center ">
-          <div class="input-group-prepend" style="margin-right: 0.5em;">
-            <span class="input-group-text"><img src="../../../../assets/icone-localizacao.png"></span>
+        <div formGroupName="endereco">
+          <label for="cep" >Endere&ccedil;o</label>
+
+          <div class="input-group d-flex align-items-center ">
+            <div class="input-group-prepend" style="margin-right: 0.5em;">
+              <span class="input-group-text"><img src="../../../../assets/icone-localizacao.png"></span>
+            </div>
+            <input type="text" class="form-control" formControlName="cep" placeholder="Insira o CEP"  >
           </div>
-          <input type="text" class="form-control" placeholder="Insira o CEP"  >
-        </div>
+          <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep')?.touched && formulario.get('endereco.cep')?.invalid"
+            msgErro="Cep inválido! Precisa ter 8 caracteres e ser números.">
+          </app-campo-control-erro>
 
-        <div class="row">
-          <div class="col">
-            <input type="text" class="form-control"  placeholder="Rua">
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control"  formControlName="rua" placeholder="Rua">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control"  formControlName="numero" placeholder="Número">
+            </div>
           </div>
-          <div class="col">
-            <input type="text" class="form-control"  placeholder="Número">
-          </div>
-        </div>
 
-        <input type="text" class="form-control"  placeholder="Complemento">
-
-        <div class="row">
-          <div class="col">
-            <input type="text" class="form-control"  placeholder="Cidade">
+          <div class="row">
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.rua')?.touched && formulario.get('endereco.rua')?.invalid"
+              msgErro="Rua é obrigatória.">
+              </app-campo-control-erro>
+            </div>
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.numero')?.touched && formulario.get('endereco.numero')?.invalid"
+              msgErro="Somente é permitido números.">
+              </app-campo-control-erro>
+            </div>
           </div>
-          <div class="col">
-            <input type="text" class="form-control"  placeholder="Estado">
+
+          <input type="text" class="form-control"  formControlName="complemento" placeholder="Complemento">
+
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control"  formControlName="cidade" placeholder="Cidade">
+            </div>
+            <div class="col">
+              <select class="form-control" id="opcoes" formControlName="estado" >
+                  <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cidade')?.touched && formulario.get('endereco.cidade')?.invalid"
+              msgErro="Cidade é obrigatória.">
+              </app-campo-control-erro>
+            </div>
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.estado')?.touched && formulario.get('endereco.estado')?.invalid"
+              msgErro="Estado é obrigatório.">
+              </app-campo-control-erro>
+            </div>
           </div>
         </div>
 
@@ -56,13 +111,21 @@
         <div class="row">
           <div class="form-group">
             <label for="opcoes">Escolha o perfil do usu&aacute;rio:</label>
-            <select id="opcoes" name="opcoes">
-                <option value="opcao1">Administrador</option>
-                <option value="opcao2">Cliente</option>
+            <select class="form-control" id="opcoes" formControlName="perfilsAcesso" name="opcoes">
+                <option *ngFor="let perfil of perfilsAcesso" [value]="perfil.nome">{{ perfil.nome }}</option>
             </select>
           </div>
         </div>
+
+        <div class="row">
+          <div class="form-group">
+            <app-campo-control-erro [mostrarErro]="formulario.get('perfilsAcesso')?.touched && formulario.get('perfilsAcesso')?.invalid"
+            msgErro="Perfil de acesso é obrigatório.">
+            </app-campo-control-erro>
+          </div>
+        </div>
       </div>
+
 
       <button type="submit">Cadastrar</button>
     </form>

@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './pages/home/home.module';
@@ -26,6 +27,7 @@ import { AgendamentoModule } from './pages/agendamento/agendamento.module';
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
+    ModalModule.forRoot(),
     SharedModule,
     HomeModule,
     LoginModule,

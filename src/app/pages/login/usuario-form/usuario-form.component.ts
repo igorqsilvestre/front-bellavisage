@@ -2,8 +2,10 @@ import { DropdownService } from './../../../shared/services/dropdown.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EstadoBr } from '../../../shared/models/estado-br';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { LoginService } from '../login.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-usuario-form',
@@ -17,12 +19,14 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
   estados!: EstadoBr[];
   perfilsAcesso = [{ id: 1, nome: 'Administrador' },{ id: 2, nome: 'Cliente' }];
   private estadosSubscription!: Subscription;
+  modalRef!: BsModalRef;
 
 
   constructor(
     private formBuilder: FormBuilder,
     private dropdownService: DropdownService,
-    private loginService: LoginService){}
+    private loginService: LoginService,
+    private modalService: BsModalService){}
 
 
 
@@ -56,8 +60,18 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
 
       this.loginService.criarUsuario(this.formulario.value).subscribe(
         dados => {
-          alert('deu certo')
+          const initialState = {
+            type: 'Sucesso!',
+            message: 'Cadastro foi realizado com sucesso!'
+          };
+          this.modalRef = this.modalService.show(AlertModalComponent, {initialState });
           this.formulario.reset();
+        },error => {
+          const initialState = {
+            type: 'Erro!',
+            message: 'Ocorreu um erro ao realizar o cadastro.!'
+          };
+          this.modalRef = this.modalService.show(AlertModalComponent, {initialState });
         },
       );
     }

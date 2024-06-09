@@ -1,3 +1,4 @@
+import { CampoControlErroComponent } from './../../shared/campo-control-erro/campo-control-erro.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
@@ -14,7 +15,7 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
   declarations: [
     LoginComponent,
     AlterarSenhaFormComponent,
-    UsuarioFormComponent
+    UsuarioFormComponent,
   ],
   imports: [
     CommonModule,

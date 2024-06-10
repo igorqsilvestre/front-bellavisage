@@ -8,6 +8,8 @@ import { LoginRoutingModule } from './login-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { UsuarioEmailValidator } from './usuario-form/UsuarioEmailValidator';
+import { LoginEmailValidator } from './LoginEmailValidator';
 
 
 
@@ -24,6 +26,7 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
     HttpClientModule,
     SharedModule,
     LoginRoutingModule
-  ]
+  ],
+  providers: [UsuarioEmailValidator, LoginEmailValidator]
 })
 export class LoginModule { }

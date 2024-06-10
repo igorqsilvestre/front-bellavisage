@@ -18,8 +18,13 @@
         <label for="email">Email</label>
         <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
 
-        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched && formulario.get('email')?.invalid"
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
+        formulario.get('email')?.hasError('pattern')"
           msgErro="Formato de email inválido!">
+        </app-campo-control-erro>
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched && formulario.get('email')?.errors?.['emailExistente']"
+          msgErro="Email já cadastrado no sistema!">
         </app-campo-control-erro>
 
         <label for="senha" >Senha</label>

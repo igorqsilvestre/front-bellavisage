@@ -1,0 +1,53 @@
+<div>
+  <p-table [value]="agendamentos"
+    dataKey="id"
+    editMode="row"
+    [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:20%">Code</th>
+            <th style="width:20%">Avaliação</th>
+            <th style="width:20%">Ações</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-agenda let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="agenda">
+            <td>
+              {{agenda.code}}
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <p-rating [(ngModel)]="agenda.avaliacao" [readonly]="false" [required]="true" [cancel]="false"/>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        <p-rating [(ngModel)]="agenda.avaliacao" [readonly]="true" [cancel]="false"/>
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <div class="flex align-items-center justify-content-center gap-2">
+                    <button
+                        *ngIf="!editing"
+                        pInitEditableRow
+                        (click)="onRowEditInit(agenda)">
+                        <fa-icon [icon]="faPen"></fa-icon>
+                    </button>
+                    <button
+                        *ngIf="editing"
+                        pSaveEditableRow
+                        (click)="onRowEditSave(agenda)">
+                        <fa-icon [icon]="faCheck"></fa-icon>
+                    </button>
+                    <button
+                        *ngIf="editing"
+                        pCancelEditableRow
+                        (click)="onRowEditCancel(agenda, ri)">
+                        <fa-icon [icon]="faTimes"></fa-icon>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>

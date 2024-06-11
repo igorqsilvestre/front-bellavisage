@@ -24,6 +24,7 @@ header,main{
 
 }
 
+
 .principal-formulario button{
   background-color: #950341;
   color: #FFFFFF;
@@ -32,16 +33,14 @@ header,main{
   border: none;
   border-radius: 8px;
   padding: 0.7em 7em;
-  width: 10px;
   margin: 4em 9em;
 }
-
 .principal-formulario{
   margin: 0 30em;
 }
 
 .sessao-principal .subtitulo {
-  color: #70666a;
+  color: #339CFF;
   font-family: 'Public Sans';
   font-weight: bold;
   text-transform: uppercase;

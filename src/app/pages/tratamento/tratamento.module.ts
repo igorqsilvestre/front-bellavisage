@@ -18,6 +18,7 @@ import { TratamentoComponent } from './tratamento.component';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
+  
   ]
 })
 export class TratamentoModule { }

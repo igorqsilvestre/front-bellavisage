@@ -8,13 +8,21 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { SharedModule } from './shared/shared.module';
+
 import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
 import { PacienteModule } from './pages/paciente/paciente.module'
 import { TratamentoModule } from './pages/tratamento/tratamento.module';
 import { EspecialistaModule } from './pages/especialista/especialista.module';
 import { AgendamentoModule } from './pages/agendamento/agendamento.module';
+import { ListagemPacienteModule } from './pages/listagemPaciente/listagemPaciente.module';
+import { ListagemEspecialistaModule } from './pages/listagemEspecialista/listagemEspecialista.module';
+import { ListagemTratamentoModule } from './pages/listagemTratamento/listagemTratamento.module';
+import { ListagemPagamentosModule } from './pages/listagemPagamentos/listagemPagamentos.module';
+import { ListagemAgendamentoModule } from './pages/listagemAgendamento/listagemAgendamento.module';
+import { LabsModule } from './pages/labs/labs.module';
+
+import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './guards/auth.guard';
 
 
@@ -35,7 +43,15 @@ import { AuthGuard } from './guards/auth.guard';
     PacienteModule,
     TratamentoModule,
     EspecialistaModule,
-    AgendamentoModule
+    AgendamentoModule,
+    ListagemPacienteModule,
+    ListagemEspecialistaModule,
+    ListagemTratamentoModule,
+    ListagemPagamentosModule,
+    ListagemAgendamentoModule,
+    LabsModule,
+    HomeModule
+
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

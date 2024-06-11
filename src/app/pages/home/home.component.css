@@ -62,3 +62,21 @@
   cursor: pointer;
 }
 
+.imagem-fundo{
+  height: 10px;
+/*     background-size: cover;
+
+ */
+ /* background-position: center;
+    height: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-family: 'Public Sans';
+    font-weight: bold;
+    text-align: center;
+    padding: 0 2em; */
+}
+

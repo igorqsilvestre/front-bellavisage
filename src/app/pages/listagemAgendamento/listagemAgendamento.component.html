@@ -1,0 +1,176 @@
+<header>
+  <app-cabecalho barraNavegacao="visualizarBarraNav"></app-cabecalho>
+</header>
+<main>
+  <section class="sessao-principal">
+    <h2 class="titulo">Agendamento dos Pacientes</h2>
+      <div class="button-direcionamentoCadastrar">
+        <button type="submit" (click)="editarCadastro(cadastro)">Cadastrar Agendamento</button>
+      </div>
+        <div class="campo-agendamento">
+
+          <h2 class="titulo-tabela">Agendamentos</h2>
+
+          <div class="tabela-bord">
+
+              <div class="table-container">
+                <p-table
+                #dtListagemAgendamento
+                dataKey="id"
+                [value]="cadastro"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                [globalFilterFields]="[
+                    'name',
+                ]"
+                editMode="row"
+                >
+
+
+                <ng-template pTemplate="header" let-agenda let-editing="editing" let-ri="rowIndex">
+                    <tr>
+                        <th>Data</th>
+                        <th>Horas</th>
+                        <th>Nome</th>
+                        <th>Tratamento</th>
+                        <th>Especialista</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Avaliação</th>
+                        <th>Ações</th>
+                    </tr>
+                    <tr>
+                      <th>
+                        <p-columnFilter
+                            type="date"
+                            field="data"
+                            placeholder="Search by data"
+                            ariaLabel="Filter data" />
+                      </th>
+                    <th>
+                          <p-columnFilter
+                              type="text"
+                              field="horas"
+                              placeholder="Search by horas"
+                              ariaLabel="Filter horas" />
+                      </th>
+                      <th>
+                          <p-columnFilter
+                              type="text"
+                              field="nome"
+                              placeholder="Search by nome"
+                              ariaLabel="Filter Nome" />
+                      </th>
+                      <th>
+                          <p-columnFilter
+                              type="text"
+                              field="tratamento"
+                              placeholder="Search by tratamento"
+                              ariaLabel="Filter tratamento" />
+                      </th>
+
+                      <th>
+                        <p-columnFilter
+                            type="text"
+                            field="especialista"
+                            placeholder="Search by especialista"
+                            ariaLabel="Filter especialista" />
+                    </th>
+
+                      <th>
+                        <p-columnFilter
+                            type="value"
+                            field="valor"
+                            placeholder="Search by valor"
+                            ariaLabel="Filter valor" />
+                      </th>
+                      <th>
+                        <p-columnFilter
+                            type="text"
+                            field="status"
+                            placeholder="Search by status"
+                            ariaLabel="Filter status" />
+                    </th>
+                      <th></th>
+                </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-cadastro  let-editing="editing" let-ri="rowIndex">
+
+                    <tr [pEditableRow]="cadastro">
+
+
+                        <td>{{ cadastro.data }}</td>
+                        <td>{{ cadastro.horas }}</td>
+                        <td>{{ cadastro.nome }}</td>
+                        <td>{{ cadastro.tratamento }}</td>
+                        <td>{{ cadastro.especialista}}</td>
+                        <td>{{ cadastro.valor}}</td>
+                        <td>{{ cadastro.status}}</td>
+                        <td>
+                          <p-cellEditor
+                            >
+                              <ng-template pTemplate="input">
+                                <p-rating [(ngModel)]="cadastro.avaliacao" [readonly]="false" [required]="true" [cancel]="false"/>
+                              </ng-template>
+                              <ng-template pTemplate="output"
+
+                              >
+                                  <p-rating
+                                  *ngIf="cadastro.status === 'Concluído'"
+                                  [(ngModel)]="cadastro.avaliacao" [readonly]="true" [cancel]="false"/>
+                              </ng-template>
+                          </p-cellEditor>
+    <!--                       <p-rating [(ngModel)]="cadastro.avaliacao" [readonly]="true" [cancel]="false"/>
+    -->                </td>
+                        <td>
+                            <div class="flex align-items-center justify-content-center gap-2">
+                              <button
+                                  *ngIf="!editing && cadastro.status !== 'Concluído'"
+                                  pInitEditableRow
+                                  (click)="onRowEditInit(cadastro)">
+                                  <fa-icon [icon]="faPen"></fa-icon>
+                              </button>
+                              <button
+                                  *ngIf="editing"
+                                  pSaveEditableRow
+                                  (click)="onRowEditSave(cadastro)">
+                                  <fa-icon [icon]="faCheck"></fa-icon>
+                              </button>
+                              <button
+                                  *ngIf="editing"
+                                  pCancelEditableRow
+                                  (click)="onRowEditCancel(cadastro)">
+                                  <fa-icon [icon]="faTimes"></fa-icon>
+                              </button>
+                            </div>
+                        </td>
+    <!--                    botoes de lixeira e edicao estao funcionando
+    -->                    <th>
+
+                          <button
+                          (click)="cancelarCadastro(cadastro)"
+                          >
+                            <fa-icon [icon]="faTrash"></fa-icon>
+
+                        </button>
+                        <button
+                        (click)="editarCadastro(cadastro)"
+                        >
+                        <fa-icon [icon]="faEdit"></fa-icon>
+                        </button>
+
+
+                    </tr>
+                </ng-template>
+            </p-table>
+
+              </div>
+
+          </div>
+        </div>
+  </section>
+</main>
+
+<footer>
+  <app-rodape></app-rodape>
+</footer>
+

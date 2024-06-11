@@ -1,33 +1,79 @@
 <header>
-  <app-cabecalho></app-cabecalho>
+  <app-cabecalho barraNavegacao="visualizarBarraNav"></app-cabecalho>
 </header>
 <main>
   <section class="sessao-principal">
     <h2 class="titulo">Agendamento do Paciente</h2>
-      <div class="button-direcionamentoCadastrar">
-        <button type="submit">Cadastrar Paciente</button>
-      </div>
         <div class="campo-paciente">
           <h3 class="subtitulo">Agende o paciente inserindo os dados abaixo:</h3>
+
           <section  class="principal-formulario">
              <form class="campos">
-                <div class="input-group d-flex align-items-center ">
-                  <div class="input-group-prepend" style="margin-right: 0.5em;">
-                    <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Nome do Paciente">
-                </div>
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Insira seu endereço de email">
+              <div class="button-direcionamentoCadastrar">
+                <button type="submit" (click)="editarCadastro()">Novo Paciente</button>
+               </div>
+              <div class="dados-nomes-agendamento">
+                      <div>
+                        <label for="nome">Nome</label>
+                        <div class="input-group d-flex align-items-center ">
+                          <div class="input-group-prepend" style="margin-right: 0.1em;">
+                            <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
+                          </div>
 
-                <label for="telefone">Telefone</label>
-                <input type="telefone" class="form-control" id="telefone" placeholder="(DDD) XXXXX-XXXX">
+                          <input type="text" class="form-control" placeholder="Nome do Paciente">
+                        </div>
+                    </div>
+
+                      <div>
+                        <label for="nome">Tratamento</label>
+                        <div class="input-group d-flex align-items-center ">
+                          <div class="input-group-prepend" style="margin-right: 0.1em;">
+                            <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Nome do Tratamento">
+                        </div>
+                      </div>
+
+                      <div>
+                        <label for="nome">Especialista</label>
+                        <div class="input-group d-flex align-items-center ">
+                          <div class="input-group-prepend" style="margin-right: 0.1em;">
+                            <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Nome do Especialista">
+                        </div>
+                      </div>
+              </div>
+            <div class="dados-data-horario-agendamento">
+                    <div class="row">
+                    <div class="col">
+                      <label for="nome">Data</label>
+                      <input type="text" class="form-control"  placeholder="__/__/___">
+                    </div>
+                    <div class="col">
+                      <label for="nome">Horário</label>
+                      <input type="text" class="form-control"  placeholder="xx : xx">
+                    </div>
+                    <div class="col">
+                      <label for="nome">Valor</label>
+                      <input type="text" class="form-control"  placeholder="R$">
+                    </div>
+            </div>
+
+
+            </div>
+            <button type="submit">Agendar</button>
+
+
 
             </form>
+
           </section>
 
         </div>
+
   </section>
+
 </main>
 
 <footer>

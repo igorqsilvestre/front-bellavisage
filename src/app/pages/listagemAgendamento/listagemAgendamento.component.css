@@ -1,0 +1,131 @@
+
+header,main{
+  margin: 0 10%;
+}
+
+
+.sessao-principal{
+  background-color: #E7EBEF;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 2em;
+  margin: 1em 0;
+  text-align: center;
+  position:relative;
+
+
+}
+
+/* titulo azul */
+.sessao-principal .titulo {
+  color: #339CFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  text-align: left;
+  margin: 20px 5px 30px 20px;
+
+}
+.tabela-bord{
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5em;
+  margin: 1em 0;
+  text-align: center;
+  position:relative;
+  width: 100%;
+
+}
+
+.titulo-tabela {
+
+  color: #339CFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1em;
+  text-align: left;
+  margin: 50px 15px 30px 50px;
+}
+.button-direcionamentoCadastrar button{
+  background-color: #950341;
+  color: #FFFFFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.3em 2em;
+
+  top: 40px;
+  font-size: 16px;
+  display: flex;
+  margin: 50px 15px 100px 50px;
+}
+
+.button-icon {
+  width: 16px;
+  height: 12px;
+
+}
+
+
+.principal-formulario{
+  margin: 0 10em;
+
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5em 1em 50em 10em;
+  width: 40%;
+}
+
+.subtitulo {
+  color: #950341;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: medium;
+  padding-top: 2em;
+
+}
+
+.principal-formulario .campos{
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+
+}
+
+.principal-formulario label{
+  font-family: 'Public Sans';
+  color: #950341;
+  font-weight: bold;
+}
+
+.principal-formulario input {
+  padding: 0.6em 0;
+  margin: 0.7em 0;
+  background-color: #F8F8F8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+principal-formulario input::placeholder{
+  color: #6B6E71;
+  padding-left: 1em;
+}
+.principal-formulario button{
+  background-color: #950341;
+  color: #FFFFFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 7em;
+
+}
+
+.table-container {
+  height: 290px;
+  overflow: auto;
+}

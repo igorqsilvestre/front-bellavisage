@@ -3,39 +3,14 @@ header,main{
   margin: 0 10%;
 }
 
-
-
-/* Div do agendamento paciente nome e email*/
-/* .campo-paciente{
+.paciente-imagem{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0px 16px 0px 0px;
-  gap: 4px;
-  width: 439px;
-  height: 48px;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 2em 0;
+  padding: 2em 8em;
+
 }
- */
-
-/* div do nome paciente */
-/* background: #F8F8F8;
-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
-border-radius: 8px;
- */
-/* placehold */
-/* flex: none;
-order: 0;
-flex-grow: 0;
- */
-
-/* butão buscar*/
-/* flex: none;
-order: 1;
-flex-grow: 0; */
-
-
-
 .sessao-principal{
   background-color: #E7EBEF;
   border: 1px solid #ddd;
@@ -43,7 +18,6 @@ flex-grow: 0; */
   padding: 2em;
   margin: 1em 0;
   text-align: center;
-  position:relative;
 }
 
 /* titulo azul */
@@ -56,31 +30,9 @@ flex-grow: 0; */
   text-align: left;
 
 }
-.button-direcionamentoCadastrar button{
-  background-color: #950341;
-  color: #FFFFFF;
-  font-family: 'Public Sans';
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  padding: 0.3em 2em;
-
-  position: absolute;
-  top: 30px;
-  right: 16px;
-  font-size: 16px;
-
-}
-
 
 .principal-formulario{
   margin: 0 10em;
-
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0.5em 1em 50em 10em;
-  width: 40%;
 }
 
 .subtitulo {
@@ -100,6 +52,24 @@ flex-grow: 0; */
   margin: 1.5em 0;
 
 }
+.principal-formulario .campos .dados-nomes-agendamento {
+  justify-content: space-between;
+  padding-top: 5em;
+  padding-bottom: 2em;
+}
+.principal-formulario .campos .dados-nomes-agendamento .form-control{
+/*   width: 9em;  /* Define a largura da div */
+/*    padding: 10px; /* Define o padding interno da div */
+   border-radius: 5px; /* Define bordas arredondadas para a div */
+/*   margin: 10px auto; /* Centraliza a div horizontalmente */
+}
+.principal-formulario .campos .dados-data-horario-agendamento{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 5em;
+  padding-bottom: 2em;
+}
 
 .principal-formulario label{
   font-family: 'Public Sans';
@@ -113,10 +83,12 @@ flex-grow: 0; */
   background-color: #F8F8F8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-principal-formulario input::placeholder{
+
+.principal-formulario input::placeholder{
   color: #6B6E71;
   padding-left: 1em;
 }
+
 .principal-formulario button{
   background-color: #950341;
   color: #FFFFFF;
@@ -125,5 +97,19 @@ principal-formulario input::placeholder{
   border: none;
   border-radius: 8px;
   padding: 0.7em 7em;
+  margin: 4em 30em;
+}
+.button-direcionamentoCadastrar button{
+  background-color: #950341;
+  color: #FFFFFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.3em 2em;
 
+  top: 40px;
+  font-size: 16px;
+  display: flex;
+  margin: 50px 15px 10px 50px;
 }

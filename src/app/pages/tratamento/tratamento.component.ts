@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './tratamento.component.css'
 })
 export class TratamentoComponent {
-
+   tratamento: any;
 }

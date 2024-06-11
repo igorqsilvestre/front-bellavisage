@@ -1,3 +1,4 @@
+import { CampoControlErroComponent } from './../../shared/campo-control-erro/campo-control-erro.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
@@ -7,6 +8,9 @@ import { LoginRoutingModule } from './login-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { UsuarioEmailValidator } from './usuario-form/UsuarioEmailValidator';
+import { LoginEmailValidator } from './LoginEmailValidator';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -14,15 +18,18 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
   declarations: [
     LoginComponent,
     AlterarSenhaFormComponent,
-    UsuarioFormComponent
+    UsuarioFormComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule,
     SharedModule,
-    LoginRoutingModule
-  ]
+    LoginRoutingModule,
+
+  ],
+  providers: [UsuarioEmailValidator, LoginEmailValidator]
 })
 export class LoginModule { }

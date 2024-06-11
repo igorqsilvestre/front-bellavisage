@@ -5,19 +5,37 @@
   <section class="principal-login">
     <img src="../../../../assets/logo-pequeno-bellavisage-m.png">
     <h1 class="principal-titulo">Edite sua senha</h1>
-    <form class="principal-formulario">
+    <form class="principal-formulario"  [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <div class="campos">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Insira o endere&ccedil;o de email para login">
+        <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira o seu endere&ccedil;o de email">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
+        formulario.get('email')?.hasError('pattern')"
+          msgErro="Formato de email inválido!">
+        </app-campo-control-erro>
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched && formulario.get('email')?.errors?.['emailExistente']"
+        msgErro="Email não cadastrado no sistema!">
+        </app-campo-control-erro>
 
         <label for="senha" >Senha</label>
-        <input type="password" class="form-control" id="senha" placeholder="Digite sua senha">
+        <input type="password" class="form-control" formControlName="senha" id="senha" placeholder="Digite sua senha">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('senha')?.touched && formulario.get('senha')?.invalid"
+          msgErro="Senha é obrigatória! Precisa ter entre 3 e 16 caracteres">
+        </app-campo-control-erro>
 
         <label for="rep-senha" >Repita a senha</label>
-        <input type="password" class="form-control" id="rep-senha" placeholder="Repita a senha anterior">
+        <input type="password" class="form-control" formControlName="confirmarSenha" id="rep-senha" placeholder="Repita a senha anterior">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('confirmarSenha')?.touched &&
+        !(formulario.get('senha')?.value == formulario.get('confirmarSenha')?.value)"
+        msgErro="Precisa ser igual a senha!">
+        </app-campo-control-erro>
       </div>
       <div class="redirecionamentos">
-        <button type="submit">Entrar</button>
+        <button type="submit" [disabled]="formulario.invalid">Atualizar</button>
       </div>
     </form>
   </section>

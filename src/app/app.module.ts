@@ -6,8 +6,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { SharedModule } from './shared/shared.module';
+
 import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
 import { PacienteModule } from './pages/paciente/paciente.module'
@@ -21,6 +22,9 @@ import { ListagemPagamentosModule } from './pages/listagemPagamentos/listagemPag
 import { ListagemAgendamentoModule } from './pages/listagemAgendamento/listagemAgendamento.module';
 import { LabsModule } from './pages/labs/labs.module';
 
+import { SharedModule } from './shared/shared.module';
+import { AuthGuard } from './guards/auth.guard';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +36,7 @@ import { LabsModule } from './pages/labs/labs.module';
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
+    ModalModule.forRoot(),
     SharedModule,
     HomeModule,
     LoginModule,
@@ -48,7 +53,7 @@ import { LabsModule } from './pages/labs/labs.module';
     HomeModule
 
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

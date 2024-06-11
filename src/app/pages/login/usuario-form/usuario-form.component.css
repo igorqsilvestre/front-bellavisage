@@ -48,24 +48,16 @@ header,main{
   font-weight: bold;
 }
 
-.principal-formulario input {
-  padding: 0.6em 0;
+.principal-formulario input, select {
+  padding: 0.6em 1em;
   margin: 0.7em 0;
   background-color: #F8F8F8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.principal-formulario select{
-  padding: 0.3em;
-  border-radius: 4px;
-  background-color: #F8F8F8;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin: 0.7em 0.5em 0;
-}
 
-.principal-formulario input::placeholder{
+.principal-formulario input::placeholder, select, option{
   color: #6B6E71;
-  padding-left: 1em;
 }
 
 .principal-formulario button{

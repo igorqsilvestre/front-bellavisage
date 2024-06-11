@@ -5,16 +5,25 @@
   <section class="principal-login">
     <img src="../../../../assets/logo-pequeno-2-bellavisage.png">
     <h1 class="principal-titulo">Fa&ccedil;a login em sua conta</h1>
-    <form class="principal-formulario">
+    <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <div class="campos">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Insira seu endere&ccedil;o de email">
+        <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
+        formulario.get('email')?.hasError('pattern')"
+          msgErro="Formato de email inválido!">
+        </app-campo-control-erro>
 
         <label for="senha" >Senha</label>
-        <input type="password" class="form-control" id="senha" placeholder="Insira sua senha">
+        <input type="password" class="form-control" formControlName="senha" id="senha" placeholder="Insira sua senha">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('senha')?.touched && formulario.get('senha')?.invalid"
+          msgErro="Senha é obrigatória! O tamanho da senha é de 3 a 16 caracteres">
+        </app-campo-control-erro>
       </div>
       <div class="redirecionamentos">
-        <button type="submit">Entrar</button>
+        <button type="submit" [disabled]="formulario.invalid">Entrar</button>
         <a routerLink="/login/alterar-senha">Esqueceu sua senha?</a>
         <span>Ainda não tem conta? <a routerLink="/login/novo-usuario" style="color: #F5066C; font-weight: bold;">Fa&ccedil;a seu cadastro!</a></span>
       </div>

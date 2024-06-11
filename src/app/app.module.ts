@@ -15,6 +15,7 @@ import { PacienteModule } from './pages/paciente/paciente.module'
 import { TratamentoModule } from './pages/tratamento/tratamento.module';
 import { EspecialistaModule } from './pages/especialista/especialista.module';
 import { AgendamentoModule } from './pages/agendamento/agendamento.module';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { AgendamentoModule } from './pages/agendamento/agendamento.module';
     EspecialistaModule,
     AgendamentoModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

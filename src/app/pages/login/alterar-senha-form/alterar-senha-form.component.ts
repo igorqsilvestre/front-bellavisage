@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { LoginEmailValidator } from './../LoginEmailValidator';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,8 +23,8 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private modalService: BsModalService,
-    private loginEmailValidator: LoginEmailValidator
-    ){}
+    private loginEmailValidator: LoginEmailValidator,
+    private router:Router){}
 
 
   ngOnInit(): void {
@@ -45,16 +46,19 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
         dados => {
           const initialState = {
             type: 'Sucesso!',
-            message: 'Senha atualizada com sucesso!'
+            message: 'Senha atualizada com sucesso!',
+            navegar: {
+              estado: true,
+              url: '/login'
+            }
           };
-          this.modalRef = this.modalService.show(AlertModalComponent, {initialState });
-          this.formulario.reset();
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
         },error => {
           const initialState = {
             type: 'Erro!',
             message: 'Ocorreu um erro ao realizar a alteração de senha.!'
           };
-          this.modalRef = this.modalService.show(AlertModalComponent, {initialState });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
         },
       );
     }

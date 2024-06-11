@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 import { UsuarioEmailValidator } from './usuario-form/UsuarioEmailValidator';
 import { LoginEmailValidator } from './LoginEmailValidator';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -24,8 +25,10 @@ import { LoginEmailValidator } from './LoginEmailValidator';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule,
     SharedModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+
   ],
   providers: [UsuarioEmailValidator, LoginEmailValidator]
 })

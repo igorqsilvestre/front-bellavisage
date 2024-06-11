@@ -7,6 +7,7 @@ import { LoginService } from '../login.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 import { UsuarioEmailValidator } from './UsuarioEmailValidator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario-form',
@@ -29,7 +30,8 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
     private dropdownService: DropdownService,
     private loginService: LoginService,
     private modalService: BsModalService,
-    private usuarioEmailValidator: UsuarioEmailValidator){}
+    private usuarioEmailValidator: UsuarioEmailValidator,
+    private router:Router){}
 
 
 
@@ -66,16 +68,19 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
         dados => {
           const initialState = {
             type: 'Sucesso!',
-            message: 'Cadastro foi realizado com sucesso!'
+            message: 'Cadastro foi realizado com sucesso!',
+            navegar: {
+              estado: true,
+              url: '/login'
+            }
           };
-          this.modalRef = this.modalService.show(AlertModalComponent, {initialState });
-          this.formulario.reset();
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
         },error => {
           const initialState = {
             type: 'Erro!',
             message: 'Ocorreu um erro ao realizar o cadastro.!'
           };
-          this.modalRef = this.modalService.show(AlertModalComponent, {initialState });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
         },
       );
     }

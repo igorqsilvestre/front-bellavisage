@@ -10,7 +10,6 @@ import { Login } from './Login';
 export class LoginService {
 
   private url = "http://localhost:8081/api/v1/usuario";
-
   constructor(private http: HttpClient) { }
 
   criarUsuario(usuario: Usuario): Observable<Usuario>{
@@ -23,6 +22,10 @@ export class LoginService {
 
   verificarExisteEmailCadastrado(email: string): Observable<boolean>{;
     return this.http.get<boolean>(`${this.url}/email?email=${email}`);
+  }
+
+  verificarExisteUsuarioCadastro(login:Login): Observable<boolean>{;
+    return this.http.post<boolean>(`${this.url}/logar`, login);
   }
 
 }

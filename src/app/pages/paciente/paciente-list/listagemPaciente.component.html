@@ -1,14 +1,13 @@
 <header>
-  <app-cabecalho barraNavegacao="visualizarBarraNav"></app-cabecalho>
+  <app-cabecalho></app-cabecalho>
 </header>
 <main>
   <section class="sessao-principal">
     <h2 class="titulo">Gerenciar Pacientes</h2>
       <div class="button-direcionamentoCadastrar">
-        <button type="submit" (click)="editarCadastro(cadastro)">Cadastrar Paciente</button>
+        <button type="submit" routerLink="pacientes/novo-paciente">Cadastrar Paciente</button>
       </div>
         <div class="campo-paciente">
-
           <h2 class="titulo-tabela">Listagem do Cadastro</h2>
 
         <div class="tabela-bord">
@@ -16,7 +15,7 @@
             <p-table
             #dtListagemPaciente
             dataKey="id"
-            [value]="cadastro"
+            [value]=""
             [tableStyle]="{ 'min-width': '50rem' }"
             [globalFilterFields]="[
                 'name',
@@ -67,16 +66,16 @@
                   <th></th>
             </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-cadastro  let-editing="editing" let-ri="rowIndex">
+            <ng-template pTemplate="body" let-pacientes  let-editing="editing" let-ri="rowIndex">
 
                 <tr>
-                    <td>{{ cadastro.nome }}</td>
-                    <td>{{ cadastro.cpf }}</td>
-                    <td>{{ cadastro.telefone}}</td>
-                    <td>{{ cadastro.endereco}}</td>
-                    <th>
+                    <td>{{ pacientes.nome }}</td>
+                    <td>{{ pacientes.cpf }}</td>
+                    <td>{{ pacientes.telefone}}</td>
+                    <td>{{ pacientes.endereco.rua}}</td>
+                    <!--<th>
                       <button
-                        (click)="editarCadastro(cadastro)"
+                    (click)="editarCadastro(cadastro)"
                       >
                         <fa-icon [icon]="faEdit"></fa-icon>
                       </button>
@@ -88,7 +87,7 @@
 
                      </button>
 
-                    </th>
+                    </th>-->
                 </tr>
             </ng-template>
         </p-table>

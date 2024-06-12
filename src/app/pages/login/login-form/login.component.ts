@@ -1,10 +1,11 @@
-import { AuthService } from './../../guards/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { LoginService } from './login.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { AlertModalComponent } from '../../shared/alert-modal/alert-modal.component';
+import { LoginService } from '../login.service';
+import { AuthService } from '../../../guards/auth.service';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+
 
 @Component({
   selector: 'app-login',

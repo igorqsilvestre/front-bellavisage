@@ -1,10 +1,10 @@
 <header>
-  <app-cabecalho [barraNavegacao]="naoVisualizarBarraNav"></app-cabecalho>
+  <app-cabecalho ></app-cabecalho>
 </header>
 <main>
   <section class="sessao-principal">
 
-    <h2 class="titulo">Cadastro do usuário</h2>
+    <h2 class="titulo">Cadastro do paciente</h2>
     <h3 class="subtitulo">Insira os dados abaixo:</h3>
     <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <div class="campos">
@@ -15,6 +15,17 @@
           msgErro="Nome é inválido!">
         </app-campo-control-erro>
 
+        <label for="cpf">Cpf</label>
+        <input type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="Informe seu cpf">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('cpf')?.touched && formulario.get('cpf')?.hasError('invalidCpf')"
+          msgErro="Cpf invalido!">
+        </app-campo-control-erro>
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('cpf')?.touched && formulario.get('cpf')?.hasError('cpfExistente')"
+          msgErro="Cpf Já existe no sistema!">
+        </app-campo-control-erro>
+
         <label for="email">Email</label>
         <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
 
@@ -22,26 +33,6 @@
         formulario.get('email')?.hasError('pattern')"
           msgErro="Formato de email inválido!">
         </app-campo-control-erro>
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched && formulario.get('email')?.errors?.['emailExistente']"
-          msgErro="Email já cadastrado no sistema!">
-        </app-campo-control-erro>
-
-        <label for="senha" >Senha</label>
-        <input type="password" class="form-control" formControlName="senha" id="senha" placeholder="Crie uma senha">
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('senha')?.touched && formulario.get('senha')?.invalid"
-          msgErro="Senha é obrigatória! Precisa ter entre 3 e 16 caracteres">
-        </app-campo-control-erro>
-
-        <label for="rep-senha" >Confirme sua senha</label>
-        <input type="password" class="form-control" formControlName="confirmarSenha" id="rep-senha" placeholder="Repita a senha">
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('confirmarSenha')?.touched &&
-        !(formulario.get('senha')?.value == formulario.get('confirmarSenha')?.value)"
-        msgErro="Precisa ser igual a senha!">
-        </app-campo-control-erro>
-
 
         <label for="telefone">Telefone</label>
         <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX">
@@ -111,26 +102,7 @@
             </div>
           </div>
         </div>
-
-
-        <div class="row">
-          <div class="form-group">
-            <label for="opcoes">Escolha o perfil do usu&aacute;rio:</label>
-            <select class="form-control" id="opcoes" formControlName="perfilsAcesso" name="opcoes">
-                <option *ngFor="let perfil of perfilsAcesso" [value]="perfil.nome">{{ perfil.nome }}</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="form-group">
-            <app-campo-control-erro [mostrarErro]="formulario.get('perfilsAcesso')?.touched && formulario.get('perfilsAcesso')?.invalid"
-            msgErro="Perfil de acesso é obrigatório.">
-            </app-campo-control-erro>
-          </div>
-        </div>
       </div>
-
 
       <button type="submit"  [disabled]="formulario.invalid">Cadastrar</button>
     </form>

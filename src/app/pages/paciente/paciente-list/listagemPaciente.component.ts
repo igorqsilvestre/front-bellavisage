@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { PacienteService } from './../paciente.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
+import { Paciente } from '../Paciente';
 
 
 @Component({
@@ -10,14 +13,32 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './listagempaciente.component.html',
   styleUrl: './listagempaciente.component.css'
 })
-export class ListagemPacienteComponent {
+export class ListagemPacienteComponent implements OnInit, OnDestroy{
+  pacientes: Paciente;
+  pacienteSubscription:Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
 
 
-  constructor(private router: Router) {} // Add the Router to the component's constructor
+  constructor(private router: Router,
+    private pacienteService: PacienteService
+  ) {}
 
+
+
+  ngOnInit(): void {
+    this.pacienteSubscription = this.pacienteService.obterPacientes().subscribe(
+      dados => {
+        if(dados){
+          console.log(dados);
+          this.pacientes = dados;
+        }
+
+      }
+    )
+  }
+  /*
   cadastro = [
     {
       id: 1,
@@ -54,7 +75,7 @@ export class ListagemPacienteComponent {
       telefone: '(11) 99999-8888',
       endereco: 'Rua Pará QD. 19 LT. 5',
     }
-  ]
+  ]*/
 
   applyFilterOnTable(event: any, dtListagemPaciente: any) {
     console.log(event.target.value)
@@ -69,11 +90,17 @@ export class ListagemPacienteComponent {
   cancelarCadastro(cadastro: any) {
 
     if(confirm('Deseja realmente excluir o cadastro?')){
-      this.cadastro = this.cadastro.filter(item => item.id !== cadastro.id);
+      //this.cadastro = this.cadastro.filter(item => item.id !== cadastro.id);
 
       //TODO: Igor, aqui voce implementa a chamada para o backend para excluir o cadastro
     }
 
+  }
+
+  ngOnDestroy(): void {
+   if(this.pacienteSubscription){
+    this.pacienteSubscription.unsubscribe();
+   }
   }
 
 }

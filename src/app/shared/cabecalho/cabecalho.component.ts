@@ -1,4 +1,4 @@
-import { Component, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-cabecalho',
@@ -7,5 +7,5 @@ import { Component, Output } from '@angular/core';
 })
 export class CabecalhoComponent {
 
-  @Output() barraNavegacao: boolean = true;
+  @Input() barraNavegacao: boolean = false;
 }

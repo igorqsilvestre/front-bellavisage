@@ -81,7 +81,7 @@ export class ListagemEspecialistaComponent {
 
     if(confirm('Deseja realmente excluir o cadastro?')){
       this.cadastro = this.cadastro.filter(item => item.id !== cadastro.id);
-
+      console.log(1);
       //TODO: Igor, aqui voce implementa a chamada para o backend para excluir o cadastro especialista
     }
 

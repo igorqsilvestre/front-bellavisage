@@ -2,14 +2,6 @@ header,main{
   margin: 0 10%;
 }
 
-.paciente-imagem{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin: 2em 0;
-  padding: 2em 8em;
-
-}
 .sessao-principal{
   background-color: #E7EBEF;
   border: 1px solid #ddd;
@@ -19,14 +11,12 @@ header,main{
   text-align: center;
 }
 
-/* titulo azul */
 .sessao-principal .titulo {
   color: #339CFF;
   font-family: 'Public Sans';
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 1em;
-  text-align: left;
+  font-size: x-large;
 
 }
 
@@ -34,7 +24,7 @@ header,main{
   margin: 0 10em;
 }
 
-.subtitulo {
+.sessao-principal .subtitulo {
   color: #950341;
   font-family: 'Public Sans';
   font-weight: bold;
@@ -58,16 +48,16 @@ header,main{
   font-weight: bold;
 }
 
-.principal-formulario input {
-  padding: 0.6em 0;
+.principal-formulario input, select {
+  padding: 0.6em 1em;
   margin: 0.7em 0;
   background-color: #F8F8F8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.principal-formulario input::placeholder{
+
+.principal-formulario input::placeholder, select, option{
   color: #6B6E71;
-  padding-left: 1em;
 }
 
 .principal-formulario button{
@@ -78,6 +68,4 @@ header,main{
   border: none;
   border-radius: 8px;
   padding: 0.7em 7em;
-  margin: 4em 30em;
 }
-

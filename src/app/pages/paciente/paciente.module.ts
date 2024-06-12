@@ -4,12 +4,19 @@ import { PacienteRoutingModule } from './paciente-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
-import { PacienteComponent } from './paciente.component';
+import { PacienteFormComponent } from './paciente-form/paciente-form.component';
+import { CpfExists } from './CpfExists';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TableModule } from 'primeng/table';
+import { InputIconModule } from 'primeng/inputicon';
+import { IconFieldModule } from 'primeng/iconfield';
+import { ListagemPacienteComponent } from './paciente-list/listagemPaciente.component';
 
 
 @NgModule({
   declarations: [
-    PacienteComponent
+    PacienteFormComponent,
+    ListagemPacienteComponent
   ],
   imports: [
     CommonModule,
@@ -18,6 +25,11 @@ import { PacienteComponent } from './paciente.component';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
-  ]
+    FontAwesomeModule,
+    TableModule,
+    InputIconModule,
+    IconFieldModule,
+  ],
+  providers: [CpfExists]
 })
 export class PacienteModule { }

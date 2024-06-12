@@ -1,19 +1,18 @@
-
+import { PacienteService } from '../../pages/paciente/paciente.service';
 import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidator, ValidationErrors } from "@angular/forms";
 import { Observable, map } from "rxjs";
-import { LoginService } from "../login.service";
 
 @Injectable()
-export class UsuarioEmailValidator implements AsyncValidator{
+export class CpfExists implements AsyncValidator{
 
-  constructor(private loginService: LoginService){}
+  constructor(private pacienteService: PacienteService){}
 
   validate(control: AbstractControl<any, any>):  Observable<ValidationErrors | null> {
     const email = control.value;
-    return this.loginService.verificarExisteEmailCadastrado(email).pipe(
+    return this.pacienteService.verificarExisteCPFCadastrado(email).pipe(
     map((existe: boolean) => {
-      return existe ? { emailExistente: true } : null;
+      return existe ? { cpfExistente: true } : null;
     }),)
   }
 

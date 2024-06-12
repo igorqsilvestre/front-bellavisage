@@ -1,3 +1,4 @@
+import { Login } from './../pages/login/Login';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CabecalhoComponent } from './cabecalho/cabecalho.component';
@@ -6,6 +7,7 @@ import { CampoControlErroComponent } from './campo-control-erro/campo-control-er
 import { DropdownService } from './services/dropdown.service';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { LoginService } from '../pages/login/login.service';
 
 
 @NgModule({
@@ -23,10 +25,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     RodapeComponent,
     CampoControlErroComponent,
     AlertModalComponent,
-    ModalModule
+    ModalModule,
   ],
   providers:[
-    DropdownService
+    DropdownService,
   ]
 })
 export class SharedModule { }

@@ -66,6 +66,9 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
 
 
   ngOnDestroy(): void {
-    this.loginSubscription.unsubscribe();
+    if(this.loginSubscription){
+      this.loginSubscription.unsubscribe();
+    }
+
   }
 }

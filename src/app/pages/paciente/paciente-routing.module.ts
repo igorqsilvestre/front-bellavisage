@@ -6,6 +6,7 @@ import { ListagemPacienteComponent } from './paciente-list/listagemPaciente.comp
 const routes: Routes = [
   {path: '',component: ListagemPacienteComponent},
   {path: 'pacientes/novo-paciente', component: PacienteFormComponent},
+  {path: 'pacientes/editar-paciente/:id', component: PacienteFormComponent},
 ];
 
 @NgModule({

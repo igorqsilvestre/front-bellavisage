@@ -15,7 +15,7 @@
             <p-table
             #dtListagemPaciente
             dataKey="id"
-            [value]=""
+            [value]="pacientes"
             [tableStyle]="{ 'min-width': '50rem' }"
             [globalFilterFields]="[
                 'name',
@@ -70,24 +70,24 @@
 
                 <tr>
                     <td>{{ pacientes.nome }}</td>
-                    <td>{{ pacientes.cpf }}</td>
-                    <td>{{ pacientes.telefone}}</td>
-                    <td>{{ pacientes.endereco.rua}}</td>
-                    <!--<th>
+                    <td>{{ pacientes.cpf | cpfFormat }}</td>
+                    <td>{{ pacientes.telefone | telefoneFormat }}</td>
+                    <td>Cep: {{ pacientes.endereco.cep}} - {{pacientes.endereco.cidade}}</td>
+                    <th>
                       <button
-                    (click)="editarCadastro(cadastro)"
+                    (click)="editarCadastro(pacientes)"
                       >
                         <fa-icon [icon]="faEdit"></fa-icon>
                       </button>
 
                       <button
-                      (click)="cancelarCadastro(cadastro)"
+                      (click)="cancelarCadastro(pacientes)"
                       >
                         <fa-icon [icon]="faTrash"></fa-icon>
 
                      </button>
 
-                    </th>-->
+                    </th>
                 </tr>
             </ng-template>
         </p-table>

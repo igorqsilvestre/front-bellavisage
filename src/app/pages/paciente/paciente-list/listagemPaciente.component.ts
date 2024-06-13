@@ -6,6 +6,9 @@ import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { Paciente } from '../Paciente';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
 
 @Component({
@@ -14,7 +17,8 @@ import { Paciente } from '../Paciente';
   styleUrl: './listagempaciente.component.css'
 })
 export class ListagemPacienteComponent implements OnInit, OnDestroy{
-  pacientes: Paciente;
+  pacientes: Paciente[] = [];
+  modalRef!: BsModalRef;
   pacienteSubscription:Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
@@ -22,78 +26,52 @@ export class ListagemPacienteComponent implements OnInit, OnDestroy{
 
 
   constructor(private router: Router,
-    private pacienteService: PacienteService
+    private pacienteService: PacienteService,
+    private modalService: BsModalService,
   ) {}
 
 
-
   ngOnInit(): void {
+    this.atualizarLista();
+  }
+
+  atualizarLista(){
     this.pacienteSubscription = this.pacienteService.obterPacientes().subscribe(
       dados => {
         if(dados){
-          console.log(dados);
           this.pacientes = dados;
         }
-
       }
     )
   }
-  /*
-  cadastro = [
-    {
-      id: 1,
-      nome: 'Maria Eduarda',
-      cpf: '015.189.456-98',
-      telefone: '(11) 99999-9999',
-      endereco: 'Rua das Flores QD. 10 LT. 20',
-    },
-    {
-      id: 2,
-      nome: 'Paulo Henrique Cabral',
-      cpf: '096.189.456-98',
-      telefone: '(11) 99900-9299',
-      endereco: 'Rua Sergipe QD. 14 LT. 2',
-    },
-    {
-      id: 3,
-      nome: 'Carlos Eduardo de Souza',
-      cpf: '037.189.456-98',
-      telefone: '(11) 99888-9999',
-      endereco: 'Rua São Paulo QD. 4P LT. 30',
-    },
-    {
-      id: 4,
-      nome: 'Márcia Maria de Souza',
-      cpf: '029.189.456-98',
-      telefone: '(11) 99999-7777',
-      endereco: 'Rua Espirito Santo QD.9A LT. 3',
-    },
-    {
-      id: 5,
-      nome: 'Flávia Couto Magalhães',
-      cpf: '059.189.456-98',
-      telefone: '(11) 99999-8888',
-      endereco: 'Rua Pará QD. 19 LT. 5',
-    }
-  ]*/
+
 
   applyFilterOnTable(event: any, dtListagemPaciente: any) {
-    console.log(event.target.value)
     return dtListagemPaciente.filterGlobal(event, 'contains')
   }
 
-  editarCadastro(cadastro: any) {
-    this.router.navigate(['/agendar/novo-paciente'])
-
+  editarCadastro(paciente: Paciente) {
+    this.router.navigate(['pacientes/editar-paciente', paciente.id]);
   }
 
-  cancelarCadastro(cadastro: any) {
+  cancelarCadastro(paciente: Paciente) {
+    this.modalRef = this.modalService.show(ConfirmModalComponent, {
+      initialState: {
+        type: 'Confirmação',
+        message: 'Deseja realmente excluir?'
+      }
+    });
 
-    if(confirm('Deseja realmente excluir o cadastro?')){
-      //this.cadastro = this.cadastro.filter(item => item.id !== cadastro.id);
-
-      //TODO: Igor, aqui voce implementa a chamada para o backend para excluir o cadastro
-    }
+    this.modalRef.content.confirm.subscribe(() => {
+      this.pacienteService.excluirPaciente(paciente.id).subscribe(
+        () => {
+          this.atualizarLista();
+        },
+        error => {
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir paciente!' } });
+        }
+      );
+    });
 
   }
 
@@ -102,5 +80,4 @@ export class ListagemPacienteComponent implements OnInit, OnDestroy{
     this.pacienteSubscription.unsubscribe();
    }
   }
-
 }

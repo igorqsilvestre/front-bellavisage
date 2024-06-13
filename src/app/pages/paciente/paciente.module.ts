@@ -11,12 +11,17 @@ import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ListagemPacienteComponent } from './paciente-list/listagemPaciente.component';
+import { CpfPipe } from '../../shared/pipes/cpf.pipe';
+import { TelefonePipe } from '../../shared/pipes/telefone.pipe';
+import { ActivatedRoute } from '@angular/router';
 
 
 @NgModule({
   declarations: [
     PacienteFormComponent,
-    ListagemPacienteComponent
+    ListagemPacienteComponent,
+    CpfPipe,
+    TelefonePipe
   ],
   imports: [
     CommonModule,

@@ -11,16 +11,36 @@ export class PacienteService {
   private url = "http://localhost:8081/api/v1/paciente";
   constructor(private http: HttpClient) { }
 
-  criarPaciente(paciente: Paciente): Observable<Paciente>{
+  private criarPaciente(paciente: Paciente): Observable<Paciente>{
     return this.http.post<Paciente>(this.url, paciente);
   }
 
-  verificarExisteCPFCadastrado(cpf: string): Observable<boolean>{;
-    return this.http.get<boolean>(`${this.url}/cpf/${cpf}`);
+  private atualizarPaciente(paciente: Paciente): Observable<Paciente>{
+    return this.http.put<Paciente>(`${this.url}/${paciente.id}`, paciente);
   }
 
-  obterPacientes(): Observable<Paciente>{;
-    return this.http.get<Paciente>(this.url);
+  verificarExisteCPFCadastrado(cpf: string): Observable<Paciente>{;
+    return this.http.get<Paciente>(`${this.url}/cpf/${cpf}`);
+  }
+
+  obterPacientes(): Observable<Paciente[]>{;
+    return this.http.get<Paciente[]>(this.url);
+  }
+
+  obterPaciente(id:number): Observable<Paciente>{;
+    return this.http.get<Paciente>(`${this.url}/${id}`);
+  }
+
+  excluirPaciente(id:number): Observable<Paciente>{;
+    return this.http.delete<Paciente>(`${this.url}/${id}`);
+  }
+
+  salvar(paciente: Paciente): Observable<Paciente>{
+    if(paciente.id === null){
+      return this.criarPaciente(paciente)
+    }else{
+      return this.atualizarPaciente(paciente);
+    }
   }
 
 }

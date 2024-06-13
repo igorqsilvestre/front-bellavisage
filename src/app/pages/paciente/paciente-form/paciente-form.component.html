@@ -4,7 +4,7 @@
 <main>
   <section class="sessao-principal">
 
-    <h2 class="titulo">Cadastro do paciente</h2>
+    <h2 class="titulo">{{ titulo }}</h2>
     <h3 class="subtitulo">Insira os dados abaixo:</h3>
     <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <div class="campos">
@@ -104,7 +104,7 @@
         </div>
       </div>
 
-      <button type="submit"  [disabled]="formulario.invalid">Cadastrar</button>
+      <button type="submit"  [disabled]="formulario.invalid">{{ nomeBotao }}</button>
     </form>
 
   </section>

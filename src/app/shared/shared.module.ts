@@ -8,6 +8,7 @@ import { DropdownService } from './services/dropdown.service';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoginService } from '../pages/login/login.service';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { LoginService } from '../pages/login/login.service';
     RodapeComponent,
     CampoControlErroComponent,
     AlertModalComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     CommonModule,

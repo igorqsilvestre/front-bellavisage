@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+[x: string]: any;
 
   nomeCards: string[] = ['Agendar Atendimento', 'Gerenciar Agendamentos', 'Gerenciar Pagamentos', 'Gerenciar Especialista', 'Gerenciar Clínica',
     'Faturamento', 'Gerenciar Tratamentos', 'Agendar Atendimento', 'Avalie o serviço'

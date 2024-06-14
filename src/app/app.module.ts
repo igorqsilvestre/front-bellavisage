@@ -20,6 +20,9 @@ import { ListagemTratamentoModule } from './pages/listagemTratamento/listagemTra
 import { ListagemPagamentosModule } from './pages/listagemPagamentos/listagemPagamentos.module';
 import { ListagemAgendamentoModule } from './pages/listagemAgendamento/listagemAgendamento.module';
 import { LabsModule } from './pages/labs/labs.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -45,10 +48,16 @@ import { LabsModule } from './pages/labs/labs.module';
     ListagemPagamentosModule,
     ListagemAgendamentoModule,
     LabsModule,
-    HomeModule
+    HomeModule,
+    CardModule,
+    ButtonModule,
+    
+
 
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

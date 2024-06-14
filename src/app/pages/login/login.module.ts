@@ -22,7 +22,9 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
+    //LoginModule,
     LoginRoutingModule
+
   ]
 })
 export class LoginModule { }

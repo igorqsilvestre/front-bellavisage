@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { RodapeHomeComponent } from './rodape-home.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('RodapeHomeComponent', () => {
+  let component: RodapeHomeComponent;
+  let fixture: ComponentFixture<RodapeHomeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HomeComponent]
+      declarations: [RodapeHomeComponent]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(HomeComponent);
+    
+    fixture = TestBed.createComponent(RodapeHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

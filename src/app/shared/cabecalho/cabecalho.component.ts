@@ -1,5 +1,6 @@
 import { Component, Output } from '@angular/core';
 
+
 @Component({
   selector: 'app-cabecalho',
   templateUrl: './cabecalho.component.html',
@@ -8,4 +9,7 @@ import { Component, Output } from '@angular/core';
 export class CabecalhoComponent {
 
   @Output() barraNavegacao: boolean = true;
+
+
+
 }

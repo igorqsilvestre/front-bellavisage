@@ -1,13 +1,19 @@
 <header class="cabecalho">
   <img src="../../assets/logo-pequeno-bellavisage.png" alt="logo da bellavisage">
-  <nav class="cabecalho-nav" [hidden]="barraNavegacao">
+  <nav class="cabecalho-nav" [hidden]="!barraNavegacao">
     <ul class="cabecalho-lista">
-      <li><a href="#">Início</a></li>
+      <a href="#"><li>Início</li></a>
+      <a href="/tratamento"> <li>Tratamentos</li></a>
+      <a href="/especialista"> <li>Especialistas</li></a>
+      <a href="/pagamentos"> <li>Pagamentos</li></a>
+      <a href="/agendamento"> <li>Agendar</li></a>
+
+      <!-- <li><a href="#">Início</a></li>
       <li><a href="/tratamento">Tratamentos</a></li>
       <li><a href="/especialista">Especialistas</a></li>
       <li><a href="/pagamentos">Pagamentos</a></li>
-      <li><a href="#">Dashbord</a></li>
-      <li><a href="/agendamento">Agendar</a></li>
+      <li><a href="/relatorios">Relatórios</a></li>
+      <li><a href="/agendamento">Agendar</a></li> -->
     </ul>
   </nav>
   <div class="cabecalho-sair">

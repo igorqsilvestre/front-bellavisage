@@ -6,6 +6,7 @@
 }
 
 .cabecalho-lista{
+  margin: 0 16px;
   list-style-type: none;
   display: flex;
   gap: 2em;

@@ -1,6 +1,6 @@
 <header class="cabecalho">
   <img src="../../assets/logo-pequeno-bellavisage.png" alt="logo da bellavisage">
-  <nav class="cabecalho-nav" [hidden]="!barraNavegacao">
+  <nav class="cabecalho-nav" [hidden]="!isLogged() || !barraNavegacao">
     <ul class="cabecalho-lista">
       <a href="#"><li>Início</li></a>
       <a href="/tratamento"> <li>Tratamentos</li></a>
@@ -18,6 +18,11 @@
   </nav>
   <div class="cabecalho-sair">
     <img src="../../../assets/logo-usuario.png">
-    <a href="#">Sair</a>
+    <a
+      *ngIf="!isLogged()"
+      href="/login">Entrar</a>
+    <a
+      *ngIf="isLogged()"
+      href="/login">Sair</a>
   </div>
 </header>

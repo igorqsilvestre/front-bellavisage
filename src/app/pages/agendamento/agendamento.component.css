@@ -113,3 +113,8 @@ header,main{
   display: flex;
   margin: 50px 15px 10px 50px;
 }
+
+
+.cabecalho{
+  width: 122em;
+}

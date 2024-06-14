@@ -126,3 +126,7 @@ principal-formulario input::placeholder{
   padding: 0.7em 7em;
 
 }
+
+.cabecalho{
+  width: 122em;
+}

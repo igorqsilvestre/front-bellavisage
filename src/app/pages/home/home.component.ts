@@ -12,5 +12,7 @@ export class HomeComponent {
     'Faturamento', 'Gerenciar Tratamentos', 'Agendar Atendimento', 'Avalie o serviço'
   ];
 
-
+  isLogged() {
+    return !!localStorage.getItem('token');
+  }
 }

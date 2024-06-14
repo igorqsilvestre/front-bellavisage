@@ -10,6 +10,9 @@ export class CabecalhoComponent {
 
   @Output() barraNavegacao: boolean = true;
 
+  isLogged() {
+    return !!localStorage.getItem('token');
+  }
 
 
 }

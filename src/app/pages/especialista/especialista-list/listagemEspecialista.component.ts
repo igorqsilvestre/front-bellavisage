@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import { EspecialistaService } from './../especialista.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Especialista } from '../Especialista';
+import { Subscription } from 'rxjs';
+import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
 
 @Component({
@@ -10,14 +16,36 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './listagemespecialista.component.html',
   styleUrl: './listagemespecialista.component.css'
 })
-export class ListagemEspecialistaComponent {
+export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
+  especialistas: Especialista[] = [];
+  modalRef!: BsModalRef;
+  especialistaSubscription: Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
 
 
-  constructor(private router: Router) {} // Add the Router to the component's constructor
+  constructor(private router: Router,
+    private especialistaService:EspecialistaService,
+    private modalService: BsModalService) {}
 
+
+
+  ngOnInit(): void {
+    this.atualizarLista();
+  }
+
+  atualizarLista(){
+    this.especialistaSubscription = this.especialistaService.obterEspecialistas().subscribe(
+      dados => {
+        if(dados){
+          this.especialistas = dados;
+        }
+      }
+    )
+  }
+
+  /*
   cadastro = [
     {
       id: 1,
@@ -65,26 +93,42 @@ export class ListagemEspecialistaComponent {
       telefone: '(11) 99999-9999',
       endereco: 'Rua dos Bobos, Qd.12',
     }
-  ]
+  ]*/
 
   applyFilterOnTable(event: any, dtListagemEspecialista: any) {
-    console.log(event.target.value)
     return dtListagemEspecialista.filterGlobal(event, 'contains')
   }
 
-  editarCadastro(cadastro: any) {
-    this.router.navigate(['/especialista/novo-especialista'])
+  editarCadastro(especialista: Especialista) {
+    this.router.navigate(['especialistas/editar-especialista', especialista.id]);
+  }
+
+  cancelarCadastro(especialista: Especialista) {
+
+    this.modalRef = this.modalService.show(ConfirmModalComponent, {
+      initialState: {
+        type: 'Confirmação',
+        message: 'Deseja realmente excluir?'
+      }
+    });
+
+    this.modalRef.content.confirm.subscribe(() => {
+      this.especialistaService.excluirEspecialista(especialista.id).subscribe(
+        () => {
+          this.atualizarLista();
+        },
+        error => {
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir especialista!' } });
+        }
+      );
+    });
 
   }
 
-  cancelarCadastro(cadastro: any) {
-
-    if(confirm('Deseja realmente excluir o cadastro?')){
-      this.cadastro = this.cadastro.filter(item => item.id !== cadastro.id);
-      console.log(1);
-      //TODO: Igor, aqui voce implementa a chamada para o backend para excluir o cadastro especialista
-    }
-
+  ngOnDestroy(): void {
+    if(this.especialistaSubscription){
+      this.especialistaSubscription.unsubscribe();
+     }
   }
 
 }

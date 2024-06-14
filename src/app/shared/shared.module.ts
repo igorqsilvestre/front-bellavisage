@@ -9,6 +9,8 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoginService } from '../pages/login/login.service';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { CpfPipe } from './pipes/cpf.pipe';
+import { TelefonePipe } from './pipes/telefone.pipe';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     CampoControlErroComponent,
     AlertModalComponent,
     ConfirmModalComponent,
+    CpfPipe,
+    TelefonePipe
   ],
   imports: [
     CommonModule,
@@ -28,6 +32,8 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     CampoControlErroComponent,
     AlertModalComponent,
     ModalModule,
+    CpfPipe,
+    TelefonePipe
   ],
   providers:[
     DropdownService,

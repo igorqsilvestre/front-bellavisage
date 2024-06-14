@@ -1,39 +1,37 @@
-import { PacienteService } from './../paciente.service';
+import { RegistroExists } from './../registroExists';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, EmailValidator } from '@angular/forms';
-import { EstadoBr } from '../../../shared/models/estado-br';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { EstadoBr } from '../../../shared/models/estado-br';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DropdownService } from '../../../shared/services/dropdown.service';
-import { CpfValidator } from '../CpfValidator';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
-import { CpfExists } from '../CpfExists';
+import { EspecialistaService } from '../especialista.service';
 import { ActivatedRoute } from '@angular/router';
-import { Paciente } from '../Paciente';
-
+import { Especialista } from '../Especialista';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
 @Component({
-  selector: 'app-paciente-form',
-  templateUrl: './paciente-form.component.html',
-  styleUrl: './paciente-form.component.css'
+  selector: 'app-especialista-form',
+  templateUrl: './especialista-form.component.html',
+  styleUrl: './especialista-form.component.css'
 })
-export class PacienteFormComponent {
+export class EspecialistaFormComponent {
 
   formulario!: FormGroup;
   estados!: EstadoBr[];
   modalRef!: BsModalRef;
-  titulo:string = 'Cadastro do paciente';
+  titulo:string = 'Cadastro do especialista';
   nomeBotao:string = 'Cadastrar';
   private estadosSubscription!: Subscription;
-  private pacienteSubscription!: Subscription;
+  private especialistaSubscription!: Subscription;
 
 
   constructor(
     private formBuilder: FormBuilder,
     private dropdownService: DropdownService,
     private modalService: BsModalService,
-    private pacienteService: PacienteService,
-    private cpfExists: CpfExists,
+    private especialistaService: EspecialistaService,
+    private registroExists: RegistroExists,
     private route: ActivatedRoute){}
 
 
@@ -42,9 +40,10 @@ export class PacienteFormComponent {
     this.formulario = this.formBuilder.group({
       id:[null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      cpf: [null, {
-        validators: [Validators.required, CpfValidator.validate()],
-        asyncValidators: [this.cpfExists.validate.bind(this.cpfExists)],
+      especialidade: [null, Validators.required],
+      registro: [null, {
+        validators: [Validators.required, Validators.pattern(/^[0-9]*$/)],
+        asyncValidators: [this.registroExists.validate.bind(this.registroExists)],
         updateOn: 'blur'
       }],
       email: [null, [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
@@ -61,28 +60,29 @@ export class PacienteFormComponent {
 
     const id = this.route.snapshot.paramMap.get('id');
     if(id){
-      this.titulo = 'Editar paciente';
+      this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.pacienteSubscription = this.pacienteService.obterPaciente(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.especialistaSubscription = this.especialistaService.obterEspecialista(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
   }
 
-  onUpdate(paciente:Paciente){
+  onUpdate(especialista:Especialista){
     this.formulario.patchValue({
-      id: paciente.id,
-      nome: paciente.nome,
-      cpf: paciente.cpf,
-      email: paciente.email,
-      telefone: paciente.telefone,
+      id: especialista.id,
+      nome: especialista.nome,
+      especialidade: especialista.especialidade,
+      registro: especialista.registro,
+      email: especialista.email,
+      telefone: especialista.telefone,
       endereco: {
-        cep: paciente.endereco.cep,
-        numero: paciente.endereco.numero,
-        complemento: paciente.endereco.complemento,
-        rua: paciente.endereco.rua,
-        cidade: paciente.endereco.cidade,
-        estado: paciente.endereco.estado
+        cep: especialista.endereco.cep,
+        rua: especialista.endereco.rua,
+        numero: especialista.endereco.numero,
+        complemento: especialista.endereco.complemento,
+        cidade: especialista.endereco.cidade,
+        estado: especialista.endereco.estado
       }
     })
   }
@@ -92,13 +92,13 @@ export class PacienteFormComponent {
     if (this.formulario.valid) {
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
-      const ir =  {estado: true, url: 'pacientes'};
+      const ir =  {estado: true, url: 'especialistas'};
 
       if(this.formulario.value.id){
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
-      this.pacienteService.salvar(this.formulario.value).subscribe(
+      this.especialistaService.salvar(this.formulario.value).subscribe(
         dados => {
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
         },error => {
@@ -112,8 +112,8 @@ export class PacienteFormComponent {
     if(this.estadosSubscription){
       this.estadosSubscription.unsubscribe();
     }
-    if(this.pacienteSubscription){
-      this.pacienteSubscription.unsubscribe();
+    if(this.especialistaSubscription){
+      this.especialistaSubscription.unsubscribe();
     }
   }
 }

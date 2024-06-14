@@ -5,7 +5,7 @@
   <section class="sessao-principal">
     <h2 class="titulo">Gerenciar Especialistas</h2>
       <div class="button-direcionamentoCadastrar">
-        <button type="submit" (click)="editarCadastro(cadastro)">Cadastrar Especialista</button>
+        <button type="submit" routerLink="especialistas/novo-especialista">Cadastrar Especialista</button>
       </div>
         <div class="campo-especialista">
 
@@ -15,7 +15,7 @@
             <p-table
             #dtListagemEspecialista
             dataKey="id"
-            [value]="cadastro"
+            [value]="especialistas"
             [tableStyle]="{ 'min-width': '50rem' }"
             [globalFilterFields]="[
                 'name',
@@ -82,24 +82,24 @@
                   <th></th>
             </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-cadastro  let-editing="editing" let-ri="rowIndex">
+            <ng-template pTemplate="body" let-especialistas  let-editing="editing" let-ri="rowIndex">
 
                 <tr>
-                    <td>{{ cadastro.especialista }}</td>
-                    <td>{{ cadastro.email}}</td>
-                    <td>{{ cadastro.especialidade }}</td>
-                    <td>{{ cadastro.registro }}</td>
-                    <td>{{ cadastro.telefone}}</td>
-                    <td>{{ cadastro.endereco}}</td>
+                    <td>{{ especialistas.nome }}</td>
+                    <td>{{ especialistas.email}}</td>
+                    <td>{{ especialistas.especialidade }}</td>
+                    <td>CFBM: {{ especialistas.registro }}</td>
+                    <td>{{ especialistas.telefone | telefoneFormat}}</td>
+                    <td>Cep: {{ especialistas.endereco.cep}} - {{especialistas.endereco.cidade}}</td>
                     <th>
                       <button
-                        (click)="editarCadastro(cadastro)"
+                        (click)="editarCadastro(especialistas)"
                       >
                         <fa-icon [icon]="faEdit"></fa-icon>
                       </button>
 
                       <button
-                      (click)="cancelarCadastro(cadastro)"
+                      (click)="cancelarCadastro(especialistas)"
                       >
                         <fa-icon [icon]="faTrash"></fa-icon>
                      </button>

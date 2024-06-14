@@ -10,6 +10,7 @@ import { AlterarSenhaFormComponent } from './alterar-senha-form/alterar-senha-fo
 import { LoginRoutingModule } from './login-routing.module';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 import { LoginEmailValidator } from './LoginEmailValidator';
+import { UsuarioEmailValidator } from './UsuarioEmailValidator';
 
 
 
@@ -30,6 +31,6 @@ import { LoginEmailValidator } from './LoginEmailValidator';
     SharedModule,
     LoginRoutingModule,
   ],
-  providers: [EmailValidator, LoginEmailValidator]
+  providers: [EmailValidator, LoginEmailValidator, UsuarioEmailValidator]
 })
 export class LoginModule { }

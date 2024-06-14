@@ -4,9 +4,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  {path: 'login', loadChildren: () => import('../app/pages/login/login.module').then(m => m.LoginModule)},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'login', loadChildren: () => import('../app/pages/login/login.module').then(m => m.LoginModule)},
   {path: 'pacientes', loadChildren: () => import('../app/pages/paciente/paciente.module').then(p => p.PacienteModule)},
+  {path: 'especialistas', loadChildren: () => import('../app/pages/especialista/especialista.module').then(e => e.EspecialistaModule)},
 ];
 
 @NgModule({

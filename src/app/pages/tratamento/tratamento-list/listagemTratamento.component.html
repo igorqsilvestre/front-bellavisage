@@ -5,7 +5,7 @@
   <section class="sessao-principal">
     <h2 class="titulo">Gerenciar Tratamentos</h2>
       <div class="button-direcionamentoCadastrar">
-        <button type="submit" (click)="editarCadastro(cadastro)">Cadastrar Tratamento</button>
+        <button type="submit" routerLink="tratamentos/novo-tratamento">Cadastrar Tratamento</button>
       </div>
         <div class="campo-tratamento">
 
@@ -14,7 +14,7 @@
           <p-table
             #dtListagemTratamento
             dataKey="id"
-            [value]="cadastro"
+            [value]="tratamentos"
             [tableStyle]="{ 'min-width': '50rem' }"
             [globalFilterFields]="[
                 'name',
@@ -65,23 +65,23 @@
                   <th></th>
             </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-cadastro  let-editing="editing" let-ri="rowIndex">
+            <ng-template pTemplate="body" let-tratamento  let-editing="editing" let-ri="rowIndex">
 
                 <tr>
-                    <td>{{ cadastro.nome }}</td>
-                    <td>{{ cadastro.descricao }}</td>
-                    <td>{{ cadastro.especialista }}</td>
-                    <td>{{ cadastro.preco }}</td>
+                    <td>{{ tratamento.nome }}</td>
+                    <td>{{ tratamento.descricao }}</td>
+                    <td>{{ tratamento.especialista }}</td>
+                    <td>{{ tratamento.valor }}</td>
                     <td></td>
                     <th>
                       <button
-                        (click)="editarCadastro(cadastro)"
+                        (click)="editarCadastro(tratamento)"
                       >
                         <fa-icon [icon]="faEdit"></fa-icon>
                       </button>
 
                       <button
-                      (click)="cancelarCadastro(cadastro)"
+                      (click)="cancelarCadastro(tratamento)"
                       >
                         <fa-icon [icon]="faTrash"></fa-icon>
 

@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TratamentoComponent } from './tratamento.component';
+import { ListagemTratamentoComponent } from './tratamento-list/listagemTratamento.component';
+import { TratamentoFormComponent } from './tratamento-form/tratamento-form.component';
 
 const routes: Routes = [
-  {path: 'tratamento/novo-tratamento', component: TratamentoComponent}
+  {path: '',component: ListagemTratamentoComponent},
+  {path: 'tratamentos/novo-tratamento', component: TratamentoFormComponent},
+  {path: 'tratamentos/editar-tratamento/:id', component: TratamentoFormComponent},
 
 ];
 

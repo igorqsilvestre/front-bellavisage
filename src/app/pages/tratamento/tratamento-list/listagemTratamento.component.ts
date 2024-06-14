@@ -1,33 +1,34 @@
-import { EspecialistaService } from './../especialista.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Tratamento } from '../Tratamento';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Especialista } from '../Especialista';
+import { TratamentoService } from '../tratamento.service';
 import { Subscription } from 'rxjs';
 import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
 
 @Component({
-  selector: 'app-listagemespecialista',
-  templateUrl: './listagemespecialista.component.html',
-  styleUrl: './listagemespecialista.component.css'
+  selector: 'app-listagemtratamento',
+  templateUrl: './listagemtratamento.component.html',
+  styleUrl: './listagemtratamento.component.css'
 })
-export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
-  especialistas: Especialista[] = [];
+export class ListagemTratamentoComponent implements OnInit, OnDestroy{
+  tratamentos: Tratamento[] = [];
   modalRef!: BsModalRef;
-  especialistaSubscription: Subscription;
+  tratamentoSubscription: Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
 
 
   constructor(private router: Router,
-    private especialistaService:EspecialistaService,
-    private modalService: BsModalService) {}
+    private tratamentoService: TratamentoService,
+    private modalService: BsModalService
+  ) {}
 
 
 
@@ -36,25 +37,26 @@ export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
   }
 
   atualizarLista(){
-    this.especialistaSubscription = this.especialistaService.obterEspecialistas().subscribe(
+    this.tratamentoSubscription = this.tratamentoService.obterTratamentos().subscribe(
       dados => {
         if(dados){
-          this.especialistas = dados;
+          this.tratamentos = dados;
         }
       }
     )
   }
 
 
-  applyFilterOnTable(event: any, dtListagemEspecialista: any) {
-    return dtListagemEspecialista.filterGlobal(event, 'contains')
+  applyFilterOnTable(event: any, dtListagemTratamento: any) {
+    console.log(event.target.value)
+    return dtListagemTratamento.filterGlobal(event, 'contains')
   }
 
-  editarCadastro(especialista: Especialista) {
-    this.router.navigate(['especialistas/editar-especialista', especialista.id]);
+  editarCadastro(tratamento: Tratamento) {
+    this.router.navigate(['tratamentos/editar-tratamento', tratamento.id]);
   }
 
-  cancelarCadastro(especialista: Especialista) {
+  cancelarCadastro(tratamento: Tratamento) {
 
     this.modalRef = this.modalService.show(ConfirmModalComponent, {
       initialState: {
@@ -64,12 +66,12 @@ export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
     });
 
     this.modalRef.content.confirm.subscribe(() => {
-      this.especialistaService.excluirEspecialista(especialista.id).subscribe(
+      this.tratamentoService.excluirTratamento(tratamento.id).subscribe(
         () => {
           this.atualizarLista();
         },
         error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir especialista!' } });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir tratamento!' } });
         }
       );
     });
@@ -77,8 +79,8 @@ export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    if(this.especialistaSubscription){
-      this.especialistaSubscription.unsubscribe();
+    if(this.tratamentoSubscription){
+      this.tratamentoSubscription.unsubscribe();
      }
   }
 

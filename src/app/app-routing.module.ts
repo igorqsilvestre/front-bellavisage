@@ -8,6 +8,7 @@ const routes: Routes = [
   {path: 'login', loadChildren: () => import('../app/pages/login/login.module').then(m => m.LoginModule)},
   {path: 'pacientes', loadChildren: () => import('../app/pages/paciente/paciente.module').then(p => p.PacienteModule)},
   {path: 'especialistas', loadChildren: () => import('../app/pages/especialista/especialista.module').then(e => e.EspecialistaModule)},
+  {path: 'tratamentos', loadChildren: () => import('../app/pages/tratamento/tratamento.module').then(t => t.TratamentoModule)},
 ];
 
 @NgModule({

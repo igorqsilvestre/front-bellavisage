@@ -1,0 +1,50 @@
+<header>
+  <app-cabecalho ></app-cabecalho>
+</header>
+<main>
+  <section class="sessao-principal">
+
+    <h2 class="titulo">{{ titulo }}</h2>
+    <h3 class="subtitulo">Insira os dados abaixo:</h3>
+    <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+      <div class="campos">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Digite o nome do tratamento">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('nome')?.touched && formulario.get('nome')?.hasError('minlength') ||
+        formulario.get('nome')?.hasError('maxlength')"
+          msgErro="Nome é inválido!">
+        </app-campo-control-erro>
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('nome')?.touched && formulario.get('nome')?.hasError('nomeExistente')"
+          msgErro="Nome do tratamento já existe no sistema.">
+        </app-campo-control-erro>
+
+        <label for="descricao">Descrição</label>
+        <input type="text" class="form-control" formControlName="descricao" id="descricao" placeholder="Digite a descrição do tratamento">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('descricao')?.touched && formulario.get('descricao')?.invalid"
+          msgErro="Descrição é inválida!">
+        </app-campo-control-erro>
+
+        <label for="valor">Valor</label>
+        <input type="number" class="form-control" formControlName="valor" id="valor" placeholder="Informe o valor do tratamento.">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid"
+          msgErro="Valor é inválido!">
+        </app-campo-control-erro>
+
+        <label for="imagem">Insira a URL da imagem</label>
+        <input type="text" class="form-control" formControlName="imagem" id="imagem" placeholder="https://img.com/fotos/retrato-limpeza-de-pele">
+      </div>
+
+      <button type="submit"  [disabled]="formulario.invalid">{{ nomeBotao }}</button>
+    </form>
+
+  </section>
+</main>
+<footer>
+  <app-rodape></app-rodape>
+</footer>
+
+

@@ -7,11 +7,19 @@ import { SharedModule } from '../../shared/shared.module';
 import { EspecialistaComponent } from './especialista.component';
 import { InputMaskModule } from 'primeng/inputmask';
 
+import { EspecialistaFormComponent } from './especialista-form/especialista-form.component';
+import { ListagemEspecialistaComponent } from './especialista-list/listagemEspecialista.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TableModule } from 'primeng/table';
+import { InputIconModule } from 'primeng/inputicon';
+import { IconFieldModule } from 'primeng/iconfield';
+import { RegistroExists } from './registroExists';
 
 
 @NgModule({
   declarations: [
-    EspecialistaComponent
+    EspecialistaFormComponent,
+    ListagemEspecialistaComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +29,11 @@ import { InputMaskModule } from 'primeng/inputmask';
     HttpClientModule,
     SharedModule,
     InputMaskModule,
-  ]
+    FontAwesomeModule,
+    TableModule,
+    InputIconModule,
+    IconFieldModule,
+  ],
+  providers:[RegistroExists]
 })
 export class EspecialistaModule { }

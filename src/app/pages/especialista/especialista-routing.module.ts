@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EspecialistaComponent } from './especialista.component';
+import { ListagemEspecialistaComponent } from './especialista-list/listagemEspecialista.component';
+import { EspecialistaFormComponent } from './especialista-form/especialista-form.component';
 
 const routes: Routes = [
-  {path: 'especialista/novo-especialista', component: EspecialistaComponent}
+  {path: '',component: ListagemEspecialistaComponent},
+  {path: 'especialistas/novo-especialista', component: EspecialistaFormComponent},
+  {path: 'especialistas/editar-especialista/:id', component: EspecialistaFormComponent},
 
 ];
 

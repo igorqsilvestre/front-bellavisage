@@ -1,0 +1,123 @@
+<header>
+  <app-cabecalho ></app-cabecalho>
+</header>
+<main>
+  <section class="sessao-principal">
+
+    <h2 class="titulo">{{ titulo }}</h2>
+    <h3 class="subtitulo">Insira os dados abaixo:</h3>
+    <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+      <div class="campos">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Informe seu nome">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('nome')?.touched && formulario.get('nome')?.invalid"
+          msgErro="Nome é inválido!">
+        </app-campo-control-erro>
+
+        <label for="especialidade">Especialidade</label>
+        <input type="text" class="form-control" formControlName="especialidade" id="especialidade" placeholder="Qual é sua especialidade?">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('especialidade')?.touched && formulario.get('especialidade')?.invalid"
+          msgErro="Especialidade é inválido!">
+        </app-campo-control-erro>
+
+        <label for="registro">Registro do Conselho Competente</label>
+        <input type="text" class="form-control" formControlName="registro" id="registro" placeholder="Informe seu número de registro.">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('registro')?.touched && formulario.get('registro')?.hasError('pattern')"
+          msgErro="Registro é inválido! Necessita ser número.">
+        </app-campo-control-erro>
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('registro')?.touched && formulario.get('registro')?.hasError('registroExistente')"
+          msgErro="Registro já cadastrado no sistema.">
+        </app-campo-control-erro>
+
+        <label for="email">Email</label>
+        <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
+        formulario.get('email')?.hasError('pattern')"
+          msgErro="Formato de email inválido!">
+        </app-campo-control-erro>
+
+        <label for="telefone">Telefone</label>
+        <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX">
+
+        <app-campo-control-erro [mostrarErro]="formulario.get('telefone')?.touched && formulario.get('telefone')?.invalid"
+          msgErro="Telefone inválido! Precisa ter 11 caracteres e ser números.">
+        </app-campo-control-erro>
+
+        <div formGroupName="endereco">
+          <label for="cep" >Endere&ccedil;o</label>
+
+          <div class="input-group d-flex align-items-center ">
+            <div class="input-group-prepend" style="margin-right: 0.5em;">
+              <span class="input-group-text"><img src="../../../../assets/icone-localizacao.png"></span>
+            </div>
+            <input type="text" class="form-control" formControlName="cep" placeholder="Insira o CEP"  >
+          </div>
+          <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep')?.touched && formulario.get('endereco.cep')?.invalid"
+            msgErro="Cep inválido! Precisa ter 8 caracteres e ser números.">
+          </app-campo-control-erro>
+
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control"  formControlName="rua" placeholder="Rua">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control"  formControlName="numero" placeholder="Número">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.rua')?.touched && formulario.get('endereco.rua')?.invalid"
+              msgErro="Rua é obrigatória.">
+              </app-campo-control-erro>
+            </div>
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.numero')?.touched && formulario.get('endereco.numero')?.invalid"
+              msgErro="Somente é permitido números.">
+              </app-campo-control-erro>
+            </div>
+          </div>
+
+          <input type="text" class="form-control"  formControlName="complemento" placeholder="Complemento">
+
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control"  formControlName="cidade" placeholder="Cidade">
+            </div>
+            <div class="col">
+              <select class="form-control" id="opcoes" formControlName="estado" >
+                  <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cidade')?.touched && formulario.get('endereco.cidade')?.invalid"
+              msgErro="Cidade é obrigatória.">
+              </app-campo-control-erro>
+            </div>
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.estado')?.touched && formulario.get('endereco.estado')?.invalid"
+              msgErro="Estado é obrigatório.">
+              </app-campo-control-erro>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit"  [disabled]="formulario.invalid">{{ nomeBotao }}</button>
+    </form>
+
+  </section>
+</main>
+<footer>
+  <app-rodape></app-rodape>
+</footer>
+
+

@@ -6,26 +6,27 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { SharedModule } from './shared/shared.module';
+
 import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
 import { PacienteModule } from './pages/paciente/paciente.module'
 import { TratamentoModule } from './pages/tratamento/tratamento.module';
 import { EspecialistaModule } from './pages/especialista/especialista.module';
 import { AgendamentoModule } from './pages/agendamento/agendamento.module';
-import { ListagemPacienteModule } from './pages/listagemPaciente/listagemPaciente.module';
-import { ListagemEspecialistaModule } from './pages/listagemEspecialista/listagemEspecialista.module';
-import { ListagemTratamentoModule } from './pages/listagemTratamento/listagemTratamento.module';
 import { ListagemPagamentosModule } from './pages/listagemPagamentos/listagemPagamentos.module';
 import { ListagemAgendamentoModule } from './pages/listagemAgendamento/listagemAgendamento.module';
-import { LabsModule } from './pages/labs/labs.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { AgendaModule } from './pages/agenda/agenda.module';
 import { DashboardFaturamentoModule } from './pages/dashboard-faturamento/dashboard-faturamento.module';
 import { NgxEchartsModule } from 'ngx-echarts';
+
+import { SharedModule } from './shared/shared.module';
+import { AuthGuard } from './guards/auth.guard';
+
+
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
+    ModalModule.forRoot(),
     SharedModule,
     HomeModule,
     LoginModule,
@@ -44,23 +46,19 @@ import { NgxEchartsModule } from 'ngx-echarts';
     TratamentoModule,
     EspecialistaModule,
     AgendamentoModule,
-    ListagemPacienteModule,
-    ListagemEspecialistaModule,
-    ListagemTratamentoModule,
     ListagemPagamentosModule,
     ListagemAgendamentoModule,
-    LabsModule,
     HomeModule,
     CardModule,
     ButtonModule,
-    AgendaModule,
     DashboardFaturamentoModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'), // do grafico de faturamento
     }),
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

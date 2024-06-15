@@ -23,7 +23,9 @@ import { LabsModule } from './pages/labs/labs.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-
+import { AgendaModule } from './pages/agenda/agenda.module';
+import { DashboardFaturamentoModule } from './pages/dashboard-faturamento/dashboard-faturamento.module';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -51,9 +53,11 @@ import { ButtonModule } from 'primeng/button';
     HomeModule,
     CardModule,
     ButtonModule,
-    
-
-
+    AgendaModule,
+    DashboardFaturamentoModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'), // do grafico de faturamento
+    }),
   ],
   providers: [
     provideAnimationsAsync()

@@ -7,6 +7,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { PasswordModule } from 'primeng/password';
 
 
 
@@ -22,7 +23,8 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    PasswordModule,
 
   ]
 })

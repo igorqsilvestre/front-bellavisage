@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+senha: any;
 
   constructor(private router: Router) {
     this.logoff()

@@ -1,3 +1,7 @@
+/* angular-cli file: src/styles.css */
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+
 *{
     margin: 0;
     padding: 0;

@@ -58,12 +58,14 @@ header,main{
   font-weight: bold;
 }
 
-.principal-formulario input {
+.principal-formulario input{
   padding: 0.6em 0;
   margin: 0.7em 0;
   background-color: #F8F8F8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+
 
 .principal-formulario input::placeholder{
   color: #6B6E71;

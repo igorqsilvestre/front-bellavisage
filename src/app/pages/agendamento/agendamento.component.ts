@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
+import { Time } from '@angular/common';
 
 
 @Component({
@@ -10,6 +11,10 @@ import { Router } from '@angular/router'; // Import the Router module
 })
 export class AgendamentoComponent {
   faMagnifyingGlass = faMagnifyingGlass;
+
+
+   date: Date;
+   time: Time;
 
   constructor(private router: Router) {} // Add the Router to the component's constructor
 

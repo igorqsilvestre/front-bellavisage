@@ -1,0 +1,80 @@
+header,main{
+  margin: 0 10%;
+}
+
+.sessao-principal .titulo {
+  color: #339CFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1em;
+  text-align: left;
+
+}
+.sessao-principal{
+  background-color: #E7EBEF;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 2em;
+  margin: 1em 0;
+  text-align: center;
+
+}
+.barras{
+  display:contents;
+  margin: 1em 0 ;
+
+}
+
+.subtitulo {
+  color: #339CFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: medium;
+  padding-top: 2em;
+  text-align: left;
+
+}
+
+
+.demo-chart {
+  height: 300px;
+  width: 30%;
+}
+
+
+.box-select-tratamento
+{
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+}
+
+.tabela-bord{
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5em;
+  margin: 1em 0;
+  text-align: center;
+  position:relative;
+  width: 100%;
+
+}
+.table-container {
+  height: 290px;
+  overflow: auto;
+}
+
+.grafico-pizza
+{
+  display: flex;
+  justify-content: left;
+  margin: 1em 0;
+}
+
+#chart-container {
+  position: relative;
+  height: 10vh;
+  overflow: hidden;
+}

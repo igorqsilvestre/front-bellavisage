@@ -129,3 +129,8 @@ principal-formulario input::placeholder{
   height: 290px;
   overflow: auto;
 }
+
+
+.cabecalho{
+  width: 122em;
+}

@@ -9,6 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { InputIconModule } from 'primeng/inputicon';
     FontAwesomeModule,
     TableModule,
     InputIconModule,
-    IconFieldModule
+    IconFieldModule,
+    CalendarModule
   ]
 })
 export class AgendamentoModule { }

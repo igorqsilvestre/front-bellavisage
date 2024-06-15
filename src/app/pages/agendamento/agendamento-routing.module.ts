@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgendamentoComponent } from './agendamento.component';
 
 const routes: Routes = [
-  {path: 'agendamento/novo-agendamento', component: AgendamentoComponent}
+  {path: 'agendar/novo-agendamento', component: AgendamentoComponent}
 
 ];
 

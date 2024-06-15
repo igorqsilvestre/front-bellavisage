@@ -57,9 +57,9 @@ header,main{
   padding-top: 5em;
   padding-bottom: 2em;
 }
-.principal-formulario .campos .dados-nomes-agendamento .form-control{
+.principal-formulario .campos .dados-nomes-agendamento{
 /*   width: 9em;  /* Define a largura da div */
-/*    padding: 10px; /* Define o padding interno da div */
+  padding: 10px; /* Define o padding interno da div */
    border-radius: 5px; /* Define bordas arredondadas para a div */
 /*   margin: 10px auto; /* Centraliza a div horizontalmente */
 }
@@ -76,7 +76,12 @@ header,main{
   color: #950341;
   font-weight: bold;
 }
-
+.form-control{
+  width: 13em;  /* Define a largura da div */
+  padding: 10px; /* Define o padding interno da div */
+  border-radius: 5px; /* Define bordas arredondadas para a div */
+  margin: 10px auto; /* Centraliza a div horizontalmente */
+}
 .principal-formulario input {
   padding: 0.6em 0;
   margin: 0.7em 0;
@@ -112,4 +117,9 @@ header,main{
   font-size: 16px;
   display: flex;
   margin: 50px 15px 10px 50px;
+}
+
+
+.cabecalho{
+  width: 122em;
 }

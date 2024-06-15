@@ -4,6 +4,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+
 import { Time } from '@angular/common';
 /* import { Time } from '@angular/common';
  */
@@ -102,7 +103,7 @@ cadastro=[
   }
 
   editarCadastro(cadastro: any) {
-    this.router.navigate(['/agendamento/novo-agendamento'])
+    this.router.navigate(['/agendar/novo-agendamento'])
 
   }
 

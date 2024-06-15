@@ -1,5 +1,11 @@
-header,main{
-  margin: 0 10%;
+.header .main{
+  height: 100vh;
+  width: 122em;
+  margin: 2rem auto;
+  padding: 1rem;
+  text-align: center;
+
+
 }
 
 .sessao-principal{
@@ -69,3 +75,16 @@ header,main{
   border-radius: 8px;
   padding: 0.7em 7em;
 }
+.conteiner-header{
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  width: 122em;
+}
+.conteiner-header-entrar
+{
+  display: flex;
+  padding: 1em;
+
+}
+

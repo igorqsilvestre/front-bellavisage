@@ -1,5 +1,5 @@
 <header>
-  <app-cabecalho></app-cabecalho>
+  <app-cabecalho class="cabecalho" barraNavegacao="visualizarBarraNav"></app-cabecalho>
 </header>
 <main>
   <section class="sessao-principal">
@@ -48,11 +48,23 @@
                     <div class="row">
                     <div class="col">
                       <label for="nome">Data</label>
-                      <input type="text" class="form-control"  placeholder="__/__/___">
+                      <div  class="form-control">
+                              <p-calendar [(ngModel)]="date" />
+                        </div>
+
                     </div>
                     <div class="col">
                       <label for="nome">Horário</label>
-                      <input type="text" class="form-control"  placeholder="xx : xx">
+                         <div class="form-control">
+                            <p-calendar
+                            [(ngModel)]="time"
+                            [iconDisplay]="'input'"
+                            [showIcon]="true"
+                            [timeOnly]="true"
+                            inputId="templatedisplay">
+                            </p-calendar>
+                         </div>
+
                     </div>
                     <div class="col">
                       <label for="nome">Valor</label>

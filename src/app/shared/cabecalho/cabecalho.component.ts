@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+
 @Component({
   selector: 'app-cabecalho',
   templateUrl: './cabecalho.component.html',
@@ -8,4 +9,10 @@ import { Component, Input } from '@angular/core';
 export class CabecalhoComponent {
 
   @Input() barraNavegacao: boolean = false;
+
+  isLogged() {
+    return !!localStorage.getItem('token');
+  }
+
+
 }

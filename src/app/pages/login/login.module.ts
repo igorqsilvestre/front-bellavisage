@@ -9,6 +9,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { AlterarSenhaFormComponent } from './alterar-senha-form/alterar-senha-form.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { PasswordModule } from 'primeng/password';
 import { LoginEmailValidator } from './LoginEmailValidator';
 import { UsuarioEmailValidator } from './UsuarioEmailValidator';
 
@@ -30,6 +31,7 @@ import { UsuarioEmailValidator } from './UsuarioEmailValidator';
     RouterModule,
     SharedModule,
     LoginRoutingModule,
+    PasswordModule,
   ],
   providers: [EmailValidator, LoginEmailValidator, UsuarioEmailValidator]
 })

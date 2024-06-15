@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListagemTratamentoComponent } from './tratamento-list/listagemTratamento.component';
+import { ListagemTratamentoComponent } from './listagemTratamento/listagemTratamento.component';
 import { TratamentoFormComponent } from './tratamento-form/tratamento-form.component';
 
 const routes: Routes = [

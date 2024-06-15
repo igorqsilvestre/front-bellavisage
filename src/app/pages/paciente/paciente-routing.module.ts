@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PacienteFormComponent } from './paciente-form/paciente-form.component';
-import { ListagemPacienteComponent } from './paciente-list/listagemPaciente.component';
+import { ListagemPacienteComponent } from './listagemPaciente/listagemPaciente.component';
+
 
 const routes: Routes = [
   {path: '',component: ListagemPacienteComponent},

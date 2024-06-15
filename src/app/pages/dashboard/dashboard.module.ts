@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DropdownModule } from 'primeng/dropdown';
 
-import { DashboardFaturamentoRoutingModule } from './dashboard-faturamento-routing.module';
-import { DashboardFaturamentoComponent } from './dashboard-faturamento.component';
+
+import { DashboardFaturamentoComponent } from './dashboard-faturamento/dashboard-faturamento.component';
 import { TableModule } from 'primeng/table';
 import { SharedModule } from "../../shared/shared.module";
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 
 
@@ -16,7 +17,7 @@ import { SharedModule } from "../../shared/shared.module";
     ],
     imports: [
         CommonModule,
-        DashboardFaturamentoRoutingModule,
+        DashboardRoutingModule,
         NgxEchartsModule.forRoot({
             /**
              * This will import all modules from echarts.
@@ -28,7 +29,7 @@ import { SharedModule } from "../../shared/shared.module";
         DropdownModule,
         TableModule,
         SharedModule,
-        
+
     ]
 })
-export class DashboardFaturamentoModule { }
+export class DashboardModule { }

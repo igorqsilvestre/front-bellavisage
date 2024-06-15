@@ -24,8 +24,8 @@ avaliacao: number;
 
 @Component({
   selector: 'app-listagemagendamento',
-  templateUrl: './listagemagendamento.component.html',
-  styleUrl: './listagemagendamento.component.css'
+  templateUrl: './listagemAgendamento.component.html',
+  styleUrl: './listagemAgendamento.component.css'
 })
 export class ListagemAgendamentoComponent {
   faMagnifyingGlass = faMagnifyingGlass;

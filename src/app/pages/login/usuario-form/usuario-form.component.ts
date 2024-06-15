@@ -15,7 +15,6 @@ import { UsuarioEmailValidator } from '../UsuarioEmailValidator';
 })
 export class UsuarioFormComponent implements OnInit, OnDestroy{
 
-  naoVisualizarBarraNav = true;
   formulario!: FormGroup;
   estados!: EstadoBr[];
   perfilsAcesso = [{ id: 1, nome: 'Administrador' },{ id: 2, nome: 'Cliente' }];

@@ -8,23 +8,7 @@
 </head>
 <body>
   <header class="conteiner-header">
-    <app-cabecalho class="cabecalho" barraNavegacao="visualizarBarraNav"></app-cabecalho>
-
-    <!-- <div class="conteiner-header-logo">
-      <img src="../../../../assets/logo-pequeno-bellavisage.png" alt="logo da bellavisage">
-    </div>
-      <div class="conteiner-header-entrar">
-        <img src="../../../assets/logo-usuario.png">
-        <a
-          *ngIf="!isLogged()"
-          href="/login">Entrar
-        </a>
-        <a
-        *ngIf="isLogged()"
-          href="/login">Sair
-        </a>
-
-     </div> -->
+    <app-cabecalho class="cabecalho" [verBarraNavegacao]="false" [verLinkEntrar]="true"></app-cabecalho>
   </header>
   <main>
      <app-banner></app-banner>

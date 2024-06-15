@@ -4,11 +4,10 @@ import { EspecialistaRoutingModule } from './especialista-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
-import { EspecialistaComponent } from './especialista.component';
 import { InputMaskModule } from 'primeng/inputmask';
 
 import { EspecialistaFormComponent } from './especialista-form/especialista-form.component';
-import { ListagemEspecialistaComponent } from './especialista-list/listagemEspecialista.component';
+import { ListagemEspecialistaComponent } from './listagemEspecialista/listagemEspecialista.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';

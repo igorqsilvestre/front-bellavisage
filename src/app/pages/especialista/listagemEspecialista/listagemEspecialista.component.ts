@@ -1,4 +1,4 @@
-import { EspecialistaService } from './../especialista.service';
+import { EspecialistaService } from '../especialista.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';

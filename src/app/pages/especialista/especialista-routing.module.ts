@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListagemEspecialistaComponent } from './especialista-list/listagemEspecialista.component';
+import { ListagemEspecialistaComponent } from './listagemEspecialista/listagemEspecialista.component';
 import { EspecialistaFormComponent } from './especialista-form/especialista-form.component';
 
 const routes: Routes = [

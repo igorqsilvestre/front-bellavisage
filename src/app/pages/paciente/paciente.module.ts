@@ -10,7 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
-import { ListagemPacienteComponent } from './paciente-list/listagemPaciente.component';
+import { ListagemPacienteComponent } from './listagemPaciente/listagemPaciente.component';
 
 
 @NgModule({

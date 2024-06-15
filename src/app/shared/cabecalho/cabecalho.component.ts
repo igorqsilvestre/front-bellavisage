@@ -1,4 +1,6 @@
+import { AuthService } from './../../guards/auth.service';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -8,10 +10,24 @@ import { Component, Input } from '@angular/core';
 })
 export class CabecalhoComponent {
 
-  @Input() barraNavegacao: boolean = false;
+  @Input() verBarraNavegacao: boolean = true;
+  @Input() verLinkEntrar: boolean = true;
+  @Input() verLinkSair: boolean = true;
 
-  isLogged() {
-    return !!localStorage.getItem('token');
+  constructor(private authService:AuthService,private route:Router) { }
+
+  verificaUsuarioLogado():boolean{
+    const usuario = localStorage.getItem('usuarioAutenticado');
+     if(usuario !== 'true' || usuario == null){
+      return false;
+     }else{
+      return true;
+     }
+  }
+
+  deslogar() {
+   this.authService.realizarLogin(false);
+   this.route.navigate(['']);
   }
 
 

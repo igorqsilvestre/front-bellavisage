@@ -1,23 +1,19 @@
 <header class="cabecalho">
   <img src="../../assets/logo-pequeno-bellavisage.png" alt="logo da bellavisage">
-  <nav class="cabecalho-nav" [hidden]="!isLogged() || !barraNavegacao">
+  <nav class="cabecalho-nav" [hidden]="!verificaUsuarioLogado()">
     <ul class="cabecalho-lista">
-      <a href="#"><li>Início</li></a>
-      <a href="/tratamento"> <li>Tratamentos</li></a>
-      <a href="/especialista"> <li>Especialistas</li></a>
+      <a href="/"><li>Início</li></a>
+      <a href="/pacientes"> <li>Pacientes</li></a>
+      <a href="/especialistas"> <li>Especialistas</li></a>
+      <a href="/tratamentos"> <li>Tratamentos</li></a>
+      <a href="/agendamentos"> <li>Agendar</li></a>
       <a href="/pagamentos"> <li>Pagamentos</li></a>
-      <a href="/agendamento"> <li>Agendar</li></a>
-      <a href="/dashbord/financeiro"><li>Dashboard</li></a>
-
+      <a href="/dashbords/financeiro"><li>Dashboard</li></a>
     </ul>
   </nav>
   <div class="cabecalho-sair">
     <img src="../../../assets/logo-usuario.png">
-    <a
-      *ngIf="!isLogged()"
-      href="/login">Entrar</a>
-    <a
-      *ngIf="isLogged()"
-      href="/login">Sair</a>
+    <a [hidden]="verificaUsuarioLogado()" href="/login">Entrar</a>
+    <a [hidden]="!verLinkSair" href="#" (click)="deslogar()">Sair</a>
   </div>
 </header>

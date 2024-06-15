@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
 import { TratamentoFormComponent } from './tratamento-form/tratamento-form.component';
-import { ListagemTratamentoComponent } from './tratamento-list/listagemTratamento.component';
+import { ListagemTratamentoComponent } from './listagemTratamento/listagemTratamento.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';

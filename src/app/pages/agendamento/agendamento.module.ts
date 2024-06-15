@@ -4,17 +4,21 @@ import { AgendamentoRoutingModule } from './agendamento-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
-import { AgendamentoComponent } from './agendamento.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { CalendarModule } from 'primeng/calendar';
+import { AgendamentoComponent } from './agendamento-form/agendamento.component';
+import { ListagemAgendamentoComponent } from './listagemAgendamento/listagemAgendamento.component';
+import { RatingModule } from 'primeng/rating';
+
 
 
 @NgModule({
   declarations: [
-    AgendamentoComponent
+    AgendamentoComponent,
+    ListagemAgendamentoComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,8 @@ import { CalendarModule } from 'primeng/calendar';
     TableModule,
     InputIconModule,
     IconFieldModule,
-    CalendarModule
+    CalendarModule,
+    RatingModule
   ]
 })
 export class AgendamentoModule { }

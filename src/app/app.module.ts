@@ -15,16 +15,14 @@ import { PacienteModule } from './pages/paciente/paciente.module'
 import { TratamentoModule } from './pages/tratamento/tratamento.module';
 import { EspecialistaModule } from './pages/especialista/especialista.module';
 import { AgendamentoModule } from './pages/agendamento/agendamento.module';
-import { ListagemPagamentosModule } from './pages/listagemPagamentos/listagemPagamentos.module';
-import { ListagemAgendamentoModule } from './pages/listagemAgendamento/listagemAgendamento.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { DashboardFaturamentoModule } from './pages/dashboard-faturamento/dashboard-faturamento.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './guards/auth.guard';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
 
 
 
@@ -46,12 +44,10 @@ import { AuthGuard } from './guards/auth.guard';
     TratamentoModule,
     EspecialistaModule,
     AgendamentoModule,
-    ListagemPagamentosModule,
-    ListagemAgendamentoModule,
     HomeModule,
     CardModule,
     ButtonModule,
-    DashboardFaturamentoModule,
+    DashboardModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'), // do grafico de faturamento
     }),

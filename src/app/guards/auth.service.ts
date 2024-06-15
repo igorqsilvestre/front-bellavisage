@@ -1,4 +1,3 @@
-import { LoginService } from './../pages/login/login.service';
 import { Injectable, OnDestroy } from '@angular/core';
 
 @Injectable({
@@ -8,17 +7,16 @@ export class AuthService{
 
   private usuarioAutenticado: boolean = false;
 
-  constructor() { }
-
-  realizarLogin(usuarioEstaLogado: boolean){
-   if(usuarioEstaLogado){
-    this.usuarioAutenticado = true;
-   }else{
-    this.usuarioAutenticado = false;
-   }
+  constructor() {
+    this.usuarioAutenticado = localStorage.getItem('usuarioAutenticado') === 'true';
   }
 
-  usuarioEstaAutenticado(){
+  realizarLogin(usuarioEstaLogado: boolean) {
+    this.usuarioAutenticado = usuarioEstaLogado;
+    localStorage.setItem('usuarioAutenticado', usuarioEstaLogado.toString());
+  }
+
+  usuarioEstaAutenticado() {
     return this.usuarioAutenticado;
   }
 }

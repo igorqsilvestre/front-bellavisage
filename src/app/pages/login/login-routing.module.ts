@@ -5,7 +5,7 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 import { LoginComponent } from './login-form/login.component';
 
 const routes: Routes = [
-  {path: 'login',component: LoginComponent},
+  {path: '',component: LoginComponent},
   {path: 'login/alterar-senha', component: AlterarSenhaFormComponent},
   {path: 'login/novo-usuario', component: UsuarioFormComponent}
 ];

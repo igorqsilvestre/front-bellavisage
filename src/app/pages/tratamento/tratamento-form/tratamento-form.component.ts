@@ -8,6 +8,7 @@ import { TratamentoService } from '../tratamento.service';
 import { Tratamento } from '../Tratamento';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
+
 @Component({
   selector: 'app-tratamento-form',
   templateUrl: './tratamento-form.component.html',
@@ -37,7 +38,7 @@ export class TratamentoFormComponent {
         asyncValidators: [this.nomeExiste.validate.bind(this.nomeExiste)],
         updateOn: 'blur'
       }],
-      valor: [null, Validators.required],
+      valor: [null, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       descricao: [null, Validators.required],
       imagem: [null],
     });
@@ -56,7 +57,7 @@ export class TratamentoFormComponent {
     this.formulario.patchValue({
       id: tratamento.id,
       nome: tratamento.nome,
-      valor: tratamento.valor,
+      valor: tratamento.valor.toString().replaceAll(',','').split('.')[0],
       descricao: tratamento.descricao,
       imagem: tratamento.imagem,
     })

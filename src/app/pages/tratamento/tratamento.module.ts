@@ -11,6 +11,8 @@ import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { NomeExists } from './nomeExists';
+import { MultiSelectModule } from 'primeng/multiselect';
+
 
 
 @NgModule({

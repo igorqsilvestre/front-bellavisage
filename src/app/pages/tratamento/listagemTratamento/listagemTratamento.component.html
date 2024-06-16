@@ -21,13 +21,10 @@
             ]"
             editMode="row"
           >
-
-
             <ng-template pTemplate="header">
                 <tr>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th>Especialista</th>
                     <th>Preço</th>
                     <th>Ações</th>
                 </tr>
@@ -49,13 +46,6 @@
                   <th>
                     <p-columnFilter
                         type="text"
-                        field="especialista"
-                        placeholder="Search by especialista"
-                        ariaLabel="Filter especialista" />
-                  </th>
-                  <th>
-                    <p-columnFilter
-                        type="text"
                         field="preco"
                         placeholder="Search by preco"
                         ariaLabel="Filter preco" />
@@ -70,9 +60,7 @@
                 <tr>
                     <td>{{ tratamento.nome }}</td>
                     <td>{{ tratamento.descricao }}</td>
-                    <td>{{ tratamento.especialista }}</td>
-                    <td>{{ tratamento.valor }}</td>
-                    <td></td>
+                    <td>{{ tratamento.valor | currency:'BRL'  }}</td>
                     <th>
                       <button
                         (click)="editarCadastro(tratamento)"

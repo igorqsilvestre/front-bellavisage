@@ -28,10 +28,10 @@
         </app-campo-control-erro>
 
         <label for="valor">Valor</label>
-        <input type="number" class="form-control" formControlName="valor" id="valor" placeholder="Informe o valor do tratamento.">
+        <input type="text" class="form-control" formControlName="valor" id="valor" placeholder="Informe o valor do tratamento.">
 
-        <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid"
-          msgErro="Valor é inválido!">
+        <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid && formulario.get('valor')?.hasError('pattern')"
+          msgErro="Valor é inválido! Somente é permitido números">
         </app-campo-control-erro>
 
         <label for="imagem">Insira a URL da imagem</label>

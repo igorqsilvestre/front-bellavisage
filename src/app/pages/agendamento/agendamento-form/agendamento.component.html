@@ -3,44 +3,59 @@
 </header>
 <main>
   <section class="sessao-principal">
-    <h2 class="titulo">Agendamento do Paciente</h2>
+    <h2 class="titulo">{{ titulo }}</h2>
         <div class="campo-paciente">
           <h3 class="subtitulo">Agende o paciente inserindo os dados abaixo:</h3>
 
           <section  class="principal-formulario">
-             <form class="campos">
-              <div class="button-direcionamentoCadastrar">
-                <button type="submit" (click)="editarCadastro()">Novo Paciente</button>
-               </div>
+             <form class="campos" [formGroup]="formulario" (ngSubmit)="onSubmit()">
               <div class="dados-nomes-agendamento">
                       <div>
-                        <label for="nome">Nome</label>
+                        <label for="paciente">Pacientes</label>
                         <div class="input-group d-flex align-items-center ">
                           <div class="input-group-prepend" style="margin-right: 0.1em;">
                             <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
                           </div>
 
-                          <input type="text" class="form-control" placeholder="Nome do Paciente">
+                          <select class="form-control" id="paciente" formControlName="pacientes" >
+                            <option *ngFor="let paciente of pacientes" [value]="paciente.id">{{ paciente.nome }}</option>
+                        </select>
+
+                        <app-campo-control-erro [mostrarErro]="formulario.get('pacientes')?.touched && formulario.get('pacientes')?.invalid"
+                          msgErro="Paciente é obrigatório!">
+                        </app-campo-control-erro>
                         </div>
                     </div>
 
                       <div>
-                        <label for="nome">Tratamento</label>
+                        <label for="tratamento">Tratamento</label>
                         <div class="input-group d-flex align-items-center ">
                           <div class="input-group-prepend" style="margin-right: 0.1em;">
                             <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Nome do Tratamento">
+                          <select class="form-control" id="tratamento" formControlName="tratamentos" >
+                            <option *ngFor="let tratamento of tratamentos" [value]="tratamento.id">{{ tratamento.nome }}</option>
+                          </select>
+
+                          <app-campo-control-erro [mostrarErro]="formulario.get('tratamentos')?.touched && formulario.get('tratamentos')?.invalid"
+                          msgErro="Tratamento é obrigatório!">
+                          </app-campo-control-erro>
                         </div>
                       </div>
 
                       <div>
-                        <label for="nome">Especialista</label>
+                        <label for="especialista">Especialista</label>
                         <div class="input-group d-flex align-items-center ">
                           <div class="input-group-prepend" style="margin-right: 0.1em;">
                             <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Nome do Especialista">
+                          <select class="form-control" id="especialista" formControlName="especialistas" >
+                            <option *ngFor="let especialista of especialistas" [value]="especialista.id">{{ especialista.nome }}</option>
+                          </select>
+
+                          <app-campo-control-erro [mostrarErro]="formulario.get('especialistas')?.touched && formulario.get('especialistas')?.invalid"
+                          msgErro="Especialista é obrigatório!">
+                          </app-campo-control-erro>
                         </div>
                       </div>
               </div>
@@ -49,7 +64,10 @@
                     <div class="col">
                       <label for="nome">Data</label>
                       <div  class="form-control">
-                              <p-calendar [(ngModel)]="date" />
+                              <p-calendar formControlName="data" />
+                              <app-campo-control-erro [mostrarErro]="formulario.get('data')?.touched && formulario.get('data')?.invalid"
+                                msgErro="Data é obrigatória!">
+                              </app-campo-control-erro>
                         </div>
 
                     </div>
@@ -57,27 +75,32 @@
                       <label for="nome">Horário</label>
                          <div class="form-control">
                             <p-calendar
-                            [(ngModel)]="time"
+                            formControlName="hora"
                             [iconDisplay]="'input'"
                             [showIcon]="true"
                             [timeOnly]="true"
                             inputId="templatedisplay">
                             </p-calendar>
+
+                            <app-campo-control-erro [mostrarErro]="formulario.get('hora')?.touched && formulario.get('hora')?.invalid"
+                              msgErro="Horário é obrigatório!">
+                            </app-campo-control-erro>
                          </div>
 
                     </div>
                     <div class="col">
                       <label for="nome">Valor</label>
-                      <input type="text" class="form-control"  placeholder="R$">
+                      <input type="text" class="form-control"  formControlName="valor" placeholder="R$">
+
+                      <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid"
+                        msgErro="Valor é obrigatório!">
+                      </app-campo-control-erro>
                     </div>
             </div>
 
 
             </div>
-            <button type="submit">Agendar</button>
-
-
-
+            <button type="submit" [disabled]="formulario.invalid" >{{ nomeBotao }}</button>
             </form>
 
           </section>

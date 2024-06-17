@@ -64,7 +64,6 @@ export class TratamentoFormComponent {
   }
 
   onSubmit(){
-    console.log(this.formulario.value);
     if (this.formulario.valid) {
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"

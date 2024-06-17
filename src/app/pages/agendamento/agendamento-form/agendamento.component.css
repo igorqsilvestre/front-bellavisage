@@ -104,20 +104,6 @@ header,main{
   padding: 0.7em 7em;
   margin: 4em 30em;
 }
-.button-direcionamentoCadastrar button{
-  background-color: #950341;
-  color: #FFFFFF;
-  font-family: 'Public Sans';
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  padding: 0.3em 2em;
-
-  top: 40px;
-  font-size: 16px;
-  display: flex;
-  margin: 50px 15px 10px 50px;
-}
 
 
 .cabecalho{

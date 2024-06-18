@@ -5,7 +5,7 @@
   <section class="sessao-principal">
     <h2 class="titulo">Agendamento dos Pacientes</h2>
       <div class="button-direcionamentoCadastrar">
-        <button type="submit" (click)="editarCadastro(cadastro)">Cadastrar Agendamento</button>
+        <button type="submit" routerLink="agendamentos/novo-agendamento">Cadastrar Agendamento</button>
       </div>
         <div class="campo-agendamento">
 
@@ -17,7 +17,7 @@
                 <p-table
                 #dtListagemAgendamento
                 dataKey="id"
-                [value]="cadastro"
+                [value]="agendamentos"
                 [tableStyle]="{ 'min-width': '50rem' }"
                 [globalFilterFields]="[
                     'name',
@@ -93,19 +93,18 @@
                       <th></th>
                 </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-cadastro  let-editing="editing" let-ri="rowIndex">
+                <ng-template pTemplate="body" let-agendamento  let-editing="editing" let-ri="rowIndex">
 
-                    <tr [pEditableRow]="cadastro">
-
-
-                        <td>{{ cadastro.data }}</td>
-                        <td>{{ cadastro.horas }}</td>
-                        <td>{{ cadastro.nome }}</td>
-                        <td>{{ cadastro.tratamento }}</td>
-                        <td>{{ cadastro.especialista}}</td>
-                        <td>{{ cadastro.valor}}</td>
-                        <td>{{ cadastro.status}}</td>
+                    <tr [pEditableRow]="agendamento">
+                        <td>{{ agendamento.data | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{ agendamento.hora | date: 'HH:mm'}}</td>
+                        <td>{{ agendamento.paciente.nome }}</td>
+                        <td>{{ agendamento.tratamento.nome }}</td>
+                        <td>{{ agendamento.especialista.nome}}</td>
+                        <td>{{ agendamento.valor}}</td>
+                        <td>{{ 'Aberto' }}</td>
                         <td>
+                          <!--
                           <p-cellEditor
                             >
                               <ng-template pTemplate="input">
@@ -119,10 +118,11 @@
                                   [(ngModel)]="cadastro.avaliacao" [readonly]="true" [cancel]="false"/>
                               </ng-template>
                           </p-cellEditor>
-    <!--                       <p-rating [(ngModel)]="cadastro.avaliacao" [readonly]="true" [cancel]="false"/>
-    -->                </td>
-                        <td>
+                          -->
+                        </td>
+                        <td><!--
                             <div class="flex align-items-center justify-content-center gap-2">
+
                               <button
                                   *ngIf="!editing && cadastro.status !== 'Concluído'"
                                   pInitEditableRow
@@ -141,19 +141,18 @@
                                   (click)="onRowEditCancel(cadastro)">
                                   <fa-icon [icon]="faTimes"></fa-icon>
                               </button>
-                            </div>
+                            </div>-->
                         </td>
-    <!--                    botoes de lixeira e edicao estao funcionando
-    -->                    <th>
+                        <th>
 
                           <button
-                          (click)="cancelarCadastro(cadastro)"
+                          (click)="cancelarCadastro(agendamento)"
                           >
                             <fa-icon [icon]="faTrash"></fa-icon>
 
                         </button>
                         <button
-                        (click)="editarCadastro(cadastro)"
+                        (click)="editarCadastro(agendamento)"
                         >
                         <fa-icon [icon]="faEdit"></fa-icon>
                         </button>

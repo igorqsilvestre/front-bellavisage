@@ -45,7 +45,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
     private tratamentoService:TratamentoService,
     private formBuilder:FormBuilder,
     private modalService: BsModalService,
-    private AgendamentoService: AgendamentoService) {}
+    private agendamentoService: AgendamentoService) {}
 
 
 
@@ -56,9 +56,9 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
 
     this.formulario = this.formBuilder.group({
       id:[null],
-      pacientes: [null, Validators.required],
-      especialistas: [null, Validators.required],
-      tratamentos: [null, Validators.required],
+      paciente: [null, Validators.required],
+      especialista: [null, Validators.required],
+      tratamento: [null, Validators.required],
       data: [null, Validators.required],
       hora: [null, Validators.required],
       valor: [null, Validators.required]
@@ -68,7 +68,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
     if(id){
       this.titulo = 'Editar agendamento do especialista';
       this.nomeBotao = 'Atualizar';
-      this.agendamentoSubscription = this.AgendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.agendamentoSubscription = this.agendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -78,9 +78,9 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
   onUpdate(agendamento:Agendamento){
     this.formulario.patchValue({
       id:agendamento.id,
-      pacientes: agendamento.pacientes,
-      especialistas: agendamento.especialistas,
-      tratamentos: agendamento.tratamentos,
+      paciente: agendamento.paciente,
+      especialista: agendamento.especialista,
+      tratamento: agendamento.tratamento,
       data: agendamento.data,
       hora: agendamento.hora,
       valor: agendamento.valor
@@ -148,10 +148,10 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
 
   onSubmit(){
 
-    console.log(this.formulario.value)
-
-    /*
     if (this.formulario.valid) {
+
+      console.log(this.formulario.value);
+
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
       const ir =  {estado: true, url: 'agendamentos'};
@@ -160,14 +160,14 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
-      this.tratamentoService.salvar(this.formulario.value).subscribe(
+      this.agendamentoService.salvar(this.formulario.value).subscribe(
         dados => {
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
         },error => {
           this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
         }
       )
-    }*/
+    }
   }
 
   ngOnDestroy(): void {

@@ -30,7 +30,7 @@
         <label for="valor">Valor</label>
         <input type="text" class="form-control" formControlName="valor" id="valor" placeholder="Informe o valor do tratamento.">
 
-        <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid && formulario.get('valor')?.hasError('pattern')"
+        <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid || formulario.get('valor')?.hasError('pattern')"
           msgErro="Valor é inválido! Somente é permitido números">
         </app-campo-control-erro>
 

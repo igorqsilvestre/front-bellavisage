@@ -1,3 +1,4 @@
+import { DatahoraService } from './../../../shared/services/datahora.service';
 import { AgendamentoService } from './../agendamento.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TratamentoService } from './../../tratamento/tratamento.service';
@@ -45,14 +46,13 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
     private tratamentoService:TratamentoService,
     private formBuilder:FormBuilder,
     private modalService: BsModalService,
-    private agendamentoService: AgendamentoService) {}
+    private agendamentoService: AgendamentoService,
+    private dataHoraService: DatahoraService) {}
 
 
 
   ngOnInit(): void {
-    this.pacienteSubscription = this.pacienteService.obterPacientes().subscribe(dados => {if(dados) this.pacientes = dados});
-    this.especialistaSubscription = this.especialistaService.obterEspecialistas().subscribe(dados => {if(dados) this.especialistas = dados});
-    this.tratamentoSubscription = this.tratamentoService.obterTratamentos().subscribe(dados => {if(dados) this.tratamentos = dados});
+
 
     this.formulario = this.formBuilder.group({
       id:[null],
@@ -61,8 +61,33 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
       tratamento: [null, Validators.required],
       data: [null, Validators.required],
       hora: [null, Validators.required],
-      valor: [null, Validators.required]
+      valor: [null, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      status:[null],
+      avaliacao:[null]
     });
+
+
+    this.pacienteSubscription = this.pacienteService.obterPacientes().subscribe(dados => {
+      if(dados) {
+        this.pacientes = dados;
+        this.formulario.patchValue({ paciente: dados[0].id });
+      }
+    });
+
+    this.especialistaSubscription = this.especialistaService.obterEspecialistas().subscribe(dados => {
+      if(dados) {
+        this.especialistas = dados;
+        this.formulario.patchValue({ especialista: dados[0].id });
+      }
+    });
+    this.tratamentoSubscription = this.tratamentoService.obterTratamentos().subscribe(dados => {
+      if(dados) {
+        this.tratamentos = dados
+        this.formulario.patchValue({ tratamento: dados[0].id });
+      }
+    });
+
+
 
     const id = this.route.snapshot.paramMap.get('id');
     if(id){
@@ -76,70 +101,21 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
 
 
   onUpdate(agendamento:Agendamento){
+    const data = this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora);
+
     this.formulario.patchValue({
       id:agendamento.id,
-      paciente: agendamento.paciente,
-      especialista: agendamento.especialista,
-      tratamento: agendamento.tratamento,
-      data: agendamento.data,
-      hora: agendamento.hora,
-      valor: agendamento.valor
+      paciente: agendamento.paciente.id,
+      especialista: agendamento.especialista.id,
+      tratamento: agendamento.tratamento.id,
+      data: data,
+      hora: data,
+      valor: agendamento.valor,
+      status: agendamento.status,
+      avaliacao: agendamento.avaliacao
     })
-  }
 
-  /*
-  cadastro = [
-    {
-      id: 1,
-      data:'25/06/2024',
-      horas: '14:00',
-      nome: 'Maria Eduarda',
-      tratamento: 'Carboxiterapia',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 120.00,
-      status: 'Aberto',
-    },
-    {
-      id: 2,
-      data:'05/06/2024',
-      horas: '16:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'Criolipólise',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-    },
-    {
-      id: 3,
-      data:'07/06/2024',
-      horas: '14:20',
-      nome: 'Márcia Maria de Souza',
-      tratamento: 'Drenagem Linfática',
-      especialista: 'Dr.Lúcia Lane de Souza',
-      valor: 300.00,
-      status: 'Concluído',
-    },
-    {
-      id: 4,
-      data:'08/06/2024',
-      horas: '11:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'carboxiterapia',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-    },
-    {
-      id: 5,
-      data:'29/06/2024',
-      horas: '15:00',
-      nome: 'Flávia Couto Magalhães',
-      tratamento: 'Pelling Químico',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 200.00,
-      status: 'Aberto',
-    }
-  ]*/
+  }
 
   applyFilterOnTable(event: any, dtAgendamento: any) {
     console.log(event.target.value)
@@ -150,24 +126,51 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
 
     if (this.formulario.valid) {
 
-      console.log(this.formulario.value);
+      this.formulario.patchValue({
+        data: this.formatarDataParaString(this.formulario.get('data').value),
+        hora: this.formatarHoraParaString(this.formulario.get('hora').value)
+      })
 
-      let mensagemSucesso = "Cadastro foi realizado com sucesso!";
-      let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
-      const ir =  {estado: true, url: 'agendamentos'};
+      let mensagemErro = '';
+      let mensagemSucesso = '';
 
-      if(this.formulario.value.id){
-        mensagemSucesso = "Alteração realizada com sucesso!"
-        mensagemErro = "Ocorreu um erro ao realizar a edição!"
-      }
-      this.agendamentoService.salvar(this.formulario.value).subscribe(
-        dados => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
-        },error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
+      this.agendamentoService.existeDataHora(this.formulario.value).subscribe(dado => {
+        console.log(dado);
+        if(dado){
+          mensagemErro = "Ocorreu um erro pois essa data e hora já existem no sistema!"
+          this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro}  });
+        }else{
+          mensagemSucesso = "Cadastro foi realizado com sucesso!";
+          mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
+          const ir =  {estado: true, url: 'agendamentos'};
+
+          if(this.formulario.value.id){
+            mensagemSucesso = "Alteração realizada com sucesso!"
+            mensagemErro = "Ocorreu um erro ao realizar a edição!"
+          }
+          this.agendamentoService.salvar(this.formulario.value).subscribe(
+            dados => {
+              this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
+            },error => {
+              this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
+            }
+          )
         }
-      )
+      })
     }
+  }
+
+  formatarDataParaString(data: Date): string {
+    const mes = ('0' + (data.getMonth() + 1)).slice(-2);
+    const dia = ('0' + data.getDate()).slice(-2);
+    const ano = data.getFullYear();
+    return `${mes}/${dia}/${ano}`;
+  }
+
+  formatarHoraParaString(tempo: Date): string {
+    const horas = ('0' + tempo.getHours()).slice(-2);
+    const minutos = ('0' + tempo.getMinutes()).slice(-2);
+    return `${horas}:${minutos}`;
   }
 
   ngOnDestroy(): void {

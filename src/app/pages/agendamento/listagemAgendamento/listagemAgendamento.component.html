@@ -96,52 +96,50 @@
                 <ng-template pTemplate="body" let-agendamento  let-editing="editing" let-ri="rowIndex">
 
                     <tr [pEditableRow]="agendamento">
-                        <td>{{ agendamento.data | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{ agendamento.hora | date: 'HH:mm'}}</td>
+                        <td>{{ agendamento.data }}</td>
+                        <td>{{ agendamento.hora }}</td>
                         <td>{{ agendamento.paciente.nome }}</td>
                         <td>{{ agendamento.tratamento.nome }}</td>
                         <td>{{ agendamento.especialista.nome}}</td>
                         <td>{{ agendamento.valor}}</td>
-                        <td>{{ 'Aberto' }}</td>
+                        <td>{{ agendamento.status }}</td>
                         <td>
-                          <!--
                           <p-cellEditor
                             >
                               <ng-template pTemplate="input">
-                                <p-rating [(ngModel)]="cadastro.avaliacao" [readonly]="false" [required]="true" [cancel]="false"/>
+                                <p-rating [(ngModel)]="agendamento.avaliacao" [readonly]="false" [required]="true" [cancel]="false"/>
                               </ng-template>
                               <ng-template pTemplate="output"
 
                               >
                                   <p-rating
-                                  *ngIf="cadastro.status === 'Concluído'"
-                                  [(ngModel)]="cadastro.avaliacao" [readonly]="true" [cancel]="false"/>
+                                  *ngIf="agendamento.status === 'Concluido'"
+                                  [(ngModel)]="agendamento.avaliacao" [readonly]="true" [cancel]="false"/>
                               </ng-template>
                           </p-cellEditor>
-                          -->
                         </td>
-                        <td><!--
-                            <div class="flex align-items-center justify-content-center gap-2">
+                        <td>
+                          <div class="flex align-items-center justify-content-center gap-2">
 
-                              <button
-                                  *ngIf="!editing && cadastro.status !== 'Concluído'"
-                                  pInitEditableRow
-                                  (click)="onRowEditInit(cadastro)">
-                                  <fa-icon [icon]="faPen"></fa-icon>
-                              </button>
-                              <button
-                                  *ngIf="editing"
-                                  pSaveEditableRow
-                                  (click)="onRowEditSave(cadastro)">
-                                  <fa-icon [icon]="faCheck"></fa-icon>
-                              </button>
-                              <button
-                                  *ngIf="editing"
-                                  pCancelEditableRow
-                                  (click)="onRowEditCancel(cadastro)">
-                                  <fa-icon [icon]="faTimes"></fa-icon>
-                              </button>
-                            </div>-->
+                            <button
+                                *ngIf="!editing && agendamento.status !== 'Concluido'"
+                                pInitEditableRow
+                                (click)="onRowEditInit(agendamento)">
+                                <fa-icon [icon]="faPen"></fa-icon>
+                            </button>
+                            <button
+                                *ngIf="editing"
+                                pSaveEditableRow
+                                (click)="onRowEditSave(agendamento)">
+                                <fa-icon [icon]="faCheck"></fa-icon>
+                            </button>
+                            <button
+                                *ngIf="editing"
+                                pCancelEditableRow
+                                (click)="onRowEditCancel(agendamento)">
+                                <fa-icon [icon]="faTimes"></fa-icon>
+                            </button>
+                          </div>
                         </td>
                         <th>
 

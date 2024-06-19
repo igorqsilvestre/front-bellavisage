@@ -50,63 +50,6 @@ export class ListagemAgendamentoComponent implements OnInit, OnDestroy{
     )
   }
 
-  /*
-cadastro=[
-    {
-      id: 1,
-      data:'25/06/2024',
-      horas: '14:00',
-      nome: 'Maria Eduarda',
-      tratamento: 'Carboxiterapia',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 120.00,
-      status: 'Aberto',
-      avaliacao: 3,
-    },
-    {
-      id: 2,
-      data:'05/06/2024',
-      horas: '16:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'Criolipólise',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-      avaliacao: 4,
-    },
-    {
-      id: 3,
-      data:'07/06/2024',
-      horas: '14:20',
-      nome: 'Márcia Maria de Souza',
-      tratamento: 'Drenagem Linfática',
-      especialista: 'Dr.Lúcia Lane de Souza',
-      valor: 300.00,
-      status: 'Concluído',
-    },
-    {
-      id: 4,
-      data:'08/06/2024',
-      horas: '11:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'carboxiterapia',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-      avaliacao: 4,
-
-    },
-    {
-      id: 5,
-      data:'29/06/2024',
-      horas: '15:00',
-      nome: 'Flávia Couto Magalhães',
-      tratamento: 'Pelling Químico',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 200.00,
-      status: 'Aberto',
-    }
-  ]*/
 
   applyFilterOnTable(event: any, dtListagemAgendamento: any) {
     console.log(event.target.value)
@@ -140,20 +83,19 @@ cadastro=[
 
   }
 
-  onRowEditInit(cadastro: any) {
+  onRowEditInit(agendamento: Agendamento) {
     console.log('Row edit initialized');
     //agenda.editing = true;
 
   }
 
-  onRowEditSave(cadastro: any) {
+  onRowEditSave(agendamento: Agendamento) {
     console.log('Row edit saved');
-    //agenda.editing = false;
-    //TODO: chamar o backend para salvar o cadastro
-    cadastro.status = 'Concluído';
-
+    agendamento.status = 'Concluido';
+    this.agendamentoService.atualizarParteAgendamento(agendamento).subscribe();
+    this.router.navigate(['agendamentos']);
   }
-  onRowEditCancel(cadastro: any) {
+  onRowEditCancel(agendamento: Agendamento) {
     console.log('Row edit cancelled');
     //agenda.editing = false;
 
@@ -164,17 +106,8 @@ cadastro=[
       this.agendamentoSubscription.unsubscribe();
      }
   }
-
-
-
-  }
-
-
-function onRowEditSave(cadastro: any, any: any) {
-  throw new Error('Function not implemented.');
 }
 
-function onRowEditInit(cadastro: any, any: any) {
-  throw new Error('Function not implemented.');
-}
+
+
 

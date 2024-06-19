@@ -20,6 +20,14 @@ export class AgendamentoService {
     return this.http.put<Agendamento>(`${this.url}/${agendamento.id}`, agendamento);
   }
 
+  atualizarParteAgendamento(agendamento: Agendamento): Observable<Agendamento>{
+    return this.http.patch<Agendamento>(`${this.url}/${agendamento.id}`, agendamento);
+  }
+
+  existeDataHora(agendamento: Agendamento): Observable<boolean>{
+    return this.http.post<boolean>(`${this.url}/exists/dataHora`, agendamento);
+  }
+
   obterAgendamentos(): Observable<Agendamento[]>{;
     return this.http.get<Agendamento[]>(this.url);
   }

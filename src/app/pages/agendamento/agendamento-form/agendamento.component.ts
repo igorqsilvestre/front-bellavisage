@@ -1,3 +1,4 @@
+import { DateValues } from 'date-fns';
 import { DatahoraService } from './../../../shared/services/datahora.service';
 import { AgendamentoService } from './../agendamento.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,6 +16,7 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
 import { Paciente } from '../../paciente/Paciente';
 import { Especialista } from '../../especialista/Especialista';
 import { Tratamento } from '../../tratamento/Tratamento';
+import moment from 'moment';
 
 
 @Component({
@@ -134,7 +136,15 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
       let mensagemErro = '';
       let mensagemSucesso = '';
 
-      this.agendamentoService.existeDataHora(this.formulario.value).subscribe(dado => {
+      const dataISO = moment(this.formulario.get('data').value, 'MM/DD/YYYY')
+        .toISOString()
+
+      this.agendamentoService.existeDataHora(
+        {
+          ...this.formulario.value,
+          data: dataISO
+        }
+      ).subscribe(dado => {
         console.log(dado);
         if(dado){
           mensagemErro = "Ocorreu um erro pois essa data e hora já existem no sistema!"
@@ -148,7 +158,14 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
             mensagemSucesso = "Alteração realizada com sucesso!"
             mensagemErro = "Ocorreu um erro ao realizar a edição!"
           }
-          this.agendamentoService.salvar(this.formulario.value).subscribe(
+
+          const dataISO = moment(this.formulario.get('data').value, 'MM/DD/YYYY')
+            .toISOString()
+
+          this.agendamentoService.salvar({
+            ...this.formulario.value,
+            data: dataISO
+          }).subscribe(
             dados => {
               this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
             },error => {

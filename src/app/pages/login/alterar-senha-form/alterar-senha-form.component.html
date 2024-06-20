@@ -15,7 +15,7 @@
           msgErro="Formato de email inválido!">
         </app-campo-control-erro>
 
-        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched && formulario.get('email')?.errors?.['emailExistente']"
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched && formulario.get('email')?.errors?.['emailInexistente']"
         msgErro="Email não cadastrado no sistema!">
         </app-campo-control-erro>
 

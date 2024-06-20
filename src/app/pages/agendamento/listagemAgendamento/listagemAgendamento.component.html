@@ -5,7 +5,7 @@
   <section class="sessao-principal">
     <h2 class="titulo">Agendamento dos Pacientes</h2>
       <div class="button-direcionamentoCadastrar">
-        <button type="submit" (click)="editarCadastro(cadastro)">Cadastrar Agendamento</button>
+        <button type="submit" routerLink="agendamentos/novo-agendamento">Cadastrar Agendamento</button>
       </div>
         <div class="campo-agendamento">
 
@@ -17,7 +17,7 @@
                 <p-table
                 #dtListagemAgendamento
                 dataKey="id"
-                [value]="cadastro"
+                [value]="agendamentos"
                 [tableStyle]="{ 'min-width': '50rem' }"
                 [globalFilterFields]="[
                     'name',
@@ -93,67 +93,64 @@
                       <th></th>
                 </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-cadastro  let-editing="editing" let-ri="rowIndex">
+                <ng-template pTemplate="body" let-agendamento  let-editing="editing" let-ri="rowIndex">
 
-                    <tr [pEditableRow]="cadastro">
-
-
-                        <td>{{ cadastro.data }}</td>
-                        <td>{{ cadastro.horas }}</td>
-                        <td>{{ cadastro.nome }}</td>
-                        <td>{{ cadastro.tratamento }}</td>
-                        <td>{{ cadastro.especialista}}</td>
-                        <td>{{ cadastro.valor}}</td>
-                        <td>{{ cadastro.status}}</td>
+                    <tr [pEditableRow]="agendamento">
+                        <td>{{ agendamento.data }}</td>
+                        <td>{{ agendamento.hora }}</td>
+                        <td>{{ agendamento.paciente.nome }}</td>
+                        <td>{{ agendamento.tratamento.nome }}</td>
+                        <td>{{ agendamento.especialista.nome}}</td>
+                        <td>{{ agendamento.valor}}</td>
+                        <td>{{ agendamento.status }}</td>
                         <td>
                           <p-cellEditor
                             >
                               <ng-template pTemplate="input">
-                                <p-rating [(ngModel)]="cadastro.avaliacao" [readonly]="false" [required]="true" [cancel]="false"/>
+                                <p-rating [(ngModel)]="agendamento.avaliacao" [readonly]="false" [required]="true" [cancel]="false"/>
                               </ng-template>
                               <ng-template pTemplate="output"
 
                               >
                                   <p-rating
-                                  *ngIf="cadastro.status === 'Concluído'"
-                                  [(ngModel)]="cadastro.avaliacao" [readonly]="true" [cancel]="false"/>
+                                  *ngIf="agendamento.status === 'Concluido'"
+                                  [(ngModel)]="agendamento.avaliacao" [readonly]="true" [cancel]="false"/>
                               </ng-template>
                           </p-cellEditor>
-    <!--                       <p-rating [(ngModel)]="cadastro.avaliacao" [readonly]="true" [cancel]="false"/>
-    -->                </td>
-                        <td>
-                            <div class="flex align-items-center justify-content-center gap-2">
-                              <button
-                                  *ngIf="!editing && cadastro.status !== 'Concluído'"
-                                  pInitEditableRow
-                                  (click)="onRowEditInit(cadastro)">
-                                  <fa-icon [icon]="faPen"></fa-icon>
-                              </button>
-                              <button
-                                  *ngIf="editing"
-                                  pSaveEditableRow
-                                  (click)="onRowEditSave(cadastro)">
-                                  <fa-icon [icon]="faCheck"></fa-icon>
-                              </button>
-                              <button
-                                  *ngIf="editing"
-                                  pCancelEditableRow
-                                  (click)="onRowEditCancel(cadastro)">
-                                  <fa-icon [icon]="faTimes"></fa-icon>
-                              </button>
-                            </div>
                         </td>
-    <!--                    botoes de lixeira e edicao estao funcionando
-    -->                    <th>
+                        <td>
+                          <div class="flex align-items-center justify-content-center gap-2">
+
+                            <button
+                                *ngIf="!editing && agendamento.status !== 'Concluido'"
+                                pInitEditableRow
+                                (click)="onRowEditInit(agendamento)">
+                                <fa-icon [icon]="faPen"></fa-icon>
+                            </button>
+                            <button
+                                *ngIf="editing"
+                                pSaveEditableRow
+                                (click)="onRowEditSave(agendamento)">
+                                <fa-icon [icon]="faCheck"></fa-icon>
+                            </button>
+                            <button
+                                *ngIf="editing"
+                                pCancelEditableRow
+                                (click)="onRowEditCancel(agendamento)">
+                                <fa-icon [icon]="faTimes"></fa-icon>
+                            </button>
+                          </div>
+                        </td>
+                        <th>
 
                           <button
-                          (click)="cancelarCadastro(cadastro)"
+                          (click)="cancelarCadastro(agendamento)"
                           >
                             <fa-icon [icon]="faTrash"></fa-icon>
 
                         </button>
                         <button
-                        (click)="editarCadastro(cadastro)"
+                        (click)="editarCadastro(agendamento)"
                         >
                         <fa-icon [icon]="faEdit"></fa-icon>
                         </button>

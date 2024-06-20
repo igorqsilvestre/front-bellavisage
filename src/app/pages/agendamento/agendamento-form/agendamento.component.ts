@@ -1,7 +1,20 @@
-import { Component } from '@angular/core';
+import { DatahoraService } from './../../../shared/services/datahora.service';
+import { AgendamentoService } from './../agendamento.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TratamentoService } from './../../tratamento/tratamento.service';
+import { EspecialistaService } from './../../especialista/especialista.service';
+import { PacienteService } from './../../paciente/paciente.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Router } from '@angular/router'; // Import the Router module
+import { ActivatedRoute, Router } from '@angular/router';
 import { Time } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Agendamento } from '../Agendamento';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { Paciente } from '../../paciente/Paciente';
+import { Especialista } from '../../especialista/Especialista';
+import { Tratamento } from '../../tratamento/Tratamento';
 
 
 @Component({
@@ -9,76 +22,161 @@ import { Time } from '@angular/common';
   templateUrl: './agendamento.component.html',
   styleUrl: './agendamento.component.css'
 })
-export class AgendamentoComponent {
+export class AgendamentoComponent implements OnInit, OnDestroy{
+  formulario!: FormGroup;
+  modalRef!: BsModalRef;
+  private pacienteSubscription!: Subscription;
+  private especialistaSubscription!: Subscription;
+  private tratamentoSubscription!: Subscription;
+  private agendamentoSubscription!: Subscription;
+  pacientes!: Paciente[];
+  especialistas!: Especialista[];
+  tratamentos!: Tratamento[];
+  titulo:string = 'Agendamento do Paciente';
+  nomeBotao:string = 'Agendar';
   faMagnifyingGlass = faMagnifyingGlass;
 
 
    date: Date;
    time: Time;
 
-  constructor(private router: Router) {} // Add the Router to the component's constructor
+  constructor(private route: ActivatedRoute,
+    private pacienteService:PacienteService,
+    private especialistaService:EspecialistaService,
+    private tratamentoService:TratamentoService,
+    private formBuilder:FormBuilder,
+    private modalService: BsModalService,
+    private agendamentoService: AgendamentoService,
+    private dataHoraService: DatahoraService) {}
 
 
-  cadastro = [
-    {
-      id: 1,
-      data:'25/06/2024',
-      horas: '14:00',
-      nome: 'Maria Eduarda',
-      tratamento: 'Carboxiterapia',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 120.00,
-      status: 'Aberto',
-    },
-    {
-      id: 2,
-      data:'05/06/2024',
-      horas: '16:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'Criolipólise',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-    },
-    {
-      id: 3,
-      data:'07/06/2024',
-      horas: '14:20',
-      nome: 'Márcia Maria de Souza',
-      tratamento: 'Drenagem Linfática',
-      especialista: 'Dr.Lúcia Lane de Souza',
-      valor: 300.00,
-      status: 'Concluído',
-    },
-    {
-      id: 4,
-      data:'08/06/2024',
-      horas: '11:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'carboxiterapia',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-    },
-    {
-      id: 5,
-      data:'29/06/2024',
-      horas: '15:00',
-      nome: 'Flávia Couto Magalhães',
-      tratamento: 'Pelling Químico',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 200.00,
-      status: 'Aberto',
+
+  ngOnInit(): void {
+
+
+    this.formulario = this.formBuilder.group({
+      id:[null],
+      paciente: [null, Validators.required],
+      especialista: [null, Validators.required],
+      tratamento: [null, Validators.required],
+      data: [null, Validators.required],
+      hora: [null, Validators.required],
+      valor: [null, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      status:[null],
+      avaliacao:[null]
+    });
+
+
+    this.pacienteSubscription = this.pacienteService.obterPacientes().subscribe(dados => {
+      if(dados) {
+        this.pacientes = dados;
+        this.formulario.patchValue({ paciente: dados[0].id });
+      }
+    });
+
+    this.especialistaSubscription = this.especialistaService.obterEspecialistas().subscribe(dados => {
+      if(dados) {
+        this.especialistas = dados;
+        this.formulario.patchValue({ especialista: dados[0].id });
+      }
+    });
+    this.tratamentoSubscription = this.tratamentoService.obterTratamentos().subscribe(dados => {
+      if(dados) {
+        this.tratamentos = dados
+        this.formulario.patchValue({ tratamento: dados[0].id });
+      }
+    });
+
+
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id){
+      this.titulo = 'Editar agendamento do especialista';
+      this.nomeBotao = 'Atualizar';
+      this.agendamentoSubscription = this.agendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+        dados => {if(dados) this.onUpdate(dados)}
+      )
     }
-  ]
+  }
+
+
+  onUpdate(agendamento:Agendamento){
+    const data = this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora);
+
+    this.formulario.patchValue({
+      id:agendamento.id,
+      paciente: agendamento.paciente.id,
+      especialista: agendamento.especialista.id,
+      tratamento: agendamento.tratamento.id,
+      data: data,
+      hora: data,
+      valor: agendamento.valor,
+      status: agendamento.status,
+      avaliacao: agendamento.avaliacao
+    })
+
+  }
 
   applyFilterOnTable(event: any, dtAgendamento: any) {
     console.log(event.target.value)
     return dtAgendamento.filterGlobal(event, 'contains')
   }
 
-  editarCadastro() {
-    this.router.navigate(['/agendar/novo-paciente'])
+  onSubmit(){
 
+    if (this.formulario.valid) {
+
+      this.formulario.patchValue({
+        data: this.formatarDataParaString(this.formulario.get('data').value),
+        hora: this.formatarHoraParaString(this.formulario.get('hora').value)
+      })
+
+      let mensagemErro = '';
+      let mensagemSucesso = '';
+
+      this.agendamentoService.existeDataHora(this.formulario.value).subscribe(dado => {
+        console.log(dado);
+        if(dado){
+          mensagemErro = "Ocorreu um erro pois essa data e hora já existem no sistema!"
+          this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro}  });
+        }else{
+          mensagemSucesso = "Cadastro foi realizado com sucesso!";
+          mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
+          const ir =  {estado: true, url: 'agendamentos'};
+
+          if(this.formulario.value.id){
+            mensagemSucesso = "Alteração realizada com sucesso!"
+            mensagemErro = "Ocorreu um erro ao realizar a edição!"
+          }
+          this.agendamentoService.salvar(this.formulario.value).subscribe(
+            dados => {
+              this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
+            },error => {
+              this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
+            }
+          )
+        }
+      })
+    }
+  }
+
+  formatarDataParaString(data: Date): string {
+    const mes = ('0' + (data.getMonth() + 1)).slice(-2);
+    const dia = ('0' + data.getDate()).slice(-2);
+    const ano = data.getFullYear();
+    return `${mes}/${dia}/${ano}`;
+  }
+
+  formatarHoraParaString(tempo: Date): string {
+    const horas = ('0' + tempo.getHours()).slice(-2);
+    const minutos = ('0' + tempo.getMinutes()).slice(-2);
+    return `${horas}:${minutos}`;
+  }
+
+  ngOnDestroy(): void {
+    if(this.pacienteSubscription)this.pacienteSubscription.unsubscribe;
+    if(this.especialistaSubscription)this.especialistaSubscription.unsubscribe;
+    if(this.tratamentoSubscription)this.tratamentoSubscription.unsubscribe;
+    if(this.agendamentoSubscription)this.agendamentoSubscription.unsubscribe;
   }
 }

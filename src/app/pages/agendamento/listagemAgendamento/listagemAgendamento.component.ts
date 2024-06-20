@@ -1,152 +1,113 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Agendamento } from '../Agendamento';
+import { Subscription } from 'rxjs';
+import { AgendamentoService } from '../agendamento.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
-import { Time } from '@angular/common';
-/* import { Time } from '@angular/common';
- */
-
-/* interface Cadastro {
-id: number;
-data:Date;
-horas: Time;
-nome: string;
-tratamento:  string;
-especialista:  string;
-valor: DoubleRange;
-status: string;
-avaliacao: number;
-
-} */
 
 @Component({
   selector: 'app-listagemagendamento',
   templateUrl: './listagemAgendamento.component.html',
   styleUrl: './listagemAgendamento.component.css'
 })
-export class ListagemAgendamentoComponent {
+export class ListagemAgendamentoComponent implements OnInit, OnDestroy{
+  agendamentos: Agendamento[] = [];
+  agendamentoSubscription: Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
   faPen = faPen;
   faCheck = faCheck;
   faTimes = faTimes;
+  modalRef: any;
 
 
 
 
-  constructor(private router: Router) {} // Add the Router to the component's constructor
+  constructor(private router: Router,
+      private agendamentoService: AgendamentoService,
+      private modalService: BsModalService) {}
 
-cadastro=[
-    {
-      id: 1,
-      data:'25/06/2024',
-      horas: '14:00',
-      nome: 'Maria Eduarda',
-      tratamento: 'Carboxiterapia',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 120.00,
-      status: 'Aberto',
-      avaliacao: 3,
-    },
-    {
-      id: 2,
-      data:'05/06/2024',
-      horas: '16:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'Criolipólise',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-      avaliacao: 4,
-    },
-    {
-      id: 3,
-      data:'07/06/2024',
-      horas: '14:20',
-      nome: 'Márcia Maria de Souza',
-      tratamento: 'Drenagem Linfática',
-      especialista: 'Dr.Lúcia Lane de Souza',
-      valor: 300.00,
-      status: 'Concluído',
-    },
-    {
-      id: 4,
-      data:'08/06/2024',
-      horas: '11:00',
-      nome: 'Carlos Eduardo de Souza',
-      tratamento: 'carboxiterapia',
-      especialista: 'Dr. Paulo Henrique Cabral',
-      valor: 120.00,
-      status: 'Concluído',
-      avaliacao: 4,
 
-    },
-    {
-      id: 5,
-      data:'29/06/2024',
-      horas: '15:00',
-      nome: 'Flávia Couto Magalhães',
-      tratamento: 'Pelling Químico',
-      especialista: 'Dr. Margarida Eduarda',
-      valor: 200.00,
-      status: 'Aberto',
-    }
-  ]
+  ngOnInit(): void {
+    this.atualizarLista();
+  }
+
+  atualizarLista(){
+    this.agendamentoSubscription = this.agendamentoService.obterAgendamentos().subscribe(
+      dados => {
+        if(dados){
+          this.agendamentos = dados;
+        }
+      }
+    )
+  }
+
 
   applyFilterOnTable(event: any, dtListagemAgendamento: any) {
     console.log(event.target.value)
     return dtListagemAgendamento.filterGlobal(event, 'contains')
   }
 
-  editarCadastro(cadastro: any) {
-    this.router.navigate(['/agendar/novo-agendamento'])
+  editarCadastro(agendamento: Agendamento) {
+    this.router.navigate(['agendamentos/editar-agendamento', agendamento.id])
 
   }
 
-  cancelarCadastro(cadastro: any) {
+  cancelarCadastro(agendamento: Agendamento) {
 
-    if(confirm('Deseja realmente excluir o cadastro?')){
-      this.cadastro = this.cadastro.filter(item => item.id !== cadastro.id);
+    this.modalRef = this.modalService.show(ConfirmModalComponent, {
+      initialState: {
+        type: 'Confirmação',
+        message: 'Deseja realmente excluir?'
+      }
+    });
 
-      //TODO: Igor, aqui voce implementa a chamada para o backend para excluir o cadastro
-    }
+    this.modalRef.content.confirm.subscribe(() => {
+      this.agendamentoService.excluirAgendamento(agendamento.id).subscribe(
+        () => {
+          this.atualizarLista();
+        },
+        error => {
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir agendamento!' } });
+        }
+      );
+    });
 
   }
 
-  onRowEditInit(cadastro: any) {
+  onRowEditInit(agendamento: Agendamento) {
     console.log('Row edit initialized');
     //agenda.editing = true;
 
   }
 
-  onRowEditSave(cadastro: any) {
+  onRowEditSave(agendamento: Agendamento) {
     console.log('Row edit saved');
-    //agenda.editing = false;
-    //TODO: chamar o backend para salvar o cadastro
-    cadastro.status = 'Concluído';
-
+    agendamento.status = 'Concluido';
+    this.agendamentoService.atualizarParteAgendamento(agendamento).subscribe();
+    this.router.navigate(['agendamentos']);
   }
-  onRowEditCancel(cadastro: any) {
+  onRowEditCancel(agendamento: Agendamento) {
     console.log('Row edit cancelled');
     //agenda.editing = false;
 
   }
 
-
-
-
+  ngOnDestroy(): void {
+    if(this.agendamentoSubscription){
+      this.agendamentoSubscription.unsubscribe();
+     }
   }
-
-
-function onRowEditSave(cadastro: any, any: any) {
-  throw new Error('Function not implemented.');
 }
 
-function onRowEditInit(cadastro: any, any: any) {
-  throw new Error('Function not implemented.');
-}
+
+
 

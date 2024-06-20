@@ -1,3 +1,4 @@
+
 export interface Tratamento {
   id:number;
   nome: string;

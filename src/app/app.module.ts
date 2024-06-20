@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import ptBr from '@angular/common/locales/pt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { registerLocaleData } from '@angular/common';
 
 
 import { HomeModule } from './pages/home/home.module';
@@ -24,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './guards/auth.guard';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 
-
+registerLocaleData(ptBr);
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
   ],
   providers: [
     provideAnimationsAsync(),
-    AuthGuard
+    AuthGuard,
+    { provide: LOCALE_ID, useValue: 'pt' },
   ],
   bootstrap: [AppComponent]
 })

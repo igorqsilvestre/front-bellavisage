@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import { InitEditableRow } from 'primeng/table';
 
 @Component({
   selector: 'app-dashboard-faturamento',
@@ -9,6 +11,57 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 
 })
 export class DashboardFaturamentoComponent{
+  private url = "http://localhost:8081/api/v1/dashboard";
+  constructor(private http: HttpClient) {
+    this.init()
+  }
+
+  barSeries: any[] = []
+  xAxisData: any[] = []
+
+  async init() {
+    const reportPizza = await this.getReportPizza()
+    //console.log(reportPizza)
+    const pizzaSerie0 = (this.faturamentopizza.series as any[])[0]
+    pizzaSerie0.data = reportPizza.map((item: any) => {
+      return {
+        value: item.valor,
+        name: item.nome
+      }
+    })
+
+    const reportBar = await this.getReportBar()
+    //console.log(reportBar)
+    this.barSeries = reportBar.map((item: any) => {
+      return item.valor
+    })
+    this.xAxisData = reportBar.map((item: any) => {
+      return item.data
+    })
+  }
+
+  async getReportPizza(): Promise<any[]> {
+    const path = 'report-pizza'
+
+    return (await this.http.get(`${this.url}/${path}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).toPromise()) as any[]
+  }
+
+
+  async getReportBar(): Promise<any[]> {
+    const path = 'report-bar'
+
+    return (await this.http.get(`${this.url}/${path}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).toPromise()) as any[]
+  }
+
+
 
   faturamento: any;
 
@@ -56,38 +109,20 @@ listaTotalFaturamentoTratamento= [
     return {
       xAxis: {
         type: 'category',
-        data: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+        data: this.xAxisData
       },
       yAxis: {
         type: 'value'
       },
       series: [
         {
-          data: this.getData(),
+          data: this.barSeries,
           type: 'bar'
         }
       ]
     } as EChartsOption
   }
 
-
-  getData() {
-    //console.log(this.tratamentoSelecionadoMensalPorProcedimento)
-
-    if(!this.tratamentoSelecionadoMensalPorProcedimento) {
-      return []
-    }
-
-    if(this.tratamentoSelecionadoMensalPorProcedimento.id === 1) {
-      return [90, 80, 70, 60, 50, 40, 30, 20, 10, 0, 10, 20]
-    }
-
-    if(this.tratamentoSelecionadoMensalPorProcedimento.id === 2) {
-      return [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
-    }
-
-    return [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
-  }
 
   listaTratamentosMensalPorProcedimento: {
     id: number,
@@ -149,11 +184,7 @@ listaTotalFaturamentoTratamento= [
         type: 'pie',
         radius: '50%',
         data: [
-          { value: 1048, name: 'Carboxiterapia' },
-          { value: 735, name: 'Criofequência' },
-          { value: 580, name: 'Harmonização Facial' },
-          { value: 484, name: 'Radiofrequência' },
-          { value: 300, name: 'Laser Vênus' }
+
         ],
         emphasis: {
           itemStyle: {

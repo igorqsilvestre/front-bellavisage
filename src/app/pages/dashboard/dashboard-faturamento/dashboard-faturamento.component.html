@@ -6,18 +6,18 @@
     <h2 class="titulo">Visão Geral de Vendas</h2>
 
      <div class="barras">
-        <h3 class="subtitulo"> Faturamento mensal por procedimento</h3>
+        <h3 class="subtitulo"> Faturamento por Mês</h3>
         <div>
-            <p-dropdown
+            <!-- <p-dropdown
             [options]="listaTratamentosMensalPorProcedimento"
             optionLabel="name"
             [showClear]="true"
             placeholder="Tratamento"
             (onChange)="listaTratamentosMensalPorProcedimentoOnChange($event)"
             class="box-select-tratamento"
-            />
+            /> -->
             <div
-              *ngIf="tratamentoSelecionadoMensalPorProcedimento"
+
               echarts
               [options]="getChartOption()"
               class="demo-chart">

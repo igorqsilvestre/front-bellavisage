@@ -80,7 +80,22 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
         },
       );
+    }else{
+      this.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+
+  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if(control.invalid){
+        control.markAsTouched({onlySelf: true});
+      }
+      if (control instanceof FormGroup) {
+        this.marcarCamposInvalidosComoTocado(control);
+      }
+    })
   }
 
   ngOnDestroy(): void {
@@ -90,6 +105,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
     if(this.loginSubscription){
       this.loginSubscription.unsubscribe();
     }
+
 
 
   }

@@ -61,7 +61,21 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
         },
       );
+    }else{
+      this.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if(control.invalid){
+        control.markAsTouched({onlySelf: true});
+      }
+      if (control instanceof FormGroup) {
+        this.marcarCamposInvalidosComoTocado(control);
+      }
+    })
   }
 
 

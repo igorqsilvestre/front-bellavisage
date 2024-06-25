@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { TratamentoService } from '../tratamento.service';
 import { Tratamento } from '../Tratamento';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
@@ -19,8 +19,7 @@ export class TratamentoFormComponent {
   modalRef!: BsModalRef;
   titulo:string = 'Cadastro do tratamento';
   nomeBotao:string = 'Cadastrar';
-  private tratamentoSubscription!: Subscription;
-
+  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +46,7 @@ export class TratamentoFormComponent {
     if(id){
       this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.tratamentoSubscription = this.tratamentoService.obterTratamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.tratamentoService.obterTratamento(Number(this.route.snapshot.paramMap.get('id'))).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -73,19 +72,34 @@ export class TratamentoFormComponent {
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
-      this.tratamentoService.salvar(this.formulario.value).subscribe(
+      this.tratamentoService.salvar(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
         },error => {
           this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
         }
       )
+    }else{
+      this.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
 
+  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if(control.invalid){
+        control.markAsTouched({onlySelf: true});
+      }
+      if (control instanceof FormGroup) {
+        this.marcarCamposInvalidosComoTocado(control);
+      }
+    })
+  }
+
   ngOnDestroy(): void {
-    if(this.tratamentoSubscription){
-      this.tratamentoSubscription.unsubscribe();
+    if(this.destroy$){
+      this.destroy$.next();
+      this.destroy$.complete();
     }
   }
 }

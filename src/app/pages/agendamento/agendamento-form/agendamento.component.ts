@@ -1,22 +1,19 @@
-import { DateValues } from 'date-fns';
 import { DatahoraService } from './../../../shared/services/datahora.service';
 import { AgendamentoService } from './../agendamento.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { TratamentoService } from './../../tratamento/tratamento.service';
 import { EspecialistaService } from './../../especialista/especialista.service';
 import { PacienteService } from './../../paciente/paciente.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Time } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Agendamento } from '../Agendamento';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 import { Paciente } from '../../paciente/Paciente';
 import { Especialista } from '../../especialista/Especialista';
 import { Tratamento } from '../../tratamento/Tratamento';
-import moment from 'moment';
 
 
 @Component({
@@ -27,20 +24,15 @@ import moment from 'moment';
 export class AgendamentoComponent implements OnInit, OnDestroy{
   formulario!: FormGroup;
   modalRef!: BsModalRef;
-  private pacienteSubscription!: Subscription;
-  private especialistaSubscription!: Subscription;
-  private tratamentoSubscription!: Subscription;
-  private agendamentoSubscription!: Subscription;
   pacientes!: Paciente[];
   especialistas!: Especialista[];
   tratamentos!: Tratamento[];
   titulo:string = 'Agendamento do Paciente';
   nomeBotao:string = 'Agendar';
   faMagnifyingGlass = faMagnifyingGlass;
+  private destroy$ = new Subject<void>();
 
 
-   date: Date;
-   time: Time;
 
   constructor(private route: ActivatedRoute,
     private pacienteService:PacienteService,
@@ -61,46 +53,71 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
       paciente: [null, Validators.required],
       especialista: [null, Validators.required],
       tratamento: [null, Validators.required],
-      data: [null, Validators.required],
+      data: [null, [Validators.required, this.validaDataMenorQueAtual()]],
       hora: [null, Validators.required],
-      valor: [null, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      valor: [null, [Validators.required]],
       status:[null],
       avaliacao:[null]
     });
 
+    this.atualizaValorDoTratamento();
 
-    this.pacienteSubscription = this.pacienteService.obterPacientes().subscribe(dados => {
+    this.pacienteService.obterPacientes().pipe(takeUntil(this.destroy$)).subscribe(dados => {
       if(dados) {
         this.pacientes = dados;
         this.formulario.patchValue({ paciente: dados[0].id });
       }
     });
 
-    this.especialistaSubscription = this.especialistaService.obterEspecialistas().subscribe(dados => {
+   this.especialistaService.obterEspecialistas().pipe(takeUntil(this.destroy$)).subscribe(dados => {
       if(dados) {
         this.especialistas = dados;
         this.formulario.patchValue({ especialista: dados[0].id });
       }
     });
-    this.tratamentoSubscription = this.tratamentoService.obterTratamentos().subscribe(dados => {
+
+
+    this.tratamentoService.obterTratamentos().pipe(takeUntil(this.destroy$)).subscribe(dados => {
       if(dados) {
         this.tratamentos = dados
         this.formulario.patchValue({ tratamento: dados[0].id });
       }
     });
 
-
-
     const id = this.route.snapshot.paramMap.get('id');
     if(id){
       this.titulo = 'Editar agendamento do especialista';
       this.nomeBotao = 'Atualizar';
-      this.agendamentoSubscription = this.agendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.agendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
   }
 
+  validaDataMenorQueAtual(): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value) {
+        const dataHoje = new Date();
+        const data = new Date(control.value);
+
+        dataHoje.setHours(0, 0, 0, 0);
+        data.setHours(0, 0, 0, 0);
+
+        return data.getTime() < dataHoje.getTime() ? { dataMenorQueAtual: true } : null;
+      }
+      return null;
+    };
+  }
+
+  atualizaValorDoTratamento(){
+    this.formulario.get('tratamento')!.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(id => {
+      if(id){
+      this.tratamentoService.obterTratamento(id).pipe(takeUntil(this.destroy$)).subscribe(tratamento => {
+        if(tratamento) this.formulario.get('valor')!.setValue(tratamento.valor.toString().replaceAll(',','').split('.')[0]);
+      });
+      }
+    })
+  }
 
   onUpdate(agendamento:Agendamento){
     const data = this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora);
@@ -127,7 +144,6 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
   onSubmit(){
 
     if (this.formulario.valid) {
-
       this.formulario.patchValue({
         data: this.formatarDataParaString(this.formulario.get('data').value),
         hora: this.formatarHoraParaString(this.formulario.get('hora').value)
@@ -136,16 +152,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
       let mensagemErro = '';
       let mensagemSucesso = '';
 
-      const dataISO = moment(this.formulario.get('data').value, 'MM/DD/YYYY')
-        .toISOString()
-
-      this.agendamentoService.existeDataHora(
-        {
-          ...this.formulario.value,
-          data: dataISO
-        }
-      ).subscribe(dado => {
-        console.log(dado);
+      this.agendamentoService.existeDataHora(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(dado => {
         if(dado){
           mensagemErro = "Ocorreu um erro pois essa data e hora já existem no sistema!"
           this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro}  });
@@ -158,14 +165,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
             mensagemSucesso = "Alteração realizada com sucesso!"
             mensagemErro = "Ocorreu um erro ao realizar a edição!"
           }
-
-          const dataISO = moment(this.formulario.get('data').value, 'MM/DD/YYYY')
-            .toISOString()
-
-          this.agendamentoService.salvar({
-            ...this.formulario.value,
-            data: dataISO
-          }).subscribe(
+          this.agendamentoService.salvar(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
             dados => {
               this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
             },error => {
@@ -174,8 +174,23 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
           )
         }
       })
+    }else{
+      this.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
+
+  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if(control.invalid){
+        control.markAsTouched({onlySelf: true});
+      }
+      if (control instanceof FormGroup) {
+        this.marcarCamposInvalidosComoTocado(control);
+      }
+    })
+  }
+
 
   formatarDataParaString(data: Date): string {
     const mes = ('0' + (data.getMonth() + 1)).slice(-2);
@@ -191,9 +206,9 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    if(this.pacienteSubscription)this.pacienteSubscription.unsubscribe;
-    if(this.especialistaSubscription)this.especialistaSubscription.unsubscribe;
-    if(this.tratamentoSubscription)this.tratamentoSubscription.unsubscribe;
-    if(this.agendamentoSubscription)this.agendamentoSubscription.unsubscribe;
+    if(this.destroy$){
+      this.destroy$.next();
+      this.destroy$.complete();
+    }
   }
 }

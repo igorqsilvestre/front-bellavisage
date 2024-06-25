@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LoginService } from '../login.service';
 import { AuthService } from '../../../guards/auth.service';
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy{
 
   formulario!: FormGroup;
   modalRef!: BsModalRef;
-  private loginSubscription!: Subscription;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy{
 
   onSubmit(){
     if (this.formulario.valid) {
-      this.loginSubscription = this.loginService.verificarExisteUsuarioCadastro(this.formulario.value).subscribe(
+      this.loginService.verificarExisteUsuarioCadastro(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {
           if(dados){
             this.authService.realizarLogin(dados);
@@ -76,10 +76,10 @@ export class LoginComponent implements OnInit, OnDestroy{
 
 
   ngOnDestroy(): void {
-    if(this.loginSubscription){
-      this.loginSubscription.unsubscribe();
+    if(this.destroy$){
+      this.destroy$.next();
+      this.destroy$.complete();
     }
-
   }
 
 }

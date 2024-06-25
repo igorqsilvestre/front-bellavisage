@@ -7,8 +7,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-listagempagamentos',
-  templateUrl: './listagempagamentos.component.html',
-  styleUrl: './listagempagamentos.component.css'
+  templateUrl: './listagemPagamentos.component.html',
+  styleUrl: './listagemPagamentos.component.css'
 })
 export class ListagemPagamentosComponent {
   faMagnifyingGlass = faMagnifyingGlass;

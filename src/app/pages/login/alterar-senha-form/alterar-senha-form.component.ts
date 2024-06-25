@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
 @Component({
@@ -16,15 +16,14 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
 
   formulario!: FormGroup;
   modalRef!: BsModalRef;
-  private loginSubscription!: Subscription;
-
+  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private modalService: BsModalService,
     private loginEmailValidator: LoginEmailValidator,
-    private router:Router){}
+    ){}
 
 
   ngOnInit(): void {
@@ -42,7 +41,7 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
   onSubmit(){
     if (this.formulario.valid) {
 
-      this.loginSubscription = this.loginService.atualizarSenha(this.formulario.value).subscribe(
+     this.loginService.atualizarSenha(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {
           const initialState = {
             type: 'Sucesso!',
@@ -80,9 +79,9 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
 
 
   ngOnDestroy(): void {
-    if(this.loginSubscription){
-      this.loginSubscription.unsubscribe();
+    if(this.destroy$){
+      this.destroy$.next();
+      this.destroy$.complete();
     }
-
   }
 }

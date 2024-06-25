@@ -18,20 +18,16 @@
         <label for="cpf">Cpf</label>
         <input type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="Informe seu cpf">
 
-        <app-campo-control-erro [mostrarErro]="formulario.get('cpf')?.touched && formulario.get('cpf')?.hasError('invalidCpf')"
-          msgErro="Cpf invalido!">
-        </app-campo-control-erro>
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('cpf')?.touched && formulario.get('cpf')?.hasError('cpfExistente')"
-          msgErro="Cpf Já existe no sistema!">
+        <app-campo-control-erro [mostrarErro]="formulario.get('cpf')?.touched && formulario.get('cpf')?.invalid"
+          msgErro="Cpf invalido ou cpf já existe no sistema">
         </app-campo-control-erro>
 
         <label for="email">Email</label>
         <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
 
         <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
-        formulario.get('email')?.hasError('pattern')"
-          msgErro="Formato de email inválido!">
+        formulario.get('email')?.invalid"
+          msgErro="Email inválido!">
         </app-campo-control-erro>
 
         <label for="telefone">Telefone</label>
@@ -104,7 +100,7 @@
         </div>
       </div>
 
-      <button type="submit"  [disabled]="formulario.invalid">{{ nomeBotao }}</button>
+      <button type="submit">{{ nomeBotao }}</button>
     </form>
 
   </section>

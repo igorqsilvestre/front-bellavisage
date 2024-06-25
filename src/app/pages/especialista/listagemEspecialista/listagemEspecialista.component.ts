@@ -13,8 +13,8 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
 
 @Component({
   selector: 'app-listagemespecialista',
-  templateUrl: './listagemespecialista.component.html',
-  styleUrl: './listagemespecialista.component.css'
+  templateUrl: './listagemEspecialista.component.html',
+  styleUrl: './listagemEspecialista.component.css'
 })
 export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
   especialistas: Especialista[] = [];

@@ -2,7 +2,7 @@ import { DropdownService } from './../../../shared/services/dropdown.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EstadoBr } from '../../../shared/models/estado-br';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { LoginService } from '../login.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
@@ -18,10 +18,8 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
   formulario!: FormGroup;
   estados!: EstadoBr[];
   perfilsAcesso = [{ id: 1, nome: 'Administrador' },{ id: 2, nome: 'Cliente' }];
-  private estadosSubscription!: Subscription;
-  private loginSubscription!: Subscription;
   modalRef!: BsModalRef;
-
+  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +32,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
-    this.estadosSubscription = this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
+    this.dropdownService.getEstadosBr().pipe(takeUntil(this.destroy$)).subscribe(dados => {this.estados = dados});
 
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -61,7 +59,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
   onSubmit(){
     if (this.formulario.valid) {
 
-      this.loginSubscription = this.loginService.criarUsuario(this.formulario.value).subscribe(
+      this.loginService.criarUsuario(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {
           const initialState = {
             type: 'Sucesso!',
@@ -99,15 +97,10 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    if(this.estadosSubscription){
-      this.estadosSubscription.unsubscribe();
+    if(this.destroy$){
+      this.destroy$.next();
+      this.destroy$.complete();
     }
-    if(this.loginSubscription){
-      this.loginSubscription.unsubscribe();
-    }
-
-
-
   }
 
 }

@@ -13,8 +13,8 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
 
 @Component({
   selector: 'app-listagemtratamento',
-  templateUrl: './listagemtratamento.component.html',
-  styleUrl: './listagemtratamento.component.css'
+  templateUrl: './listagemTratamento.component.html',
+  styleUrl: './listagemTratamento.component.css'
 })
 export class ListagemTratamentoComponent implements OnInit, OnDestroy{
   tratamentos: Tratamento[] = [];

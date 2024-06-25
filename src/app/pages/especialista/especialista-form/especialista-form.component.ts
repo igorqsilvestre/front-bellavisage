@@ -1,7 +1,7 @@
 import { RegistroExists } from './../registroExists';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { EstadoBr } from '../../../shared/models/estado-br';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DropdownService } from '../../../shared/services/dropdown.service';
@@ -22,8 +22,7 @@ export class EspecialistaFormComponent {
   modalRef!: BsModalRef;
   titulo:string = 'Cadastro do especialista';
   nomeBotao:string = 'Cadastrar';
-  private estadosSubscription!: Subscription;
-  private especialistaSubscription!: Subscription;
+  private destroy$ = new Subject<void>();
 
 
   constructor(
@@ -36,7 +35,7 @@ export class EspecialistaFormComponent {
 
 
   ngOnInit(): void {
-    this.estadosSubscription = this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
+    this.dropdownService.getEstadosBr().pipe(takeUntil(this.destroy$)).subscribe(dados => {this.estados = dados});
     this.formulario = this.formBuilder.group({
       id:[null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -62,7 +61,7 @@ export class EspecialistaFormComponent {
     if(id){
       this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.especialistaSubscription = this.especialistaService.obterEspecialista(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.especialistaService.obterEspecialista(Number(this.route.snapshot.paramMap.get('id'))).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -88,7 +87,7 @@ export class EspecialistaFormComponent {
   }
 
   onSubmit(){
-    console.log(this.formulario.value);
+
     if (this.formulario.valid) {
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
@@ -98,22 +97,34 @@ export class EspecialistaFormComponent {
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
-      this.especialistaService.salvar(this.formulario.value).subscribe(
+      this.especialistaService.salvar(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
         dados => {
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
         },error => {
           this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
         }
       )
+    }else{
+      this.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
 
+  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if(control.invalid){
+        control.markAsTouched({onlySelf: true});
+      }
+      if (control instanceof FormGroup) {
+        this.marcarCamposInvalidosComoTocado(control);
+      }
+    })
+  }
+
   ngOnDestroy(): void {
-    if(this.estadosSubscription){
-      this.estadosSubscription.unsubscribe();
-    }
-    if(this.especialistaSubscription){
-      this.especialistaSubscription.unsubscribe();
+    if(this.destroy$){
+      this.destroy$.next();
+      this.destroy$.complete();
     }
   }
 }

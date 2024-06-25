@@ -33,7 +33,7 @@
                           <div class="input-group-prepend" style="margin-right: 0.1em;">
                             <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
                           </div>
-                          <select class="form-control" id="tratamento" formControlName="tratamento" >
+                          <select class="form-control" id="tratamento" formControlName="tratamento">
                             <option *ngFor="let tratamento of tratamentos" [value]="tratamento.id">{{ tratamento.nome }}</option>
                           </select>
 
@@ -66,7 +66,7 @@
                       <div  class="form-control">
                               <p-calendar formControlName="data" />
                               <app-campo-control-erro [mostrarErro]="formulario.get('data')?.touched && formulario.get('data')?.invalid"
-                                msgErro="Data é obrigatória!">
+                                msgErro="Data inválida ou data menor que a data atual">
                               </app-campo-control-erro>
                         </div>
 
@@ -90,17 +90,17 @@
                     </div>
                     <div class="col">
                       <label for="nome">Valor</label>
-                      <input type="text" class="form-control"  formControlName="valor" placeholder="R$">
+                      <input type="text" class="form-control"  formControlName="valor" placeholder="R$" readonly>
 
-                      <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid || formulario.get('valor')?.hasError('pattern')"
-                        msgErro="Valor é inválido! Somente é permitido números">
+                      <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid"
+                        msgErro="Selecione algum tratamento">
                       </app-campo-control-erro>
                     </div>
             </div>
 
 
             </div>
-            <button type="submit" [disabled]="formulario.invalid" >{{ nomeBotao }}</button>
+            <button type="submit">{{ nomeBotao }}</button>
             </form>
 
           </section>

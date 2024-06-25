@@ -13,8 +13,8 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
 
 @Component({
   selector: 'app-listagempaciente',
-  templateUrl: './listagempaciente.component.html',
-  styleUrl: './listagempaciente.component.css'
+  templateUrl: './listagemPaciente.component.html',
+  styleUrl: './listagemPaciente.component.css'
 })
 export class ListagemPacienteComponent implements OnInit, OnDestroy{
   pacientes: Paciente[] = [];

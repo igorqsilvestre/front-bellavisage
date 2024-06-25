@@ -19,26 +19,22 @@
         <input type="text" class="form-control" formControlName="especialidade" id="especialidade" placeholder="Qual é sua especialidade?">
 
         <app-campo-control-erro [mostrarErro]="formulario.get('especialidade')?.touched && formulario.get('especialidade')?.invalid"
-          msgErro="Especialidade é inválido!">
+          msgErro="Especialidade é inválida!">
         </app-campo-control-erro>
 
         <label for="registro">Registro do Conselho Competente</label>
         <input type="text" class="form-control" formControlName="registro" id="registro" placeholder="Informe seu número de registro.">
 
-        <app-campo-control-erro [mostrarErro]="formulario.get('registro')?.touched && formulario.get('registro')?.hasError('pattern')"
-          msgErro="Registro é inválido! Necessita ser número.">
-        </app-campo-control-erro>
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('registro')?.touched && formulario.get('registro')?.hasError('registroExistente')"
-          msgErro="Registro já cadastrado no sistema.">
+        <app-campo-control-erro [mostrarErro]="formulario.get('registro')?.touched && formulario.get('registro')?.invalid"
+          msgErro="Registro é inválido! Necessita ser número ou registro já cadastrado no sistema.">
         </app-campo-control-erro>
 
         <label for="email">Email</label>
         <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
 
         <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
-        formulario.get('email')?.hasError('pattern')"
-          msgErro="Formato de email inválido!">
+        formulario.get('email')?.invalid"
+          msgErro="Email inválido!">
         </app-campo-control-erro>
 
         <label for="telefone">Telefone</label>
@@ -111,7 +107,7 @@
         </div>
       </div>
 
-      <button type="submit"  [disabled]="formulario.invalid">{{ nomeBotao }}</button>
+      <button type="submit">{{ nomeBotao }}</button>
     </form>
 
   </section>

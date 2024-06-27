@@ -16,10 +16,9 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './listagemEspecialista.component.html',
   styleUrl: './listagemEspecialista.component.css'
 })
-export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
+export class ListagemEspecialistaComponent implements OnInit{
   especialistas: Especialista[] = [];
   modalRef!: BsModalRef;
-  especialistaSubscription: Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
@@ -36,7 +35,7 @@ export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
   }
 
   atualizarLista(){
-    this.especialistaSubscription = this.especialistaService.obterEspecialistas().subscribe(
+    this.especialistaService.obterEspecialistas().subscribe(
       dados => {
         if(dados){
           this.especialistas = dados;
@@ -75,11 +74,4 @@ export class ListagemEspecialistaComponent implements OnInit, OnDestroy{
     });
 
   }
-
-  ngOnDestroy(): void {
-    if(this.especialistaSubscription){
-      this.especialistaSubscription.unsubscribe();
-     }
-  }
-
 }

@@ -12,11 +12,10 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit, OnDestroy{
+export class LoginComponent implements OnInit{
 
   formulario!: FormGroup;
   modalRef!: BsModalRef;
-  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy{
 
   onSubmit(){
     if (this.formulario.valid) {
-      this.loginService.verificarExisteUsuarioCadastro(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
+      this.loginService.verificarExisteUsuarioCadastro(this.formulario.value).subscribe(
         dados => {
           if(dados){
             this.authService.realizarLogin(dados);
@@ -72,14 +71,6 @@ export class LoginComponent implements OnInit, OnDestroy{
         this.marcarCamposInvalidosComoTocado(control);
       }
     })
-  }
-
-
-  ngOnDestroy(): void {
-    if(this.destroy$){
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
   }
 
 }

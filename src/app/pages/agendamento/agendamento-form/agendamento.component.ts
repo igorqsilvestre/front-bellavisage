@@ -7,7 +7,6 @@ import { PacienteService } from './../../paciente/paciente.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Agendamento } from '../Agendamento';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
@@ -21,7 +20,7 @@ import { Tratamento } from '../../tratamento/Tratamento';
   templateUrl: './agendamento.component.html',
   styleUrl: './agendamento.component.css'
 })
-export class AgendamentoComponent implements OnInit, OnDestroy{
+export class AgendamentoComponent implements OnInit{
   formulario!: FormGroup;
   modalRef!: BsModalRef;
   pacientes!: Paciente[];
@@ -30,7 +29,6 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
   titulo:string = 'Agendamento do Paciente';
   nomeBotao:string = 'Agendar';
   faMagnifyingGlass = faMagnifyingGlass;
-  private destroy$ = new Subject<void>();
 
 
 
@@ -62,14 +60,14 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
 
     this.atualizaValorDoTratamento();
 
-    this.pacienteService.obterPacientes().pipe(takeUntil(this.destroy$)).subscribe(dados => {
+    this.pacienteService.obterPacientes().subscribe(dados => {
       if(dados) {
         this.pacientes = dados;
         this.formulario.patchValue({ paciente: dados[0].id });
       }
     });
 
-   this.especialistaService.obterEspecialistas().pipe(takeUntil(this.destroy$)).subscribe(dados => {
+   this.especialistaService.obterEspecialistas().subscribe(dados => {
       if(dados) {
         this.especialistas = dados;
         this.formulario.patchValue({ especialista: dados[0].id });
@@ -77,7 +75,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
     });
 
 
-    this.tratamentoService.obterTratamentos().pipe(takeUntil(this.destroy$)).subscribe(dados => {
+    this.tratamentoService.obterTratamentos().subscribe(dados => {
       if(dados) {
         this.tratamentos = dados
         this.formulario.patchValue({ tratamento: dados[0].id });
@@ -88,7 +86,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
     if(id){
       this.titulo = 'Editar agendamento do especialista';
       this.nomeBotao = 'Atualizar';
-      this.agendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).pipe(takeUntil(this.destroy$)).subscribe(
+      this.agendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -110,9 +108,9 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
   }
 
   atualizaValorDoTratamento(){
-    this.formulario.get('tratamento')!.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(id => {
+    this.formulario.get('tratamento')!.valueChanges.subscribe(id => {
       if(id){
-      this.tratamentoService.obterTratamento(id).pipe(takeUntil(this.destroy$)).subscribe(tratamento => {
+      this.tratamentoService.obterTratamento(id).subscribe(tratamento => {
         if(tratamento) this.formulario.get('valor')!.setValue(tratamento.valor.toString().replaceAll(',','').split('.')[0]);
       });
       }
@@ -152,7 +150,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
       let mensagemErro = '';
       let mensagemSucesso = '';
 
-      this.agendamentoService.existeDataHora(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(dado => {
+      this.agendamentoService.existeDataHora(this.formulario.value).subscribe(dado => {
         if(dado){
           mensagemErro = "Ocorreu um erro pois essa data e hora já existem no sistema!"
           this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro}  });
@@ -165,7 +163,7 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
             mensagemSucesso = "Alteração realizada com sucesso!"
             mensagemErro = "Ocorreu um erro ao realizar a edição!"
           }
-          this.agendamentoService.salvar(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
+          this.agendamentoService.salvar(this.formulario.value).subscribe(
             dados => {
               this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
             },error => {
@@ -203,12 +201,5 @@ export class AgendamentoComponent implements OnInit, OnDestroy{
     const horas = ('0' + tempo.getHours()).slice(-2);
     const minutos = ('0' + tempo.getMinutes()).slice(-2);
     return `${horas}:${minutos}`;
-  }
-
-  ngOnDestroy(): void {
-    if(this.destroy$){
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
   }
 }

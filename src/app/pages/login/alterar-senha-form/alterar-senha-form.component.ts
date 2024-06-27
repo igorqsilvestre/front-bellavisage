@@ -12,11 +12,10 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './alterar-senha-form.component.html',
   styleUrl: './alterar-senha-form.component.css'
 })
-export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
+export class AlterarSenhaFormComponent implements OnInit{
 
   formulario!: FormGroup;
   modalRef!: BsModalRef;
-  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +40,7 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
   onSubmit(){
     if (this.formulario.valid) {
 
-     this.loginService.atualizarSenha(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
+     this.loginService.atualizarSenha(this.formulario.value).subscribe(
         dados => {
           const initialState = {
             type: 'Sucesso!',
@@ -75,13 +74,5 @@ export class AlterarSenhaFormComponent implements OnInit, OnDestroy{
         this.marcarCamposInvalidosComoTocado(control);
       }
     })
-  }
-
-
-  ngOnDestroy(): void {
-    if(this.destroy$){
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
   }
 }

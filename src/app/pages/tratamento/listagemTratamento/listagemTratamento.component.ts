@@ -16,10 +16,9 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './listagemTratamento.component.html',
   styleUrl: './listagemTratamento.component.css'
 })
-export class ListagemTratamentoComponent implements OnInit, OnDestroy{
+export class ListagemTratamentoComponent implements OnInit{
   tratamentos: Tratamento[] = [];
   modalRef!: BsModalRef;
-  tratamentoSubscription: Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
@@ -37,7 +36,7 @@ export class ListagemTratamentoComponent implements OnInit, OnDestroy{
   }
 
   atualizarLista(){
-    this.tratamentoSubscription = this.tratamentoService.obterTratamentos().subscribe(
+  this.tratamentoService.obterTratamentos().subscribe(
       dados => {
         if(dados){
           this.tratamentos = dados;
@@ -77,11 +76,4 @@ export class ListagemTratamentoComponent implements OnInit, OnDestroy{
     });
 
   }
-
-  ngOnDestroy(): void {
-    if(this.tratamentoSubscription){
-      this.tratamentoSubscription.unsubscribe();
-     }
-  }
-
 }

@@ -5,7 +5,6 @@ import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Agendamento } from '../Agendamento';
-import { Subscription } from 'rxjs';
 import { AgendamentoService } from '../agendamento.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
@@ -17,9 +16,8 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './listagemAgendamento.component.html',
   styleUrl: './listagemAgendamento.component.css'
 })
-export class ListagemAgendamentoComponent implements OnInit, OnDestroy{
+export class ListagemAgendamentoComponent implements OnInit{
   agendamentos: Agendamento[] = [];
-  agendamentoSubscription: Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
@@ -41,7 +39,7 @@ export class ListagemAgendamentoComponent implements OnInit, OnDestroy{
   }
 
   atualizarLista(){
-    this.agendamentoSubscription = this.agendamentoService.obterAgendamentos().subscribe(
+    this.agendamentoService.obterAgendamentos().subscribe(
       dados => {
         if(dados){
           this.agendamentos = dados;
@@ -99,12 +97,6 @@ export class ListagemAgendamentoComponent implements OnInit, OnDestroy{
     console.log('Row edit cancelled');
     //agenda.editing = false;
 
-  }
-
-  ngOnDestroy(): void {
-    if(this.agendamentoSubscription){
-      this.agendamentoSubscription.unsubscribe();
-     }
   }
 }
 

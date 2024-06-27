@@ -16,10 +16,9 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './listagemPaciente.component.html',
   styleUrl: './listagemPaciente.component.css'
 })
-export class ListagemPacienteComponent implements OnInit, OnDestroy{
+export class ListagemPacienteComponent implements OnInit{
   pacientes: Paciente[] = [];
   modalRef!: BsModalRef;
-  pacienteSubscription:Subscription;
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
@@ -36,7 +35,7 @@ export class ListagemPacienteComponent implements OnInit, OnDestroy{
   }
 
   atualizarLista(){
-    this.pacienteSubscription = this.pacienteService.obterPacientes().subscribe(
+    this.pacienteService.obterPacientes().subscribe(
       dados => {
         if(dados){
           this.pacientes = dados;
@@ -73,11 +72,5 @@ export class ListagemPacienteComponent implements OnInit, OnDestroy{
       );
     });
 
-  }
-
-  ngOnDestroy(): void {
-   if(this.pacienteSubscription){
-    this.pacienteSubscription.unsubscribe();
-   }
   }
 }

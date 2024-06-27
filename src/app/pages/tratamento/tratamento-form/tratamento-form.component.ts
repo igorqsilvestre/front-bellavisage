@@ -1,5 +1,5 @@
 import { NomeExists } from './../nomeExists';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -14,12 +14,11 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './tratamento-form.component.html',
   styleUrl: './tratamento-form.component.css'
 })
-export class TratamentoFormComponent {
+export class TratamentoFormComponent implements OnInit{
   formulario!: FormGroup;
   modalRef!: BsModalRef;
   titulo:string = 'Cadastro do tratamento';
   nomeBotao:string = 'Cadastrar';
-  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,7 +45,7 @@ export class TratamentoFormComponent {
     if(id){
       this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.tratamentoService.obterTratamento(Number(this.route.snapshot.paramMap.get('id'))).pipe(takeUntil(this.destroy$)).subscribe(
+      this.tratamentoService.obterTratamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -72,7 +71,7 @@ export class TratamentoFormComponent {
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
-      this.tratamentoService.salvar(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
+      this.tratamentoService.salvar(this.formulario.value).subscribe(
         dados => {
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
         },error => {
@@ -94,12 +93,5 @@ export class TratamentoFormComponent {
         this.marcarCamposInvalidosComoTocado(control);
       }
     })
-  }
-
-  ngOnDestroy(): void {
-    if(this.destroy$){
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
   }
 }

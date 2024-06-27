@@ -13,13 +13,12 @@ import { UsuarioEmailValidator } from '../UsuarioEmailValidator';
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.css'
 })
-export class UsuarioFormComponent implements OnInit, OnDestroy{
+export class UsuarioFormComponent implements OnInit{
 
   formulario!: FormGroup;
   estados!: EstadoBr[];
   perfilsAcesso = [{ id: 1, nome: 'Administrador' },{ id: 2, nome: 'Cliente' }];
   modalRef!: BsModalRef;
-  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,7 +31,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
-    this.dropdownService.getEstadosBr().pipe(takeUntil(this.destroy$)).subscribe(dados => {this.estados = dados});
+    this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
 
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -59,7 +58,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
   onSubmit(){
     if (this.formulario.valid) {
 
-      this.loginService.criarUsuario(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
+      this.loginService.criarUsuario(this.formulario.value).subscribe(
         dados => {
           const initialState = {
             type: 'Sucesso!',
@@ -94,13 +93,6 @@ export class UsuarioFormComponent implements OnInit, OnDestroy{
         this.marcarCamposInvalidosComoTocado(control);
       }
     })
-  }
-
-  ngOnDestroy(): void {
-    if(this.destroy$){
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
   }
 
 }

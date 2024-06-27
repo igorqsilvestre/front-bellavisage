@@ -1,5 +1,5 @@
 import { RegistroExists } from './../registroExists';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { EstadoBr } from '../../../shared/models/estado-br';
@@ -15,15 +15,13 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
   templateUrl: './especialista-form.component.html',
   styleUrl: './especialista-form.component.css'
 })
-export class EspecialistaFormComponent {
+export class EspecialistaFormComponent implements OnInit{
 
   formulario!: FormGroup;
   estados!: EstadoBr[];
   modalRef!: BsModalRef;
   titulo:string = 'Cadastro do especialista';
   nomeBotao:string = 'Cadastrar';
-  private destroy$ = new Subject<void>();
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +33,7 @@ export class EspecialistaFormComponent {
 
 
   ngOnInit(): void {
-    this.dropdownService.getEstadosBr().pipe(takeUntil(this.destroy$)).subscribe(dados => {this.estados = dados});
+    this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
     this.formulario = this.formBuilder.group({
       id:[null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -61,7 +59,7 @@ export class EspecialistaFormComponent {
     if(id){
       this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.especialistaService.obterEspecialista(Number(this.route.snapshot.paramMap.get('id'))).pipe(takeUntil(this.destroy$)).subscribe(
+      this.especialistaService.obterEspecialista(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -97,7 +95,7 @@ export class EspecialistaFormComponent {
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
-      this.especialistaService.salvar(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
+      this.especialistaService.salvar(this.formulario.value).subscribe(
         dados => {
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
         },error => {
@@ -119,12 +117,5 @@ export class EspecialistaFormComponent {
         this.marcarCamposInvalidosComoTocado(control);
       }
     })
-  }
-
-  ngOnDestroy(): void {
-    if(this.destroy$){
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
   }
 }

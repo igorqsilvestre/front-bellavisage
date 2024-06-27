@@ -1,5 +1,5 @@
 import { PacienteService } from './../paciente.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, EmailValidator } from '@angular/forms';
 import { EstadoBr } from '../../../shared/models/estado-br';
 import { Subject, takeUntil } from 'rxjs';
@@ -17,14 +17,13 @@ import { Paciente } from '../Paciente';
   templateUrl: './paciente-form.component.html',
   styleUrl: './paciente-form.component.css'
 })
-export class PacienteFormComponent {
+export class PacienteFormComponent implements OnInit{
 
   formulario!: FormGroup;
   estados!: EstadoBr[];
   modalRef!: BsModalRef;
   titulo:string = 'Cadastro do paciente';
   nomeBotao:string = 'Cadastrar';
-  private destroy$ = new Subject<void>();
 
 
   constructor(
@@ -37,7 +36,7 @@ export class PacienteFormComponent {
 
 
   ngOnInit(): void {
-    this.dropdownService.getEstadosBr().pipe(takeUntil(this.destroy$)).subscribe(dados => {this.estados = dados});
+    this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
     this.formulario = this.formBuilder.group({
       id:[null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -62,7 +61,7 @@ export class PacienteFormComponent {
     if(id){
       this.titulo = 'Editar paciente';
       this.nomeBotao = 'Atualizar';
-      this.pacienteService.obterPaciente(Number(this.route.snapshot.paramMap.get('id'))).pipe(takeUntil(this.destroy$)).subscribe(
+      this.pacienteService.obterPaciente(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -97,7 +96,7 @@ export class PacienteFormComponent {
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
-      this.pacienteService.salvar(this.formulario.value).pipe(takeUntil(this.destroy$)).subscribe(
+      this.pacienteService.salvar(this.formulario.value).subscribe(
         dados => {
           this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
         },error => {
@@ -119,12 +118,5 @@ export class PacienteFormComponent {
         this.marcarCamposInvalidosComoTocado(control);
       }
     })
-  }
-
-  ngOnDestroy(): void {
-    if(this.destroy$){
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
   }
 }

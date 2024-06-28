@@ -86,7 +86,6 @@ export class PacienteFormComponent implements OnInit{
   }
 
   onSubmit(){
-
     if (this.formulario.valid) {
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"

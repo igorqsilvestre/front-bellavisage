@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,14 +6,20 @@ import { Injectable, OnDestroy } from '@angular/core';
 export class AuthService{
 
   private usuarioAutenticado: boolean = false;
+  private nomeAutenticacao: string = 'usuarioAutenticado';
 
   constructor() {
-    this.usuarioAutenticado = localStorage.getItem('usuarioAutenticado') === 'true';
+    this.usuarioAutenticado = sessionStorage.getItem(this.nomeAutenticacao) === 'true';
   }
 
-  realizarLogin(usuarioEstaLogado: boolean) {
-    this.usuarioAutenticado = usuarioEstaLogado;
-    localStorage.setItem('usuarioAutenticado', usuarioEstaLogado.toString());
+  realizarLogin() {
+    this.usuarioAutenticado = true;
+    sessionStorage.setItem(this.nomeAutenticacao, this.usuarioAutenticado.toString())
+  }
+
+  realizarLogout(){
+    this.usuarioAutenticado = false;
+    sessionStorage.removeItem(this.nomeAutenticacao);
   }
 
   usuarioEstaAutenticado() {

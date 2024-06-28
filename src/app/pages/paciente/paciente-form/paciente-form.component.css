@@ -60,7 +60,12 @@ header,main{
   color: #6B6E71;
 }
 
-.principal-formulario button{
+.principal-formulario .botoes{
+  display: flex;
+  justify-content: space-around;
+}
+
+.principal-formulario .botao-submit{
   background-color: #950341;
   color: #FFFFFF;
   font-family: 'Public Sans';
@@ -68,6 +73,10 @@ header,main{
   border: none;
   border-radius: 8px;
   padding: 0.7em 7em;
+}
+
+.principal-formulario .botao-submit:hover{
+  background-color: #b13d6d;
 }
 
 

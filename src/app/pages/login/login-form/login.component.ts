@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit{
       this.loginService.verificarExisteUsuarioCadastro(this.formulario.value).subscribe(
         dados => {
           if(dados){
-            this.authService.realizarLogin(dados);
+            this.authService.realizarLogin();
             const initialState = {
               type: 'Sucesso!',
               message: 'Sucesso ao realizar login!',

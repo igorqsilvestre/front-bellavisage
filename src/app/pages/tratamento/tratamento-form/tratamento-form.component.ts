@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Subject, Subscription, takeUntil } from 'rxjs';
 import { TratamentoService } from '../tratamento.service';
 import { Tratamento } from '../Tratamento';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';

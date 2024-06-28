@@ -16,17 +16,14 @@ export class CabecalhoComponent {
 
   constructor(private authService:AuthService,private route:Router) { }
 
-  verificaUsuarioLogado():boolean{
-    const usuario = localStorage.getItem('usuarioAutenticado');
-     if(usuario !== 'true' || usuario == null){
-      return false;
-     }else{
-      return true;
-     }
+  verificaUsuarioLogado(){
+    const usuario = this.authService.usuarioEstaAutenticado();
+    if(usuario) return true;
+    return false;
   }
 
   deslogar() {
-   this.authService.realizarLogin(false);
+   this.authService.realizarLogout();
    this.route.navigate(['']);
   }
 

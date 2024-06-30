@@ -1,3 +1,4 @@
+import { Cep } from './../../../shared/services/consulta-cep.service';
 import { PacienteService } from './../paciente.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, EmailValidator } from '@angular/forms';
@@ -10,6 +11,7 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
 import { CpfExists } from '../CpfExists';
 import { ActivatedRoute } from '@angular/router';
 import { Paciente } from '../Paciente';
+import { ConsultaCepService } from '../../../shared/services/consulta-cep.service';
 
 
 @Component({
@@ -32,11 +34,13 @@ export class PacienteFormComponent implements OnInit{
     private modalService: BsModalService,
     private pacienteService: PacienteService,
     private cpfExists: CpfExists,
-    private route: ActivatedRoute){}
+    private route: ActivatedRoute,
+    private cepService: ConsultaCepService){}
 
 
   ngOnInit(): void {
     this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
+
     this.formulario = this.formBuilder.group({
       id:[null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -51,9 +55,10 @@ export class PacienteFormComponent implements OnInit{
         cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-9]*$/)]],
         numero: [null, Validators.pattern(/^[0-9]*$/)],
         complemento: [null],
-        rua: [null, Validators.required],
+        bairro: [null, Validators.required],
+        logradouro: [null, Validators.required],
         cidade: [null, Validators.required],
-        estado: ['Acre', Validators.required]
+        estado: ['', Validators.required]
       }),
     });
 
@@ -78,11 +83,40 @@ export class PacienteFormComponent implements OnInit{
         cep: paciente.endereco.cep,
         numero: paciente.endereco.numero,
         complemento: paciente.endereco.complemento,
-        rua: paciente.endereco.rua,
+        bairro: paciente.endereco.bairro,
+        logradouro: paciente.endereco.logradouro,
         cidade: paciente.endereco.cidade,
         estado: paciente.endereco.estado
       }
     })
+  }
+
+  onBuscaCep(){
+    const cep = this.formulario.get('endereco.cep').value;
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+      .subscribe(dados => {
+        if(dados){
+          this.insereDadosEndereco(dados);
+        }
+      });
+    }
+  }
+
+  insereDadosEndereco(dados:Cep){
+    this.dropdownService.getEstadoBySigla(dados.uf).subscribe(estado => {
+      console.log(estado);
+      this.formulario.patchValue({
+        endereco: {
+          logradouro: dados.logradouro,
+          complemento: dados.complemento,
+          bairro: dados.bairro,
+          cidade: dados.localidade,
+          estado: estado.nome
+        }
+      })
+    });
   }
 
   onSubmit(){
@@ -105,6 +139,10 @@ export class PacienteFormComponent implements OnInit{
     }else{
       this.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+  onCancel(){
+    this.formulario.reset();
   }
 
   marcarCamposInvalidosComoTocado(formGroup: FormGroup){

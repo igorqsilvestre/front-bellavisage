@@ -40,22 +40,45 @@
         <div formGroupName="endereco">
           <label for="cep" >Endere&ccedil;o</label>
 
-          <div class="input-group d-flex align-items-center ">
-            <div class="input-group-prepend" style="margin-right: 0.5em;">
-            <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+          <div class="row">
+            <div class="col-1 d-flex align-items-center pe-0">
+              <button class="btn btn-primary" (click)="onBuscaCep()"><i class="bi bi-search"></i></button>
             </div>
-            <input type="text" class="form-control" formControlName="cep" placeholder="Insira o CEP"  >
+            <div class="col-5 ps-0">
+              <input type="text" class="form-control" formControlName="cep" placeholder="Insira o CEP">
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control"  formControlName="logradouro" placeholder="Logradouro">
+            </div>
           </div>
-          <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep')?.touched && formulario.get('endereco.cep')?.invalid"
-            msgErro="Cep inválido! Precisa ter 8 caracteres e ser números.">
-          </app-campo-control-erro>
+
+          <div class="row">
+            <div class="col-6">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep')?.touched && formulario.get('endereco.cep')?.invalid"
+                msgErro="Cep inválido! Precisa ter 8 caracteres e ser números.">
+              </app-campo-control-erro>
+            </div>
+            <div class="col-6">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.logradouro')?.touched && formulario.get('endereco.logradouro')?.invalid"
+                msgErro="Logradouro é obrigatório.">
+              </app-campo-control-erro>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col">
-              <input type="text" class="form-control"  formControlName="rua" placeholder="Rua">
+              <input type="text" class="form-control"  formControlName="bairro" placeholder="Bairro">
             </div>
             <div class="col">
               <input type="text" class="form-control"  formControlName="numero" placeholder="Número">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.bairro')?.touched && formulario.get('endereco.bairro')?.invalid"
+                msgErro="Bairro é obrigatório.">
+              </app-campo-control-erro>
             </div>
           </div>
 
@@ -79,7 +102,8 @@
               <input type="text" class="form-control"  formControlName="cidade" placeholder="Cidade">
             </div>
             <div class="col">
-              <select class="form-control" id="opcoes" formControlName="estado" >
+              <select class="form-control" id="opcoes" formControlName="estado">
+                  <option value="" disabled selected hidden>Selecione um estado</option>
                   <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
               </select>
             </div>
@@ -101,7 +125,7 @@
       </div>
 
       <div class="botoes">
-        <button type="submit" class="botao-submit">Cancelar</button>
+        <button type="submit" class="botao-submit" (click)="onCancel()">Cancelar</button>
         <button type="submit" class="botao-submit" (click)="onSubmit()">{{ nomeBotao }}</button>
       </div>
     </form>

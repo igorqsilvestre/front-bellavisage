@@ -6,7 +6,7 @@
 
     <h2 class="titulo">Cadastro do usuário</h2>
     <h3 class="subtitulo">Insira os dados abaixo:</h3>
-    <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <form class="principal-formulario" [formGroup]="formulario">
       <div class="campos">
         <label for="nome">Nome</label>
         <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Informe seu nome">
@@ -48,22 +48,45 @@
         <div formGroupName="endereco">
           <label for="cep" >Endere&ccedil;o</label>
 
-          <div class="input-group d-flex align-items-center ">
-            <div class="input-group-prepend" style="margin-right: 0.5em;">
-              <span class="input-group-text"><img src="../../../../assets/icone-localizacao.png"></span>
+          <div class="row d-flex align-items-center">
+
+            <div class="col-6 d-flex align-items-center gap-1">
+              <button class="btn btn-primary" (click)="onBuscaCep()"><i class="bi bi-search"></i></button>
+              <input type="text" class="form-control" formControlName="cep" placeholder="Insira o CEP">
             </div>
-            <input type="text" class="form-control" formControlName="cep" placeholder="Insira o CEP"  >
+
+            <div class="col-6">
+              <input type="text" class="form-control"  formControlName="logradouro" placeholder="Logradouro">
+            </div>
           </div>
-          <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep')?.touched && formulario.get('endereco.cep')?.invalid"
-            msgErro="Cep inválido! Precisa ter 8 caracteres e ser números.">
-          </app-campo-control-erro>
+
+          <div class="row">
+            <div class="col-6">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep')?.touched && formulario.get('endereco.cep')?.invalid"
+                msgErro="Cep inválido! Precisa ter 8 caracteres e ser números.">
+              </app-campo-control-erro>
+            </div>
+            <div class="col-6">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.logradouro')?.touched && formulario.get('endereco.logradouro')?.invalid"
+                msgErro="Logradouro é obrigatório.">
+              </app-campo-control-erro>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col">
-              <input type="text" class="form-control"  formControlName="rua" placeholder="Rua">
+              <input type="text" class="form-control"  formControlName="bairro" placeholder="Bairro">
             </div>
             <div class="col">
               <input type="text" class="form-control"  formControlName="numero" placeholder="Número">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <app-campo-control-erro [mostrarErro]="formulario.get('endereco.bairro')?.touched && formulario.get('endereco.bairro')?.invalid"
+                msgErro="Bairro é obrigatório.">
+              </app-campo-control-erro>
             </div>
           </div>
 
@@ -79,7 +102,6 @@
               </app-campo-control-erro>
             </div>
           </div>
-
           <input type="text" class="form-control"  formControlName="complemento" placeholder="Complemento">
 
           <div class="row">
@@ -88,7 +110,8 @@
             </div>
             <div class="col">
               <select class="form-control" id="opcoes" formControlName="estado" >
-                  <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
+                <option value="" disabled selected hidden>Selecione um estado</option>
+                <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
               </select>
             </div>
           </div>
@@ -126,8 +149,10 @@
         </div>
       </div>
 
-
-      <button type="submit">Cadastrar</button>
+      <div class="botoes">
+        <button type="submit"  class="botao-submit" (click)="onCancel()">Cancelar</button>
+        <button type="submit"  class="botao-submit" (click)="onSubmit()">Cadastrar</button>
+      </div>
     </form>
 
   </section>

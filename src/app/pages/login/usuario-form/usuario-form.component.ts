@@ -7,6 +7,7 @@ import { LoginService } from '../login.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 import { UsuarioEmailValidator } from '../UsuarioEmailValidator';
+import { Cep, ConsultaCepService } from '../../../shared/services/consulta-cep.service';
 
 @Component({
   selector: 'app-usuario-form',
@@ -25,7 +26,8 @@ export class UsuarioFormComponent implements OnInit{
     private dropdownService: DropdownService,
     private loginService: LoginService,
     private modalService: BsModalService,
-    private usuarioValidator: UsuarioEmailValidator){}
+    private usuarioValidator: UsuarioEmailValidator,
+    private cepService: ConsultaCepService){}
 
 
 
@@ -48,10 +50,39 @@ export class UsuarioFormComponent implements OnInit{
         cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-9]*$/)]],
         numero: [null, Validators.pattern(/^[0-9]*$/)],
         complemento: [null],
-        rua: [null, Validators.required],
+        bairro: [null, Validators.required],
+        logradouro: [null, Validators.required],
         cidade: [null, Validators.required],
-        estado: ['Acre', Validators.required]
+        estado: ['', Validators.required]
       }),
+    });
+  }
+
+  onBuscaCep(){
+    const cep = this.formulario.get('endereco.cep').value;
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+      .subscribe(dados => {
+        if(dados){
+          this.insereDadosEndereco(dados);
+        }
+      });
+    }
+  }
+
+  insereDadosEndereco(dados:Cep){
+    this.dropdownService.getEstadoBySigla(dados.uf).subscribe(estado => {
+      console.log(estado);
+      this.formulario.patchValue({
+        endereco: {
+          logradouro: dados.logradouro,
+          complemento: dados.complemento,
+          bairro: dados.bairro,
+          cidade: dados.localidade,
+          estado: estado.nome
+        }
+      })
     });
   }
 
@@ -80,6 +111,15 @@ export class UsuarioFormComponent implements OnInit{
     }else{
       this.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+  onCancel(){
+    this.formulario.reset({
+      perfilsAcesso: 'Administrador',
+      endereco:{
+        estado: ''
+      }
+    });
   }
 
 

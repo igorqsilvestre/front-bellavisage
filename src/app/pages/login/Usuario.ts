@@ -5,12 +5,12 @@ export interface Usuario {
   email: string;
   telefone: string;
   endereco: {
-    cep: number;
-    logradouro: string;
-    rua: string;
-    numero: number;
-    complemento: string;
-    cidade: string;
-    estado: string;
+    cep:string;
+    logradouro:string;
+    bairro:string;
+    numero:number;
+    complemento:string;
+    cidade:string;
+    estado:string;
   }
 }

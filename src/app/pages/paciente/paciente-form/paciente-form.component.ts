@@ -142,7 +142,11 @@ export class PacienteFormComponent implements OnInit{
   }
 
   onCancel(){
-    this.formulario.reset();
+    this.formulario.reset({
+      endereco:{
+        estado: ''
+      }
+    });
   }
 
   marcarCamposInvalidosComoTocado(formGroup: FormGroup){

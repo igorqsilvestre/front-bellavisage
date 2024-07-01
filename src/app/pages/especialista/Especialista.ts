@@ -7,7 +7,8 @@ export interface Especialista {
   telefone:string;
   endereco: {
     cep:string;
-    rua:string;
+    logradouro:string;
+    bairro:string;
     numero:number;
     complemento:string;
     cidade:string;

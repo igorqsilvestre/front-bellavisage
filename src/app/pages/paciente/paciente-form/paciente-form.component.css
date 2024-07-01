@@ -60,6 +60,12 @@ header,main{
   color: #6B6E71;
 }
 
+
+.cabecalho{
+  width: 122em;
+}
+
+
 .principal-formulario .botoes{
   display: flex;
   justify-content: space-around;
@@ -79,7 +85,3 @@ header,main{
   background-color: #b13d6d;
 }
 
-
-.cabecalho{
-  width: 122em;
-}

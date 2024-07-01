@@ -40,13 +40,13 @@
         <div formGroupName="endereco">
           <label for="cep" >Endere&ccedil;o</label>
 
-          <div class="row">
-            <div class="col-1 d-flex align-items-center pe-0">
+          <div class="row d-flex align-items-center">
+
+            <div class="col-6 d-flex align-items-center gap-1">
               <button class="btn btn-primary" (click)="onBuscaCep()"><i class="bi bi-search"></i></button>
-            </div>
-            <div class="col-5 ps-0">
               <input type="text" class="form-control" formControlName="cep" placeholder="Insira o CEP">
             </div>
+
             <div class="col-6">
               <input type="text" class="form-control"  formControlName="logradouro" placeholder="Logradouro">
             </div>

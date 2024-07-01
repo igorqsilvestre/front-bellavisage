@@ -9,6 +9,7 @@ import { EspecialistaService } from '../especialista.service';
 import { ActivatedRoute } from '@angular/router';
 import { Especialista } from '../Especialista';
 import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { Cep, ConsultaCepService } from '../../../shared/services/consulta-cep.service';
 
 @Component({
   selector: 'app-especialista-form',
@@ -29,7 +30,8 @@ export class EspecialistaFormComponent implements OnInit{
     private modalService: BsModalService,
     private especialistaService: EspecialistaService,
     private registroExists: RegistroExists,
-    private route: ActivatedRoute){}
+    private route: ActivatedRoute,
+    private cepService: ConsultaCepService){}
 
 
   ngOnInit(): void {
@@ -49,9 +51,10 @@ export class EspecialistaFormComponent implements OnInit{
         cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-9]*$/)]],
         numero: [null, Validators.pattern(/^[0-9]*$/)],
         complemento: [null],
-        rua: [null, Validators.required],
+        bairro: [null, Validators.required],
+        logradouro: [null, Validators.required],
         cidade: [null, Validators.required],
-        estado: ['Acre', Validators.required]
+        estado: ['', Validators.required]
       }),
     });
 
@@ -75,14 +78,44 @@ export class EspecialistaFormComponent implements OnInit{
       telefone: especialista.telefone,
       endereco: {
         cep: especialista.endereco.cep,
-        rua: especialista.endereco.rua,
         numero: especialista.endereco.numero,
         complemento: especialista.endereco.complemento,
+        bairro: especialista.endereco.bairro,
+        logradouro: especialista.endereco.logradouro,
         cidade: especialista.endereco.cidade,
         estado: especialista.endereco.estado
       }
     })
   }
+
+  onBuscaCep(){
+    const cep = this.formulario.get('endereco.cep').value;
+
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+      .subscribe(dados => {
+        if(dados){
+          this.insereDadosEndereco(dados);
+        }
+      });
+    }
+  }
+
+  insereDadosEndereco(dados:Cep){
+    this.dropdownService.getEstadoBySigla(dados.uf).subscribe(estado => {
+      console.log(estado);
+      this.formulario.patchValue({
+        endereco: {
+          logradouro: dados.logradouro,
+          complemento: dados.complemento,
+          bairro: dados.bairro,
+          cidade: dados.localidade,
+          estado: estado.nome
+        }
+      })
+    });
+  }
+
 
   onSubmit(){
 
@@ -105,6 +138,14 @@ export class EspecialistaFormComponent implements OnInit{
     }else{
       this.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+  onCancel(){
+    this.formulario.reset({
+      endereco:{
+        estado: ''
+      }
+    });
   }
 
   marcarCamposInvalidosComoTocado(formGroup: FormGroup){

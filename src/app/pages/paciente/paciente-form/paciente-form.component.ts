@@ -66,7 +66,7 @@ export class PacienteFormComponent implements OnInit{
     if(id){
       this.titulo = 'Editar paciente';
       this.nomeBotao = 'Atualizar';
-      this.pacienteService.obterPaciente(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.pacienteService.obter(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }

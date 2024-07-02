@@ -35,7 +35,7 @@ export class ListagemEspecialistaComponent implements OnInit{
   }
 
   atualizarLista(){
-    this.especialistaService.obterEspecialistas().subscribe(
+    this.especialistaService.obterTodos().subscribe(
       dados => {
         if(dados){
           this.especialistas = dados;
@@ -63,7 +63,7 @@ export class ListagemEspecialistaComponent implements OnInit{
     });
 
     this.modalRef.content.confirm.subscribe(() => {
-      this.especialistaService.excluirEspecialista(especialista.id).subscribe(
+      this.especialistaService.excluir(especialista.id).subscribe(
         () => {
           this.atualizarLista();
         },

@@ -44,7 +44,7 @@ export class TratamentoFormComponent implements OnInit{
     if(id){
       this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.tratamentoService.obterTratamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.tratamentoService.obter(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -80,6 +80,10 @@ export class TratamentoFormComponent implements OnInit{
     }else{
       this.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+  onCancel(){
+    this.formulario.reset();
   }
 
   marcarCamposInvalidosComoTocado(formGroup: FormGroup){

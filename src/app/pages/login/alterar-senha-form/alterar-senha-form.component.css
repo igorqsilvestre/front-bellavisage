@@ -54,6 +54,10 @@
   padding: 0.7em 7em;
 }
 
+.principal-formulario button:hover{
+  background-color: #b13d6d;
+}
+
 .principal-formulario .envio{
   display: inline-block;
 }

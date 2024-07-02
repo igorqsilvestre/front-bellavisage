@@ -62,7 +62,7 @@ export class EspecialistaFormComponent implements OnInit{
     if(id){
       this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.especialistaService.obterEspecialista(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.especialistaService.obter(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }

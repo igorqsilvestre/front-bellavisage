@@ -6,7 +6,7 @@
 
     <h2 class="titulo">{{ titulo }}</h2>
     <h3 class="subtitulo">Insira os dados abaixo:</h3>
-    <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <form class="principal-formulario" [formGroup]="formulario">
       <div class="campos">
         <label for="nome">Nome</label>
         <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Digite o nome do tratamento">
@@ -33,7 +33,11 @@
         <input type="text" class="form-control" formControlName="imagem" id="imagem" placeholder="https://img.com/fotos/retrato-limpeza-de-pele">
       </div>
 
-      <button type="submit">{{ nomeBotao }}</button>
+      <div class="botoes">
+        <button type="submit" (click)="onCancel()">Cancelar</button>
+        <button type="submit" (click)="onSubmit()">{{ nomeBotao }}</button>
+      </div>
+
     </form>
 
   </section>

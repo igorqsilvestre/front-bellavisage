@@ -60,6 +60,11 @@ header,main{
   color: #6B6E71;
 }
 
+.principal-formulario .botoes{
+  display: flex;
+  justify-content: space-around;
+}
+
 .principal-formulario button{
   background-color: #950341;
   color: #FFFFFF;
@@ -70,6 +75,9 @@ header,main{
   padding: 0.7em 7em;
 }
 
+.principal-formulario button:hover{
+  background-color: #b13d6d;
+}
 
 .cabecalho{
   width: 122em;

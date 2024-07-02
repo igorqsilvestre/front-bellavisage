@@ -60,14 +60,14 @@ export class AgendamentoComponent implements OnInit{
 
     this.atualizaValorDoTratamento();
 
-    this.pacienteService.obterPacientes().subscribe(dados => {
+    this.pacienteService.obterTodos().subscribe(dados => {
       if(dados) {
         this.pacientes = dados;
         this.formulario.patchValue({ paciente: dados[0].id });
       }
     });
 
-   this.especialistaService.obterEspecialistas().subscribe(dados => {
+   this.especialistaService.obterTodos().subscribe(dados => {
       if(dados) {
         this.especialistas = dados;
         this.formulario.patchValue({ especialista: dados[0].id });
@@ -75,7 +75,7 @@ export class AgendamentoComponent implements OnInit{
     });
 
 
-    this.tratamentoService.obterTratamentos().subscribe(dados => {
+    this.tratamentoService.obterTodos().subscribe(dados => {
       if(dados) {
         this.tratamentos = dados
         this.formulario.patchValue({ tratamento: dados[0].id });
@@ -86,7 +86,7 @@ export class AgendamentoComponent implements OnInit{
     if(id){
       this.titulo = 'Editar agendamento do especialista';
       this.nomeBotao = 'Atualizar';
-      this.agendamentoService.obterAgendamento(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
+      this.agendamentoService.obter(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
         dados => {if(dados) this.onUpdate(dados)}
       )
     }
@@ -110,7 +110,7 @@ export class AgendamentoComponent implements OnInit{
   atualizaValorDoTratamento(){
     this.formulario.get('tratamento')!.valueChanges.subscribe(id => {
       if(id){
-      this.tratamentoService.obterTratamento(id).subscribe(tratamento => {
+      this.tratamentoService.obter(id).subscribe(tratamento => {
         if(tratamento) this.formulario.get('valor')!.setValue(tratamento.valor.toString().replaceAll(',','').split('.')[0]);
       });
       }

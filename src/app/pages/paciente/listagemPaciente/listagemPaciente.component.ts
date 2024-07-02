@@ -35,7 +35,7 @@ export class ListagemPacienteComponent implements OnInit{
   }
 
   atualizarLista(){
-    this.pacienteService.obterPacientes().subscribe(
+    this.pacienteService.obterTodos().subscribe(
       dados => {
         if(dados){
           this.pacientes = dados;
@@ -62,7 +62,7 @@ export class ListagemPacienteComponent implements OnInit{
     });
 
     this.modalRef.content.confirm.subscribe(() => {
-      this.pacienteService.excluirPaciente(paciente.id).subscribe(
+      this.pacienteService.excluir(paciente.id).subscribe(
         () => {
           this.atualizarLista();
         },

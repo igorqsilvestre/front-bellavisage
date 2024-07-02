@@ -71,11 +71,19 @@
   padding: 0.7em 7em;
 }
 
+.principal-formulario button:hover{
+  background-color: #b13d6d;
+}
+
 .principal-formulario a {
   font-family: 'Public Sans';
   text-decoration: none;
   color: #950341;
   padding: 0.4em 0;
+
 }
 
+.principal-formulario a:hover{
+  text-decoration: underline;
+}
 

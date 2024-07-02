@@ -1,4 +1,5 @@
 export interface Usuario {
+  id: number;
   senha: string;
   perfilAcesso: string;
   nome: string;

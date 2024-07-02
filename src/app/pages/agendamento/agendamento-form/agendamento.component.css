@@ -105,6 +105,9 @@ header,main{
   margin: 4em 30em;
 }
 
+.principal-formulario button:hover{
+  background-color: #b13d6d;
+}
 
 .cabecalho{
   width: 122em;

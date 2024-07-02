@@ -39,7 +39,7 @@ export class ListagemAgendamentoComponent implements OnInit{
   }
 
   atualizarLista(){
-    this.agendamentoService.obterAgendamentos().subscribe(
+    this.agendamentoService.obterTodos().subscribe(
       dados => {
         if(dados){
           this.agendamentos = dados;
@@ -69,7 +69,7 @@ export class ListagemAgendamentoComponent implements OnInit{
     });
 
     this.modalRef.content.confirm.subscribe(() => {
-      this.agendamentoService.excluirAgendamento(agendamento.id).subscribe(
+      this.agendamentoService.excluir(agendamento.id).subscribe(
         () => {
           this.atualizarLista();
         },

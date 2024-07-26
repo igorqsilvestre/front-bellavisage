@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
@@ -22,10 +22,20 @@ export class ConsultaCepService {
 
       // Valida o formato do CEP.
       if (validacep.test(cep)) {
-        return this.http.get<Cep>(`//viacep.com.br/ws/${cep}/json`).pipe(take(1));
+        return this.http.get<Cep | {erro: boolean}>(`//viacep.com.br/ws/${cep}/json`).pipe(
+          map(resposta => {
+            if('erro' in resposta){
+              return null;
+            }else{
+              return resposta;
+            }
+          }),
+          catchError(() => of(null)),
+          take(1)
+        )
       }
     }
-    return of({logradouro: null, complemento: null, bairro: null, localidade: null, uf: null});
+    return of(null);
   }
 }
 

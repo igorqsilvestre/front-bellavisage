@@ -1,13 +1,14 @@
-import { DropdownService } from './../../../shared/services/dropdown.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormUtilsService } from './../../../shared/services/form-utils.service';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { map } from 'rxjs';
+
 import { EstadoBr } from '../../../shared/models/estado-br';
-import { Subject, Subscription, takeUntil } from 'rxjs';
-import { LoginService } from '../login.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
-import { UsuarioEmailValidator } from '../UsuarioEmailValidator';
 import { Cep, ConsultaCepService } from '../../../shared/services/consulta-cep.service';
+import { LoginService } from '../login.service';
+import { DropdownService } from './../../../shared/services/dropdown.service';
 
 @Component({
   selector: 'app-usuario-form',
@@ -18,37 +19,29 @@ export class UsuarioFormComponent implements OnInit{
 
   formulario!: FormGroup;
   estados!: EstadoBr[];
-  perfilsAcesso = [{ id: 1, nome: 'Administrador' },{ id: 2, nome: 'Cliente' }];
-  modalRef!: BsModalRef;
 
   constructor(
     private formBuilder: FormBuilder,
     private dropdownService: DropdownService,
     private loginService: LoginService,
-    private modalService: BsModalService,
-    private usuarioValidator: UsuarioEmailValidator,
-    private cepService: ConsultaCepService){}
-
+    private location: Location,
+    private formUtilService: FormUtilsService,
+    private cepService: ConsultaCepService
+  ){}
 
 
   ngOnInit(): void {
-
     this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
-
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       senha: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
       confirmarSenha: [null, Validators.required],
-      perfilsAcesso: ['Administrador', Validators.required],
-      email: [null, {
-          validators: [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')],
-          asyncValidators: [this.usuarioValidator.validate.bind(this.usuarioValidator)],
-          updateOn: 'blur'
-      }],
-      telefone: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^[0-9]*$/)]],
+      perfilsAcesso: [this.formUtilService.perfilDeAcesso, Validators.required],
+      email: [null,  [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)], [this.validarEmail.bind(this)]],
+      telefone: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
       endereco: this.formBuilder.group({
-        cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-9]*$/)]],
-        numero: [null, Validators.pattern(/^[0-9]*$/)],
+        cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
+        numero: [null, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)],
         complemento: [null],
         bairro: [null, Validators.required],
         logradouro: [null, Validators.required],
@@ -59,21 +52,23 @@ export class UsuarioFormComponent implements OnInit{
   }
 
   onBuscaCep(){
-    const cep = this.formulario.get('endereco.cep').value;
-
-    if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-      .subscribe(dados => {
+    const campoCep = this.getCampo('endereco.cep');
+    if(campoCep.valid){
+       this.cepService.consultaCEP(campoCep.value).subscribe(dados => {
         if(dados){
           this.insereDadosEndereco(dados);
+        }else{
+          this.formUtilService.mostrarErro('Erro ao buscar o cep');
         }
       });
+    }else{
+      this.formUtilService.mostrarErro('Erro ao buscar o cep');
     }
   }
 
+
   insereDadosEndereco(dados:Cep){
     this.dropdownService.getEstadoBySigla(dados.uf).subscribe(estado => {
-      console.log(estado);
       this.formulario.patchValue({
         endereco: {
           logradouro: dados.logradouro,
@@ -88,51 +83,43 @@ export class UsuarioFormComponent implements OnInit{
 
   onSubmit(){
     if (this.formulario.valid) {
-
-      this.loginService.criarUsuario(this.formulario.value).subscribe(
-        dados => {
-          const initialState = {
-            type: 'Sucesso!',
-            message: 'Cadastro foi realizado com sucesso!',
-            navegar: {
-              estado: true,
-              url: '/login'
-            }
-          };
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
-        },error => {
-          const initialState = {
-            type: 'Erro!',
-            message: 'Ocorreu um erro ao realizar o cadastro.!'
-          };
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
-        },
-      );
+        this.loginService.criarUsuario(this.formulario.value).subscribe(
+          () => {
+            this.formUtilService.mostrarSucesso('Cadastro realizado com sucesso')
+            this.onCancel(2000);
+          },() => {
+            this.formUtilService.mostrarErro('Erro ao fazer o cadastro');
+          },
+        );
     }else{
-      this.marcarCamposInvalidosComoTocado(this.formulario);
+      this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
 
-  onCancel(){
-    this.formulario.reset({
-      perfilsAcesso: 'Administrador',
-      endereco:{
-        estado: ''
-      }
-    });
+  getMensagemErro(campoNome: string){
+    return this.formUtilService.getMensagemErro(this.formulario,campoNome);
   }
 
+  onCancel(milisegundos = 0){
+    setTimeout(() => {
+      this.location.back();
+    }, milisegundos);
+  }
 
-  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if(control.invalid){
-        control.markAsTouched({onlySelf: true});
-      }
-      if (control instanceof FormGroup) {
-        this.marcarCamposInvalidosComoTocado(control);
-      }
-    })
+  getCampo(nome:string){
+    return this.formulario.get(nome);
+  }
+
+  validarEmail(formControl: FormControl) {
+    return this.loginService.verificarExisteEmailCadastrado(formControl.value)
+      .pipe(map(emailExiste => emailExiste ? { emailExiste: true } : null));
+  }
+
+  verificaSenhasIguais(campoNomeSenha: string, campoNomeConfirmarSenha: string){
+    if(this.getCampo(campoNomeSenha)?.value === this.getCampo(campoNomeConfirmarSenha)?.value){
+      return false;
+    }
+    return true;
   }
 
 }

@@ -37,21 +37,23 @@ export class LoginComponent implements OnInit{
         dados => {
           if(dados){
             this.authService.realizarLogin();
-            const initialState = {
-              type: 'Sucesso!',
-              message: 'Sucesso ao realizar login!',
-              navegar: {
-                estado: true,
-                url: '/'
+            this.modalRef = this.modalService.show(AlertModalComponent, {
+              initialState: {
+                type: 'Sucesso!',
+                message: 'Sucesso ao realizar login!',
+                navegar: {
+                  estado: true,
+                  url: '/'
+                }
               }
-            };
-            this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
+            });
           }else{
-              const initialState = {
-                type: 'Erro!',
-                message: 'Usuario ou senha estão invalidos!'
-              };
-              this.modalRef = this.modalService.show(AlertModalComponent, { initialState });
+              this.modalRef = this.modalService.show(AlertModalComponent, {
+                initialState: {
+                   type: 'Erro!',
+                  message: 'Usuario ou senha estão invalidos!'
+                }
+              });
           }
         }
       );

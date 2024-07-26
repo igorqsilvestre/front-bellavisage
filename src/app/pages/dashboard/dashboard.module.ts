@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DropdownModule } from 'primeng/dropdown';
-
-
-import { DashboardFaturamentoComponent } from './dashboard-faturamento/dashboard-faturamento.component';
 import { TableModule } from 'primeng/table';
-import { SharedModule } from "../../shared/shared.module";
+
+import { SharedModule } from '../../shared/shared.module';
+import { DashboardFaturamentoComponent } from './dashboard-faturamento/dashboard-faturamento.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+
 
 
 

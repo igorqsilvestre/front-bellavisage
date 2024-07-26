@@ -1,18 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CabecalhoComponent } from './cabecalho/cabecalho.component';
-import { RodapeComponent } from './rodape/rodape.component';
-import { BannerComponent } from './banner/banner.component';
-import { CardComponent } from './card/card.component';
-import { CardModule } from 'primeng/card';
-import { RodapeHomeComponent } from './rodape-home/rodape-home.component';
-import { CampoControlErroComponent } from './campo-control-erro/campo-control-erro.component';
-import { DropdownService } from './services/dropdown.service';
-import { AlertModalComponent } from './alert-modal/alert-modal.component';
+import { NgModule } from '@angular/core';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CardModule } from 'primeng/card';
+
+import { AlertModalComponent } from './alert-modal/alert-modal.component';
+import { BannerComponent } from './banner/banner.component';
+import { CabecalhoComponent } from './cabecalho/cabecalho.component';
+import { CampoControlErroTesteComponent } from './campo-control-erro-teste/campo-control-erro-teste.component';
+import { CampoControlErroComponent } from './campo-control-erro/campo-control-erro.component';
+import { CardComponent } from './card/card.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { CpfPipe } from './pipes/cpf.pipe';
 import { TelefonePipe } from './pipes/telefone.pipe';
+import { RodapeHomeComponent } from './rodape-home/rodape-home.component';
+import { RodapeComponent } from './rodape/rodape.component';
+import { DropdownService } from './services/dropdown.service';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -26,7 +29,8 @@ import { TelefonePipe } from './pipes/telefone.pipe';
     AlertModalComponent,
     ConfirmModalComponent,
     CpfPipe,
-    TelefonePipe
+    TelefonePipe,
+    CampoControlErroTesteComponent
 
   ],
   imports: [
@@ -40,6 +44,7 @@ import { TelefonePipe } from './pipes/telefone.pipe';
     CardComponent,
     RodapeHomeComponent,
     CampoControlErroComponent,
+    CampoControlErroTesteComponent,
     AlertModalComponent,
     ModalModule,
     CpfPipe,
@@ -47,6 +52,7 @@ import { TelefonePipe } from './pipes/telefone.pipe';
   ],
   providers:[
     DropdownService,
+    MessageService
   ]
 })
 export class SharedModule { }

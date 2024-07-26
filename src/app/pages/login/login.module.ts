@@ -1,16 +1,19 @@
-import { NgModule } from '@angular/core';
+import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { EmailValidator, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
-import { LoginComponent } from './login-form/login.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AlterarSenhaFormComponent } from './alterar-senha-form/alterar-senha-form.component';
+import { LoginComponent } from './login-form/login.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
-import { LoginEmailValidator } from './LoginEmailValidator';
-import { UsuarioEmailValidator } from './UsuarioEmailValidator';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { MessageService } from 'primeng/api';
+
 
 
 @NgModule({
@@ -27,7 +30,8 @@ import { UsuarioEmailValidator } from './UsuarioEmailValidator';
     RouterModule,
     SharedModule,
     LoginRoutingModule,
+    ToastModule
   ],
-  providers: [EmailValidator, LoginEmailValidator, UsuarioEmailValidator]
+  providers: []
 })
 export class LoginModule { }

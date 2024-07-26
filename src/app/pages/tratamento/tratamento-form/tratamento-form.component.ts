@@ -28,16 +28,17 @@ export class TratamentoFormComponent implements OnInit{
 
 
   ngOnInit(): void {
+    const tratamento: Tratamento = this.route.snapshot.data['tratamento'];
     this.formulario = this.formBuilder.group({
-      id:[null],
-      nome: [null, {
+      id:[tratamento.id],
+      nome: [tratamento.nome, {
         validators:[Validators.required, Validators.minLength(3), Validators.maxLength(255)],
         asyncValidators: [this.nomeExiste.validate.bind(this.nomeExiste)],
         updateOn: 'blur'
       }],
-      valor: [null, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      descricao: [null, Validators.required],
-      imagem: [null],
+      valor: [tratamento.valor, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      descricao: [tratamento.descricao, Validators.required],
+      imagem: [tratamento.imagem],
     });
 
     const id = this.route.snapshot.paramMap.get('id');

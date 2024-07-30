@@ -1,14 +1,14 @@
-import { FormUtilsService } from './../../../shared/services/form-utils.service';
-import { Location } from '@angular/common';
+import { ConsultaCepService } from './../../../shared/services/consulta-cep.service';
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { map } from 'rxjs';
 
 import { EstadoBr } from '../../../shared/models/estado-br';
-import { Cep, ConsultaCepService } from '../../../shared/services/consulta-cep.service';
+import { Cep } from '../../../shared/services/consulta-cep.service';
 import { LoginService } from '../login.service';
 import { DropdownService } from './../../../shared/services/dropdown.service';
+import { FormUtilsService } from './../../../shared/services/form-utils.service';
 
 @Component({
   selector: 'app-usuario-form',
@@ -21,11 +21,11 @@ export class UsuarioFormComponent implements OnInit{
   estados!: EstadoBr[];
 
   constructor(
+    public formUtilService: FormUtilsService,
     private formBuilder: FormBuilder,
     private dropdownService: DropdownService,
     private loginService: LoginService,
-    private location: Location,
-    private formUtilService: FormUtilsService,
+    private messageService: MessageService,
     private cepService: ConsultaCepService
   ){}
 
@@ -52,17 +52,15 @@ export class UsuarioFormComponent implements OnInit{
   }
 
   onBuscaCep(){
-    const campoCep = this.getCampo('endereco.cep');
+    const campoCep = this.formulario.get('endereco.cep');
     if(campoCep.valid){
-       this.cepService.consultaCEP(campoCep.value).subscribe(dados => {
-        if(dados){
-          this.insereDadosEndereco(dados);
-        }else{
-          this.formUtilService.mostrarErro('Erro ao buscar o cep');
-        }
-      });
-    }else{
-      this.formUtilService.mostrarErro('Erro ao buscar o cep');
+      this.cepService.consultaCEP(campoCep.value).subscribe(dados => {
+       if(dados){
+        this.insereDadosEndereco(dados);
+       }else{
+        this.mostrarMensagemErro('Erro ao buscar o cep')
+       }
+      })
     }
   }
 
@@ -85,10 +83,10 @@ export class UsuarioFormComponent implements OnInit{
     if (this.formulario.valid) {
         this.loginService.criarUsuario(this.formulario.value).subscribe(
           () => {
-            this.formUtilService.mostrarSucesso('Cadastro realizado com sucesso')
-            this.onCancel(2000);
+            this.mostrarMensagemSucesso('Cadastro realizado com sucesso');
+            this.formUtilService.voltarPagina(2000);
           },() => {
-            this.formUtilService.mostrarErro('Erro ao fazer o cadastro');
+            this.mostrarMensagemErro('Erro ao fazer o cadastro');
           },
         );
     }else{
@@ -96,30 +94,18 @@ export class UsuarioFormComponent implements OnInit{
     }
   }
 
-  getMensagemErro(campoNome: string){
-    return this.formUtilService.getMensagemErro(this.formulario,campoNome);
-  }
-
-  onCancel(milisegundos = 0){
-    setTimeout(() => {
-      this.location.back();
-    }, milisegundos);
-  }
-
-  getCampo(nome:string){
-    return this.formulario.get(nome);
-  }
-
   validarEmail(formControl: FormControl) {
-    return this.loginService.verificarExisteEmailCadastrado(formControl.value)
+    const email = formControl.value;
+    return this.loginService.verificarExisteEmailCadastrado(email)
       .pipe(map(emailExiste => emailExiste ? { emailExiste: true } : null));
   }
 
-  verificaSenhasIguais(campoNomeSenha: string, campoNomeConfirmarSenha: string){
-    if(this.getCampo(campoNomeSenha)?.value === this.getCampo(campoNomeConfirmarSenha)?.value){
-      return false;
-    }
-    return true;
+  mostrarMensagemErro(mensagem: string) {
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem, key: 'toast-error' });
+  }
+
+  mostrarMensagemSucesso(mensagem: string){
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
   }
 
 }

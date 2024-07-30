@@ -1,14 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { TableModule } from 'primeng/table';
+import { MessageService } from 'primeng/api';
 
+import { AppAngularModule } from '../../shared/app-angular.module';
+import { AppPrimengModule } from '../../shared/app-primeng.module';
 import { SharedModule } from '../../shared/shared.module';
-import { CpfExists } from './CpfExists';
 import { ListagemPacienteComponent } from './listagemPaciente/listagemPaciente.component';
 import { PacienteFormComponent } from './paciente-form/paciente-form.component';
 import { PacienteRoutingModule } from './paciente-routing.module';
@@ -20,17 +15,11 @@ import { PacienteRoutingModule } from './paciente-routing.module';
     ListagemPacienteComponent,
   ],
   imports: [
-    CommonModule,
+    AppAngularModule,
+    AppPrimengModule,
     PacienteRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    SharedModule,
-    FontAwesomeModule,
-    TableModule,
-    InputIconModule,
-    IconFieldModule,
+    SharedModule
   ],
-  providers: [CpfExists]
+  providers: [MessageService]
 })
 export class PacienteModule { }

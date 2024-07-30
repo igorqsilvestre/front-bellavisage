@@ -5,33 +5,26 @@
   <section class="principal-login">
     <img src="../../../../assets/logo-pequeno-bellavisage-m.png">
     <h1 class="principal-titulo">Edite sua senha</h1>
-    <form class="principal-formulario"  [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <form class="principal-formulario"  [formGroup]="formulario">
       <div class="campos">
         <label for="email">Email</label>
         <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira o seu endere&ccedil;o de email">
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
-        formulario.get('email')?.invalid"
-          msgErro="Email inválido ou email não cadastrado no sistema">
-        </app-campo-control-erro>
+        <app-campo-control-erro-teste *ngIf="formulario.get('email')?.invalid && formulario.get('email').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'email')"></app-campo-control-erro-teste>
 
         <label for="senha" >Senha</label>
         <input type="password" class="form-control" formControlName="senha" id="senha" placeholder="Digite sua senha">
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('senha')?.touched && formulario.get('senha')?.invalid"
-          msgErro="Senha é obrigatória! Precisa ter entre 3 e 16 caracteres">
-        </app-campo-control-erro>
+        <app-campo-control-erro-teste *ngIf="formulario.get('senha')?.invalid && formulario.get('senha').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'senha')"></app-campo-control-erro-teste>
 
         <label for="rep-senha" >Repita a senha</label>
         <input type="password" class="form-control" formControlName="confirmarSenha" id="rep-senha" placeholder="Repita a senha anterior">
+        <app-campo-control-erro-teste *ngIf="formulario.get('confirmarSenha').touched && formUtilService.verificaSenhasIguais(formulario, 'senha', 'confirmarSenha')" [msgErro]="'Senhas precisam ser iguais.'"></app-campo-control-erro-teste>
 
-        <app-campo-control-erro [mostrarErro]="formulario.get('confirmarSenha')?.touched &&
-        !(formulario.get('senha')?.value == formulario.get('confirmarSenha')?.value)"
-        msgErro="Precisa ser igual a senha!">
-        </app-campo-control-erro>
       </div>
-      <div class="redirecionamentos">
-        <button type="submit">Atualizar</button>
+      <div class="botoes">
+        <p-toast position="top-left" key="toast-error" />
+        <p-toast position="top-right" key="toast-sucess" />
+        <button type="submit" (click)="formUtilService.voltarPagina()">Cancelar</button>
+        <button type="submit" (click)="onSubmit()">Atualizar</button>
       </div>
     </form>
   </section>

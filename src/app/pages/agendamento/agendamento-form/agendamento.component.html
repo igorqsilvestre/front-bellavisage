@@ -4,111 +4,93 @@
 <main>
   <section class="sessao-principal">
     <h2 class="titulo">{{ titulo }}</h2>
-        <div class="campo-paciente">
-          <h3 class="subtitulo">Agende o paciente inserindo os dados abaixo:</h3>
+    <div class="campo-paciente">
+      <h3 class="subtitulo">Agende o paciente inserindo os dados abaixo:</h3>
 
-          <section  class="principal-formulario">
-             <form class="campos" [formGroup]="formulario" (ngSubmit)="onSubmit()">
-              <div class="dados-nomes-agendamento">
-                      <div>
-                        <label for="paciente">Pacientes</label>
-                        <div class="input-group d-flex align-items-center ">
-                          <div class="input-group-prepend" style="margin-right: 0.1em;">
-                            <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
-                          </div>
-
-                          <select class="form-control" id="paciente" formControlName="paciente" >
-                            <option *ngFor="let paciente of pacientes" [value]="paciente.id" >{{ paciente.nome }}</option>
-                        </select>
-
-                        <app-campo-control-erro [mostrarErro]="formulario.get('paciente')?.touched && formulario.get('paciente')?.invalid"
-                          msgErro="Paciente é obrigatório!">
-                        </app-campo-control-erro>
-                        </div>
-                    </div>
-
-                      <div>
-                        <label for="tratamento">Tratamento</label>
-                        <div class="input-group d-flex align-items-center ">
-                          <div class="input-group-prepend" style="margin-right: 0.1em;">
-                            <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
-                          </div>
-                          <select class="form-control" id="tratamento" formControlName="tratamento">
-                            <option *ngFor="let tratamento of tratamentos" [value]="tratamento.id">{{ tratamento.nome }}</option>
-                          </select>
-
-                          <app-campo-control-erro [mostrarErro]="formulario.get('tratamento')?.touched && formulario.get('tratamento')?.invalid"
-                          msgErro="Tratamento é obrigatório!">
-                          </app-campo-control-erro>
-                        </div>
+      <section  class="principal-formulario">
+          <form class="campos" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+          <div class="dados-nomes-agendamento">
+                  <div>
+                    <label for="paciente">Pacientes</label>
+                    <div class="input-group d-flex align-items-center ">
+                      <div class="input-group-prepend" style="margin-right: 0.1em;">
+                        <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
                       </div>
 
-                      <div>
-                        <label for="especialista">Especialista</label>
-                        <div class="input-group d-flex align-items-center ">
-                          <div class="input-group-prepend" style="margin-right: 0.1em;">
-                            <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
-                          </div>
-                          <select class="form-control" id="especialista" formControlName="especialista" >
-                            <option *ngFor="let especialista of especialistas" [value]="especialista.id">{{ especialista.nome }}</option>
-                          </select>
+                      <select class="form-control" id="paciente" formControlName="paciente" >
+                        <option *ngFor="let paciente of pacientes" [value]="paciente.id" >{{ paciente.nome }}</option>
+                    </select>
+                    <app-campo-control-erro-teste *ngIf="formulario.get('paciente')?.invalid && formulario.get('paciente').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'paciente')"></app-campo-control-erro-teste>
+                    </div>
+                </div>
 
-                          <app-campo-control-erro [mostrarErro]="formulario.get('especialista')?.touched && formulario.get('especialista')?.invalid"
-                          msgErro="Especialista é obrigatório!">
-                          </app-campo-control-erro>
-                        </div>
+                  <div class="tratamento">
+                    <label for="tratamento">Tratamento</label>
+                    <div class="input-group d-flex align-items-center ">
+                      <div class="input-group-prepend" style="margin-right: 0.1em;">
+                        <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
                       </div>
-              </div>
-            <div class="dados-data-horario-agendamento">
-                    <div class="row">
-                    <div class="col">
-                      <label for="nome">Data</label>
-                      <div  class="form-control">
-                              <p-calendar formControlName="data" />
-                              <app-campo-control-erro [mostrarErro]="formulario.get('data')?.touched && formulario.get('data')?.invalid"
-                                msgErro="Data inválida ou data menor que a data atual">
-                              </app-campo-control-erro>
-                        </div>
-
+                      <select class="form-control" id="tratamento" formControlName="tratamento">
+                        <option *ngFor="let tratamento of tratamentos" [value]="tratamento.id">{{ tratamento.nome }}</option>
+                      </select>
+                      <app-campo-control-erro-teste *ngIf="formulario.get('tratamento')?.invalid && formulario.get('tratamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'tratamento')"></app-campo-control-erro-teste>
                     </div>
-                    <div class="col">
-                      <label for="nome">Horário</label>
-                         <div class="form-control">
-                            <p-calendar
-                            formControlName="hora"
-                            [iconDisplay]="'input'"
-                            [showIcon]="true"
-                            [timeOnly]="true"
-                            inputId="templatedisplay">
-                            </p-calendar>
+                  </div>
 
-                            <app-campo-control-erro [mostrarErro]="formulario.get('hora')?.touched && formulario.get('hora')?.invalid"
-                              msgErro="Horário é obrigatório!">
-                            </app-campo-control-erro>
-                         </div>
-
+                  <div>
+                    <label for="especialista">Especialista</label>
+                    <div class="input-group d-flex align-items-center ">
+                      <div class="input-group-prepend" style="margin-right: 0.1em;">
+                        <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
+                      </div>
+                      <select class="form-control" id="especialista" formControlName="especialista" >
+                        <option *ngFor="let especialista of especialistas" [value]="especialista.id">{{ especialista.nome }}</option>
+                      </select>
+                      <app-campo-control-erro-teste *ngIf="formulario.get('especialista')?.invalid && formulario.get('especialista').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'especialista')"></app-campo-control-erro-teste>
                     </div>
-                    <div class="col">
-                      <label for="nome">Valor</label>
-                      <input type="text" class="form-control"  formControlName="valor" placeholder="R$" readonly>
-
-                      <app-campo-control-erro [mostrarErro]="formulario.get('valor')?.touched && formulario.get('valor')?.invalid"
-                        msgErro="Selecione algum tratamento">
-                      </app-campo-control-erro>
+                  </div>
+          </div>
+        <div class="dados-data-horario-agendamento">
+                <div class="row">
+                <div class="col">
+                  <label for="nome">Data</label>
+                  <div  class="form-control">
+                          <p-calendar formControlName="data" />
+                          <app-campo-control-erro-teste *ngIf="formulario.get('data')?.invalid && formulario.get('data').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'data')"></app-campo-control-erro-teste>
                     </div>
-            </div>
 
+                </div>
+                <div class="col">
+                  <label for="nome">Horário</label>
+                      <div class="form-control">
+                        <p-calendar
+                        formControlName="hora"
+                        [iconDisplay]="'input'"
+                        [showIcon]="true"
+                        [timeOnly]="true"
+                        inputId="templatedisplay">
+                        </p-calendar>
+                        <app-campo-control-erro-teste *ngIf="formulario.get('hora')?.invalid && formulario.get('hora').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'hora')"></app-campo-control-erro-teste>
+                      </div>
 
-            </div>
-            <button type="submit">{{ nomeBotao }}</button>
-            </form>
-
-          </section>
-
+                </div>
+                <div class="col">
+                  <label for="nome">Valor</label>
+                  <input type="text" class="form-control"  formControlName="valor" placeholder="R$" readonly>
+                  <app-campo-control-erro-teste *ngIf="formulario.get('valor')?.invalid && formulario.get('valor').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'valor')"></app-campo-control-erro-teste>
+                </div>
         </div>
-
+        </div>
+        <div class="botoes">
+          <p-toast position="top-left" key="toast-error" />
+          <p-toast position="top-right" key="toast-sucess" />
+          <button type="submit"  (click)="(formUtilService.voltarPagina())">Cancelar</button>
+          <button type="submit" (click)="onSubmit()">{{ nomeBotao }}</button>
+        </div>
+        </form>
+      </section>
+    </div>
   </section>
-
 </main>
 
 <footer>

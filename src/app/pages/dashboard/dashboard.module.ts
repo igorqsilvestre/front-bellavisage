@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
 
+import { AppAngularModule } from '../../shared/app-angular.module';
+import { AppPrimengModule } from '../../shared/app-primeng.module';
 import { SharedModule } from '../../shared/shared.module';
 import { DashboardFaturamentoComponent } from './dashboard-faturamento/dashboard-faturamento.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -16,7 +16,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
         DashboardFaturamentoComponent
     ],
     imports: [
-        CommonModule,
+        AppAngularModule,
+        AppPrimengModule,
         DashboardRoutingModule,
         NgxEchartsModule.forRoot({
             /**
@@ -27,7 +28,6 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
             echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
         }),
         DropdownModule,
-        TableModule,
         SharedModule,
 
     ]

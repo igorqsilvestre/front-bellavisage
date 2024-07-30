@@ -14,7 +14,7 @@ export class AuthService{
 
   realizarLogin() {
     this.usuarioAutenticado = true;
-    sessionStorage.setItem(this.nomeAutenticacao, this.usuarioAutenticado.toString())
+    sessionStorage.setItem(this.nomeAutenticacao, this.usuarioAutenticado.toString());
   }
 
   realizarLogout(){

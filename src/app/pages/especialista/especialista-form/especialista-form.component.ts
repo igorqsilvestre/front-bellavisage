@@ -1,15 +1,15 @@
-import { RegistroExists } from './../registroExists';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, Subscription, takeUntil } from 'rxjs';
-import { EstadoBr } from '../../../shared/models/estado-br';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { DropdownService } from '../../../shared/services/dropdown.service';
-import { EspecialistaService } from '../especialista.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Especialista } from '../Especialista';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { MessageService } from 'primeng/api';
+import { catchError, map, of } from 'rxjs';
+
+import { EstadoBr } from '../../../shared/models/estado-br';
 import { Cep, ConsultaCepService } from '../../../shared/services/consulta-cep.service';
+import { DropdownService } from '../../../shared/services/dropdown.service';
+import { FormUtilsService } from '../../../shared/services/form-utils.service';
+import { Especialista } from '../Especialista';
+import { EspecialistaService } from '../especialista.service';
 
 @Component({
   selector: 'app-especialista-form',
@@ -20,90 +20,64 @@ export class EspecialistaFormComponent implements OnInit{
 
   formulario!: FormGroup;
   estados!: EstadoBr[];
-  modalRef!: BsModalRef;
   titulo:string = 'Cadastro do especialista';
   nomeBotao:string = 'Cadastrar';
 
   constructor(
+    public formUtilService: FormUtilsService,
     private formBuilder: FormBuilder,
     private dropdownService: DropdownService,
-    private modalService: BsModalService,
     private especialistaService: EspecialistaService,
-    private registroExists: RegistroExists,
     private route: ActivatedRoute,
-    private cepService: ConsultaCepService){}
+    private cepService: ConsultaCepService,
+    private messageService: MessageService
+  ){}
 
 
   ngOnInit(): void {
     this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
-    this.formulario = this.formBuilder.group({
-      id:[null],
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      especialidade: [null, Validators.required],
-      registro: [null, {
-        validators: [Validators.required, Validators.pattern(/^[0-9]*$/)],
-        asyncValidators: [this.registroExists.validate.bind(this.registroExists)],
-        updateOn: 'blur'
-      }],
-      email: [null, [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      telefone: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(/^[0-9]*$/)]],
-      endereco: this.formBuilder.group({
-        cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-9]*$/)]],
-        numero: [null, Validators.pattern(/^[0-9]*$/)],
-        complemento: [null],
-        bairro: [null, Validators.required],
-        logradouro: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: ['', Validators.required]
-      }),
-    });
 
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id){
+    const especialista: Especialista = this.route.snapshot.data['especialista'];
+
+    if(especialista.id){
       this.titulo = 'Editar especialista';
       this.nomeBotao = 'Atualizar';
-      this.especialistaService.obter(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
-        dados => {if(dados) this.onUpdate(dados)}
-      )
     }
-  }
 
-  onUpdate(especialista:Especialista){
-    this.formulario.patchValue({
-      id: especialista.id,
-      nome: especialista.nome,
-      especialidade: especialista.especialidade,
-      registro: especialista.registro,
-      email: especialista.email,
-      telefone: especialista.telefone,
-      endereco: {
-        cep: especialista.endereco.cep,
-        numero: especialista.endereco.numero,
-        complemento: especialista.endereco.complemento,
-        bairro: especialista.endereco.bairro,
-        logradouro: especialista.endereco.logradouro,
-        cidade: especialista.endereco.cidade,
-        estado: especialista.endereco.estado
-      }
-    })
+    this.formulario = this.formBuilder.group({
+      id:[especialista.id],
+      nome: [especialista.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      especialidade: [especialista.especialidade, Validators.required],
+      registro: [especialista.registro, [Validators.required, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)], [this.validarRegistroExiste.bind(this)]],
+      email: [especialista.email, [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)]],
+      telefone: [especialista.telefone, [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
+      endereco: this.formBuilder.group({
+        cep: [especialista.endereco.cep, [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
+        numero: [especialista.endereco.numero, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)],
+        complemento: [especialista.endereco.complemento],
+        bairro: [especialista.endereco.bairro, Validators.required],
+        logradouro: [especialista.endereco.logradouro, Validators.required],
+        cidade: [especialista.endereco.cidade, Validators.required],
+        estado: [especialista.endereco.estado, Validators.required]
+      }),
+    });
   }
 
   onBuscaCep(){
-    const cep = this.formulario.get('endereco.cep').value;
-
-    if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-      .subscribe(dados => {
-        if(dados){
-          this.insereDadosEndereco(dados);
-        }
-      });
+    const campoCep = this.formulario.get('endereco.cep');
+    if(campoCep.valid){
+      this.cepService.consultaCEP(campoCep.value).subscribe(dados => {
+       if(dados){
+        this.insereDadosEndereco(dados);
+       }else{
+        this.mostrarMensagemErro('Erro ao buscar o cep')
+       }
+      })
     }
   }
 
   insereDadosEndereco(dados:Cep){
     this.dropdownService.getEstadoBySigla(dados.uf).subscribe(estado => {
-      console.log(estado);
       this.formulario.patchValue({
         endereco: {
           logradouro: dados.logradouro,
@@ -118,45 +92,43 @@ export class EspecialistaFormComponent implements OnInit{
 
 
   onSubmit(){
-
     if (this.formulario.valid) {
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
-      const ir =  {estado: true, url: 'especialistas'};
 
       if(this.formulario.value.id){
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
       this.especialistaService.salvar(this.formulario.value).subscribe(
-        dados => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
-        },error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
+        () => {
+          this.mostrarMensagemSucesso(mensagemSucesso);
+          this.formUtilService.voltarPagina(2000);
+        },() => {
+          this.mostrarMensagemErro(mensagemErro);
         }
       )
     }else{
-      this.marcarCamposInvalidosComoTocado(this.formulario);
+      this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
 
-  onCancel(){
-    this.formulario.reset({
-      endereco:{
-        estado: ''
-      }
-    });
+
+  validarRegistroExiste(formControl: FormControl) {
+    const registro = formControl.value;
+    const id = formControl.root.get('id')?.value;
+    return this.especialistaService.verificarExisteRegistroCadastrado(registro)
+      .pipe(
+        map(especialista => especialista && especialista.id !== id ? { registroExistente: true } : null),
+        catchError(() => of(null))
+      );
   }
 
-  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if(control.invalid){
-        control.markAsTouched({onlySelf: true});
-      }
-      if (control instanceof FormGroup) {
-        this.marcarCamposInvalidosComoTocado(control);
-      }
-    })
+  mostrarMensagemErro(mensagem: string) {
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem, key: 'toast-error' });
+  }
+
+  mostrarMensagemSucesso(mensagem: string){
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
   }
 }

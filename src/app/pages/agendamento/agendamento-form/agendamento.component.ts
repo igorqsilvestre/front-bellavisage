@@ -1,18 +1,19 @@
-import { DatahoraService } from './../../../shared/services/datahora.service';
-import { AgendamentoService } from './../agendamento.service';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { TratamentoService } from './../../tratamento/tratamento.service';
+import { ActivatedRoute } from '@angular/router';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { MessageService } from 'primeng/api';
+
+import { FormUtilsService } from '../../../shared/services/form-utils.service';
+import { Especialista } from '../../especialista/Especialista';
+import { Paciente } from '../../paciente/Paciente';
+import { Tratamento } from '../../tratamento/Tratamento';
+import { Agendamento } from '../Agendamento';
+import { DatahoraService } from './../../../shared/services/datahora.service';
 import { EspecialistaService } from './../../especialista/especialista.service';
 import { PacienteService } from './../../paciente/paciente.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Agendamento } from '../Agendamento';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
-import { Paciente } from '../../paciente/Paciente';
-import { Especialista } from '../../especialista/Especialista';
-import { Tratamento } from '../../tratamento/Tratamento';
+import { TratamentoService } from './../../tratamento/tratamento.service';
+import { AgendamentoService } from './../agendamento.service';
 
 
 @Component({
@@ -22,7 +23,6 @@ import { Tratamento } from '../../tratamento/Tratamento';
 })
 export class AgendamentoComponent implements OnInit{
   formulario!: FormGroup;
-  modalRef!: BsModalRef;
   pacientes!: Paciente[];
   especialistas!: Especialista[];
   tratamentos!: Tratamento[];
@@ -33,33 +33,55 @@ export class AgendamentoComponent implements OnInit{
 
 
   constructor(private route: ActivatedRoute,
+    public formUtilService: FormUtilsService,
     private pacienteService:PacienteService,
     private especialistaService:EspecialistaService,
     private tratamentoService:TratamentoService,
     private formBuilder:FormBuilder,
-    private modalService: BsModalService,
     private agendamentoService: AgendamentoService,
-    private dataHoraService: DatahoraService) {}
+    private dataHoraService: DatahoraService,
+    private messageService: MessageService
+  ) {}
 
 
 
   ngOnInit(): void {
 
+    const agendamento: Agendamento = this.route.snapshot.data['agendamento'];
+
+    if(agendamento.id){
+      this.titulo = 'Editar agendamento do especialista';
+      this.nomeBotao = 'Atualizar';
+    }
 
     this.formulario = this.formBuilder.group({
-      id:[null],
-      paciente: [null, Validators.required],
-      especialista: [null, Validators.required],
-      tratamento: [null, Validators.required],
-      data: [null, [Validators.required, this.validaDataMenorQueAtual()]],
-      hora: [null, Validators.required],
-      valor: [null, [Validators.required]],
-      status:[null],
-      avaliacao:[null]
+      id:[agendamento.id],
+      paciente: [agendamento.paciente, Validators.required],
+      especialista: [agendamento.especialista, Validators.required],
+      tratamento: [agendamento.tratamento, Validators.required],
+      data: [this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora), [Validators.required, this.validaDataMenorQueAtual()]],
+      hora: [this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora), Validators.required],
+      valor: [agendamento.valor, [Validators.required]],
+      status:[agendamento.status],
+      avaliacao:[agendamento.avaliacao]
     });
 
     this.atualizaValorDoTratamento();
+    this.atualizaListaDePacientesEespecialistasEtratamentos();
 
+  }
+
+  atualizaValorDoTratamento(){
+    this.formulario.get('tratamento')!.valueChanges.subscribe(id => {
+      if(id){
+        this.tratamentoService.obter(id).subscribe(tratamento => {
+          if(tratamento) this.formulario.get('valor')!.setValue(tratamento.valor.toString().replaceAll(',','').split('.')[0]);
+        });
+      }
+    })
+  }
+
+  atualizaListaDePacientesEespecialistasEtratamentos() {
     this.pacienteService.obterTodos().subscribe(dados => {
       if(dados) {
         this.pacientes = dados;
@@ -74,23 +96,55 @@ export class AgendamentoComponent implements OnInit{
       }
     });
 
-
     this.tratamentoService.obterTodos().subscribe(dados => {
       if(dados) {
         this.tratamentos = dados
         this.formulario.patchValue({ tratamento: dados[0].id });
       }
     });
+  }
 
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id){
-      this.titulo = 'Editar agendamento do especialista';
-      this.nomeBotao = 'Atualizar';
-      this.agendamentoService.obter(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
-        dados => {if(dados) this.onUpdate(dados)}
-      )
+  applyFilterOnTable(event: any, dtAgendamento: any) {
+    return dtAgendamento.filterGlobal(event, 'contains')
+  }
+
+  onSubmit(){
+
+    if (this.formulario.valid) {
+      this.formulario.patchValue({
+        data: this.dataHoraService.formatarDataParaString(this.formulario.get('data').value),
+        hora: this.dataHoraService.formatarHoraParaString(this.formulario.get('hora').value)
+      })
+
+      let mensagemErro = '';
+      let mensagemSucesso = '';
+
+      this.agendamentoService.existeDataHora(this.formulario.value).subscribe(dado => {
+        if(dado){
+          this.mostrarMensagemErro("Ocorreu um erro pois essa data e hora já existem no sistema!");
+        }else{
+          mensagemSucesso = "Cadastro foi realizado com sucesso!";
+          mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
+
+          if(this.formulario.value.id){
+            mensagemSucesso = "Alteração realizada com sucesso!"
+            mensagemErro = "Ocorreu um erro ao realizar a edição!"
+          }
+          this.agendamentoService.salvar(this.formulario.value).subscribe(
+            () => {
+              this.mostrarMensagemSucesso(mensagemSucesso);
+              this.formUtilService.voltarPagina(2000);
+            },() => {
+              this.mostrarMensagemErro(mensagemErro);
+            }
+          )
+        }
+      })
+    }else{
+      this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
+
 
   validaDataMenorQueAtual(): ValidatorFn{
     return (control: AbstractControl): ValidationErrors | null => {
@@ -107,99 +161,12 @@ export class AgendamentoComponent implements OnInit{
     };
   }
 
-  atualizaValorDoTratamento(){
-    this.formulario.get('tratamento')!.valueChanges.subscribe(id => {
-      if(id){
-      this.tratamentoService.obter(id).subscribe(tratamento => {
-        if(tratamento) this.formulario.get('valor')!.setValue(tratamento.valor.toString().replaceAll(',','').split('.')[0]);
-      });
-      }
-    })
+  mostrarMensagemErro(mensagem: string) {
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem, key: 'toast-error' });
   }
 
-  onUpdate(agendamento:Agendamento){
-    const data = this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora);
-
-    this.formulario.patchValue({
-      id:agendamento.id,
-      paciente: agendamento.paciente.id,
-      especialista: agendamento.especialista.id,
-      tratamento: agendamento.tratamento.id,
-      data: data,
-      hora: data,
-      valor: agendamento.valor,
-      status: agendamento.status,
-      avaliacao: agendamento.avaliacao
-    })
-
+  mostrarMensagemSucesso(mensagem: string){
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
   }
 
-  applyFilterOnTable(event: any, dtAgendamento: any) {
-    console.log(event.target.value)
-    return dtAgendamento.filterGlobal(event, 'contains')
-  }
-
-  onSubmit(){
-
-    if (this.formulario.valid) {
-      this.formulario.patchValue({
-        data: this.formatarDataParaString(this.formulario.get('data').value),
-        hora: this.formatarHoraParaString(this.formulario.get('hora').value)
-      })
-
-      let mensagemErro = '';
-      let mensagemSucesso = '';
-
-      this.agendamentoService.existeDataHora(this.formulario.value).subscribe(dado => {
-        if(dado){
-          mensagemErro = "Ocorreu um erro pois essa data e hora já existem no sistema!"
-          this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro}  });
-        }else{
-          mensagemSucesso = "Cadastro foi realizado com sucesso!";
-          mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
-          const ir =  {estado: true, url: 'agendamentos'};
-
-          if(this.formulario.value.id){
-            mensagemSucesso = "Alteração realizada com sucesso!"
-            mensagemErro = "Ocorreu um erro ao realizar a edição!"
-          }
-          this.agendamentoService.salvar(this.formulario.value).subscribe(
-            dados => {
-              this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
-            },error => {
-              this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
-            }
-          )
-        }
-      })
-    }else{
-      this.marcarCamposInvalidosComoTocado(this.formulario);
-    }
-  }
-
-  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if(control.invalid){
-        control.markAsTouched({onlySelf: true});
-      }
-      if (control instanceof FormGroup) {
-        this.marcarCamposInvalidosComoTocado(control);
-      }
-    })
-  }
-
-
-  formatarDataParaString(data: Date): string {
-    const mes = ('0' + (data.getMonth() + 1)).slice(-2);
-    const dia = ('0' + data.getDate()).slice(-2);
-    const ano = data.getFullYear();
-    return `${mes}/${dia}/${ano}`;
-  }
-
-  formatarHoraParaString(tempo: Date): string {
-    const horas = ('0' + tempo.getHours()).slice(-2);
-    const minutos = ('0' + tempo.getMinutes()).slice(-2);
-    return `${horas}:${minutos}`;
-  }
 }

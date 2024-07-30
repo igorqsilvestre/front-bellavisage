@@ -26,10 +26,6 @@
 
 }
 
-.principal-formulario .envio{
-  display: inline-block;
-}
-
 .principal-formulario label{
   font-family: 'Public Sans';
   color: #950341;
@@ -85,5 +81,10 @@
 
 .principal-formulario a:hover{
   text-decoration: underline;
+}
+
+.principal-formulario span a{
+  color: #F5066C;
+  font-weight: bold;
 }
 

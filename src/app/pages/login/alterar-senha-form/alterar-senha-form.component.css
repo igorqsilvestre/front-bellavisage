@@ -52,12 +52,10 @@
   border: none;
   border-radius: 8px;
   padding: 0.7em 7em;
+  margin-right: 0.5em;
 }
 
 .principal-formulario button:hover{
   background-color: #b13d6d;
 }
 
-.principal-formulario .envio{
-  display: inline-block;
-}

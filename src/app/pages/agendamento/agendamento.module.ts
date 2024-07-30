@@ -1,14 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CalendarModule } from 'primeng/calendar';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { RatingModule } from 'primeng/rating';
-import { TableModule } from 'primeng/table';
 
+import { AppAngularModule } from '../../shared/app-angular.module';
+import { AppPrimengModule } from '../../shared/app-primeng.module';
 import { SharedModule } from '../../shared/shared.module';
 import { AgendamentoComponent } from './agendamento-form/agendamento.component';
 import { AgendamentoRoutingModule } from './agendamento-routing.module';
@@ -22,18 +15,10 @@ import { ListagemAgendamentoComponent } from './listagemAgendamento/listagemAgen
     ListagemAgendamentoComponent
   ],
   imports: [
-    CommonModule,
+    AppAngularModule,
+    AppPrimengModule,
     AgendamentoRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    SharedModule,
-    FontAwesomeModule,
-    TableModule,
-    InputIconModule,
-    IconFieldModule,
-    CalendarModule,
-    RatingModule
+    SharedModule
   ]
 })
 export class AgendamentoModule { }

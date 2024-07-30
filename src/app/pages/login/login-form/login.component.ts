@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, Subscription, takeUntil } from 'rxjs';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { LoginService } from '../login.service';
+import { MessageService } from 'primeng/api';
+
 import { AuthService } from '../../../guards/auth.service';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { FormUtilsService } from '../../../shared/services/form-utils.service';
+import { LoginService } from '../login.service';
 
 
 @Component({
@@ -15,18 +15,19 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
 export class LoginComponent implements OnInit{
 
   formulario!: FormGroup;
-  modalRef!: BsModalRef;
 
   constructor(
+    public formUtilService: FormUtilsService,
     private formBuilder: FormBuilder,
     private loginService: LoginService,
-    private modalService: BsModalService,
-    private authService: AuthService){}
+    private authService: AuthService,
+    private messageService: MessageService
+  ){}
 
 
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      email: [null,  [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)]],
       senha: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
     });
   }
@@ -37,42 +38,24 @@ export class LoginComponent implements OnInit{
         dados => {
           if(dados){
             this.authService.realizarLogin();
-            this.modalRef = this.modalService.show(AlertModalComponent, {
-              initialState: {
-                type: 'Sucesso!',
-                message: 'Sucesso ao realizar login!',
-                navegar: {
-                  estado: true,
-                  url: '/'
-                }
-              }
-            });
+            this.mostrarMensagemSucesso('Sucesso ao realizar login');
+            this.formUtilService.navegarPagina('', 2000);
           }else{
-              this.modalRef = this.modalService.show(AlertModalComponent, {
-                initialState: {
-                   type: 'Erro!',
-                  message: 'Usuario ou senha estão invalidos!'
-                }
-              });
+            this.mostrarMensagemErro('Usuario ou senha estão invalidos');
           }
         }
       );
-
     }else{
-      this.marcarCamposInvalidosComoTocado(this.formulario);
+      this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
 
-  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if(control.invalid){
-        control.markAsTouched({onlySelf: true});
-      }
-      if (control instanceof FormGroup) {
-        this.marcarCamposInvalidosComoTocado(control);
-      }
-    })
+  mostrarMensagemErro(mensagem: string) {
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem, key: 'toast-error' });
+  }
+
+  mostrarMensagemSucesso(mensagem: string){
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
   }
 
 }

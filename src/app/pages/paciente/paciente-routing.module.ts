@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PacienteFormComponent } from './paciente-form/paciente-form.component';
 import { ListagemPacienteComponent } from './listagemPaciente/listagemPaciente.component';
+import { pacienteResolver } from '../../guards/paciente.resolver';
 
 
 const routes: Routes = [
   {path: '',component: ListagemPacienteComponent},
-  {path: 'pacientes/novo-paciente', component: PacienteFormComponent},
-  {path: 'pacientes/editar-paciente/:id', component: PacienteFormComponent},
+  {path: 'pacientes/novo-paciente', component: PacienteFormComponent, resolve: {paciente: pacienteResolver}},
+  {path: 'pacientes/editar-paciente/:id', component: PacienteFormComponent, resolve: { paciente: pacienteResolver}},
 ];
 
 @NgModule({

@@ -1,11 +1,12 @@
-import { NomeExists } from './../nomeExists';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { TratamentoService } from '../tratamento.service';
+import { MessageService } from 'primeng/api';
+import { catchError, map, of } from 'rxjs';
+
+import { FormUtilsService } from '../../../shared/services/form-utils.service';
 import { Tratamento } from '../Tratamento';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { TratamentoService } from '../tratamento.service';
 
 
 @Component({
@@ -15,87 +16,75 @@ import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.com
 })
 export class TratamentoFormComponent implements OnInit{
   formulario!: FormGroup;
-  modalRef!: BsModalRef;
   titulo:string = 'Cadastro do tratamento';
   nomeBotao:string = 'Cadastrar';
 
   constructor(
+    public formUtilService: FormUtilsService,
     private formBuilder: FormBuilder,
-    private modalService: BsModalService,
     private tratamentoService: TratamentoService,
-    private nomeExiste: NomeExists,
-    private route: ActivatedRoute){}
+    private route: ActivatedRoute,
+    private messageService: MessageService
+  ){}
 
 
   ngOnInit(): void {
+
     const tratamento: Tratamento = this.route.snapshot.data['tratamento'];
+
+    if(tratamento.id){
+      this.titulo = 'Editar tratamento';
+      this.nomeBotao = 'Atualizar';
+      tratamento.valor = parseFloat(tratamento.valor.toString().replaceAll(',','').split('.')[0]) ;
+    }
+
     this.formulario = this.formBuilder.group({
       id:[tratamento.id],
-      nome: [tratamento.nome, {
-        validators:[Validators.required, Validators.minLength(3), Validators.maxLength(255)],
-        asyncValidators: [this.nomeExiste.validate.bind(this.nomeExiste)],
-        updateOn: 'blur'
-      }],
-      valor: [tratamento.valor, [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      nome: [tratamento.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(255)], [this.validarTratamentoExiste.bind(this)]],
+      valor: [tratamento.valor, [Validators.required, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
       descricao: [tratamento.descricao, Validators.required],
       imagem: [tratamento.imagem],
     });
-
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id){
-      this.titulo = 'Editar especialista';
-      this.nomeBotao = 'Atualizar';
-      this.tratamentoService.obter(Number(this.route.snapshot.paramMap.get('id'))).subscribe(
-        dados => {if(dados) this.onUpdate(dados)}
-      )
-    }
-  }
-
-  onUpdate(tratamento:Tratamento){
-    this.formulario.patchValue({
-      id: tratamento.id,
-      nome: tratamento.nome,
-      valor: tratamento.valor.toString().replaceAll(',','').split('.')[0],
-      descricao: tratamento.descricao,
-      imagem: tratamento.imagem,
-    })
   }
 
   onSubmit(){
     if (this.formulario.valid) {
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
-      const ir =  {estado: true, url: 'tratamentos'};
 
       if(this.formulario.value.id){
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
       this.tratamentoService.salvar(this.formulario.value).subscribe(
-        dados => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: {type: 'Sucesso!', message: mensagemSucesso, navegar: ir} });
-        },error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, {  initialState: {type: 'Erro!', message: mensagemErro, navegar: ir}  });
+        () => {
+          this.mostrarMensagemSucesso(mensagemSucesso);
+          this.formUtilService.voltarPagina(2000);
+        },() => {
+          this.mostrarMensagemErro(mensagemErro);
         }
       )
     }else{
-      this.marcarCamposInvalidosComoTocado(this.formulario);
+      this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
     }
   }
 
-  onCancel(){
-    this.formulario.reset();
+  validarTratamentoExiste(formControl: FormControl) {
+    const registro = formControl.value;
+    const id = formControl.root.get('id')?.value;
+    return this.tratamentoService.verificarExisteNomeCadastrado(registro)
+      .pipe(
+        map(tratamento => tratamento && tratamento.id !== id ? { tratamentoExistente: true } : null),
+        catchError(() => of(null))
+      );
   }
 
-  marcarCamposInvalidosComoTocado(formGroup: FormGroup){
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if(control.invalid){
-        control.markAsTouched({onlySelf: true});
-      }
-      if (control instanceof FormGroup) {
-        this.marcarCamposInvalidosComoTocado(control);
-      }
-    })
+  mostrarMensagemErro(mensagem: string) {
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem, key: 'toast-error' });
   }
+
+  mostrarMensagemSucesso(mensagem: string){
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
+  }
+
 }

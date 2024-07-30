@@ -10,33 +10,31 @@
       <div class="campos">
         <label for="nome">Nome</label>
         <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Informe seu nome*">
-        <app-campo-control-erro-teste *ngIf="getCampo('nome')?.invalid && getCampo('nome').touched" [msgErro]="getMensagemErro('nome')"></app-campo-control-erro-teste>
+        <app-campo-control-erro-teste *ngIf="formulario.get('nome')?.invalid && formulario.get('nome').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'nome')"></app-campo-control-erro-teste>
 
         <label for="email">Email</label>
         <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email*">
-        <app-campo-control-erro-teste *ngIf="getCampo('email')?.invalid && getCampo('email').touched" [msgErro]="getMensagemErro('email')"></app-campo-control-erro-teste>
+        <app-campo-control-erro-teste *ngIf="formulario.get('email')?.invalid && formulario.get('email').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'email')"></app-campo-control-erro-teste>
 
         <label for="senha" >Senha</label>
         <input type="password" class="form-control" formControlName="senha" id="senha" placeholder="Crie uma senha*">
-        <app-campo-control-erro-teste *ngIf="getCampo('senha')?.invalid && getCampo('senha').touched" [msgErro]="getMensagemErro('senha')"></app-campo-control-erro-teste>
+        <app-campo-control-erro-teste *ngIf="formulario.get('senha')?.invalid && formulario.get('senha').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'senha')"></app-campo-control-erro-teste>
 
 
         <label for="rep-senha" >Confirme sua senha</label>
         <input type="password" class="form-control" formControlName="confirmarSenha" id="rep-senha" placeholder="Repita a senha*">
-        <app-campo-control-erro-teste *ngIf="getCampo('confirmarSenha').touched && verificaSenhasIguais('senha', 'confirmarSenha')" [msgErro]="'Senhas precisam ser iguais.'"></app-campo-control-erro-teste>
+        <app-campo-control-erro-teste *ngIf="formulario.get('confirmarSenha').touched && formUtilService.verificaSenhasIguais(formulario, 'senha', 'confirmarSenha')" [msgErro]="'Senhas precisam ser iguais.'"></app-campo-control-erro-teste>
 
 
         <label for="telefone">Telefone</label>
         <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX*">
-        <app-campo-control-erro-teste *ngIf="getCampo('telefone')?.invalid && getCampo('telefone').touched" [msgErro]="getMensagemErro('telefone')"></app-campo-control-erro-teste>
+        <app-campo-control-erro-teste *ngIf="formulario.get('telefone')?.invalid && formulario.get('telefone').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'telefone')"></app-campo-control-erro-teste>
 
         <div formGroupName="endereco">
           <label for="cep" >Endere&ccedil;o</label>
 
           <div class="row d-flex align-items-center">
             <div class="col-6 d-flex align-items-center gap-1">
-              <p-toast position="top-left" key="toast-error" />
-              <p-toast position="top-right" key="toast-sucess" />
               <button class="btn btn-primary" (click)="onBuscaCep()"><i class="bi bi-search"></i></button>
               <input type="text" class="form-control" formControlName="cep" placeholder="CEP*">
             </div>
@@ -48,10 +46,10 @@
 
           <div class="row">
             <div class="col-6">
-              <app-campo-control-erro-teste *ngIf="getCampo('endereco.cep')?.invalid && getCampo('endereco.cep').touched" [msgErro]="getMensagemErro('endereco.cep')"></app-campo-control-erro-teste>
+              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.cep')?.invalid && formulario.get('endereco.cep').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.cep')"></app-campo-control-erro-teste>
             </div>
             <div class="col-6">
-              <app-campo-control-erro-teste *ngIf="getCampo('endereco.logradouro')?.invalid && getCampo('endereco.logradouro').touched" [msgErro]="getMensagemErro('endereco.logradouro')"></app-campo-control-erro-teste>
+              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.logradouro')?.invalid && formulario.get('endereco.logradouro').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.logradouro')"></app-campo-control-erro-teste>
             </div>
           </div>
 
@@ -66,10 +64,10 @@
 
           <div class="row">
             <div class="col">
-              <app-campo-control-erro-teste *ngIf="getCampo('endereco.bairro')?.invalid && getCampo('endereco.bairro').touched" [msgErro]="getMensagemErro('endereco.bairro')"></app-campo-control-erro-teste>
+              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.bairro')?.invalid && formulario.get('endereco.bairro').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.bairro')"></app-campo-control-erro-teste>
             </div>
             <div class="col">
-              <app-campo-control-erro-teste *ngIf="getCampo('endereco.numero')?.invalid && getCampo('endereco.numero').touched" [msgErro]="getMensagemErro('endereco.numero')"></app-campo-control-erro-teste>
+              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.numero')?.invalid && formulario.get('endereco.numero').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.numero')"></app-campo-control-erro-teste>
             </div>
           </div>
 
@@ -89,18 +87,20 @@
 
           <div class="row">
             <div class="col">
-              <app-campo-control-erro-teste *ngIf="getCampo('endereco.cidade')?.invalid && getCampo('endereco.cidade').touched" [msgErro]="getMensagemErro('endereco.cidade')"></app-campo-control-erro-teste>
+              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.cidade')?.invalid && formulario.get('endereco.cidade').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.cidade')"></app-campo-control-erro-teste>
             </div>
             <div class="col">
-              <app-campo-control-erro-teste *ngIf="getCampo('endereco.estado')?.invalid && getCampo('endereco.estado').touched" [msgErro]="getMensagemErro('endereco.estado')"></app-campo-control-erro-teste>
+              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.estado')?.invalid && formulario.get('endereco.estado').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.estado')"></app-campo-control-erro-teste>
             </div>
           </div>
         </div>
       </div>
 
       <div class="botoes">
-        <button type="submit"  class="botao-submit" (click)="onCancel()">Cancelar</button>
-        <button type="submit"  class="botao-submit" (click)="onSubmit()">Cadastrar</button>
+        <p-toast position="top-left" key="toast-error" />
+        <p-toast position="top-right" key="toast-sucess" />
+        <button type="submit" (click)="formUtilService.voltarPagina()">Cancelar</button>
+        <button type="submit" (click)="onSubmit()">Cadastrar</button>
       </div>
     </form>
   </section>

@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export class CpfValidator {
+export class CpfUtilValidator {
   static validate(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const cpf = control.value;

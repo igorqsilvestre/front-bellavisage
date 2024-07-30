@@ -5,27 +5,23 @@
   <section class="principal-login">
     <img src="../../../../assets/logo-pequeno-2-bellavisage.png">
     <h1 class="principal-titulo">Fa&ccedil;a login em sua conta</h1>
-    <form class="principal-formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <form class="principal-formulario" [formGroup]="formulario">
       <div class="campos">
         <label for="email">Email</label>
         <input type="email" class="form-control" formControlName="email" id="email" placeholder="Insira seu endere&ccedil;o de email">
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.touched &&
-        formulario.get('email')?.invalid"
-          msgErro="Email inválido!">
-        </app-campo-control-erro>
+        <app-campo-control-erro-teste *ngIf="formulario.get('email')?.invalid && formulario.get('email').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'email')"></app-campo-control-erro-teste>
 
         <label for="senha" >Senha</label>
         <input type="password" class="form-control" formControlName="senha" id="senha" placeholder="Insira sua senha">
-
-        <app-campo-control-erro [mostrarErro]="formulario.get('senha')?.touched && formulario.get('senha')?.invalid"
-          msgErro="Senha é obrigatória! O tamanho da senha é de 3 a 16 caracteres">
-        </app-campo-control-erro>
+        <app-campo-control-erro-teste *ngIf="formulario.get('senha')?.invalid && formulario.get('senha').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'senha')"></app-campo-control-erro-teste>
       </div>
+
       <div class="redirecionamentos">
-        <button type="submit">Entrar</button>
+        <p-toast position="top-left" key="toast-error" />
+        <p-toast position="top-right" key="toast-sucess" />
+        <button type="submit" (click)="onSubmit()">Entrar</button>
         <a routerLink="/login/alterar-senha">Esqueceu sua senha?</a>
-        <span>Ainda não tem conta? <a routerLink="/login/novo-usuario" style="color: #F5066C; font-weight: bold;">Fa&ccedil;a seu cadastro!</a></span>
+        <span>Ainda não tem conta? <a routerLink="/login/novo-usuario">Fa&ccedil;a seu cadastro!</a></span>
       </div>
     </form>
   </section>

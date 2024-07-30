@@ -8,6 +8,11 @@ export class DatahoraService {
   constructor() { }
 
   convertaDataHora(data: string, hora: string): Date | null {
+
+    if(!data || !hora){
+      return null;
+    }
+
     // Extrair os componentes da data
     const dateParts = data.split('/');
     const month = parseInt(dateParts[0], 10);
@@ -33,5 +38,18 @@ export class DatahoraService {
     }
 
     return dateObj;
+  }
+
+  formatarDataParaString(data: Date): string {
+    const mes = ('0' + (data.getMonth() + 1)).slice(-2);
+    const dia = ('0' + data.getDate()).slice(-2);
+    const ano = data.getFullYear();
+    return `${mes}/${dia}/${ano}`;
+  }
+
+  formatarHoraParaString(tempo: Date): string {
+    const horas = ('0' + tempo.getHours()).slice(-2);
+    const minutos = ('0' + tempo.getMinutes()).slice(-2);
+    return `${horas}:${minutos}`;
   }
 }

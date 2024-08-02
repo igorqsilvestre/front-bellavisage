@@ -1,14 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+
+import { AppAngularModule } from '../../shared/app-angular.module';
+import { AppPrimengModule } from '../../shared/app-primeng.module';
 import { SharedModule } from '../../shared/shared.module';
 import { ListagemPagamentosComponent } from './listagemPagamentos/listagemPagamentos.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TableModule } from 'primeng/table';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { RatingModule } from 'primeng/rating';
 import { PagamentosRoutingModule } from './pagamentos-routing.module';
 
 
@@ -18,18 +13,10 @@ import { PagamentosRoutingModule } from './pagamentos-routing.module';
     ListagemPagamentosComponent,
   ],
   imports: [
-    CommonModule,
+    AppAngularModule,
+    AppPrimengModule,
     PagamentosRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    SharedModule,
-    FontAwesomeModule,
-    TableModule,
-    InputIconModule,
-    IconFieldModule,
-    RatingModule
-
+    SharedModule
   ]
 })
 export class PagamentosModule { }

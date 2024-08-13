@@ -6,8 +6,8 @@ import { especialistaResolver } from '../../guards/especialista.resolver';
 
 const routes: Routes = [
   {path: '',component: ListagemEspecialistaComponent},
-  {path: 'especialistas/novo-especialista', component: EspecialistaFormComponent, resolve: {especialista: especialistaResolver}},
-  {path: 'especialistas/editar-especialista/:id', component: EspecialistaFormComponent,  resolve: {especialista: especialistaResolver}},
+  {path: 'novo-especialista', component: EspecialistaFormComponent, resolve: {especialista: especialistaResolver}},
+  {path: 'editar-especialista/:id', component: EspecialistaFormComponent,  resolve: {especialista: especialistaResolver}},
 
 ];
 

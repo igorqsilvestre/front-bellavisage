@@ -5,7 +5,7 @@
   <section class="sessao-principal">
     <h2 class="titulo">Pagamentos</h2>
       <div class="button-direcionamentoCadastrar">
-        <button type="submit" (click)="editarCadastro(cadastro)">Cadastrar Pagamentos</button>
+        <button type="submit" routerLink="novo-pagamento">Cadastrar Pagamento</button>
       </div>
         <div class="campo-pagamentos">
 
@@ -14,7 +14,7 @@
           <p-table
             #dtListagemPagamentos
             dataKey="id"
-            [value]="cadastro"
+            [value]="pagamentos"
             [tableStyle]="{ 'min-width': '50rem' }"
             [globalFilterFields]="[
                 'name',
@@ -25,12 +25,13 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Data</th>
+                    <th>Data e Horário</th>
                     <th>Nome</th>
                     <th>Tratamento</th>
                     <th>Preço</th>
                     <th>Formas de Pagamento</th>
                     <th>Status</th>
+                    <th>Ações</th>
 
                 </tr>
                 <tr>
@@ -83,17 +84,30 @@
                   <th></th>
             </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-cadastro  let-editing="editing" let-ri="rowIndex">
+            <ng-template pTemplate="body" let-pagamento  let-editing="editing" let-ri="rowIndex">
 
                 <tr>
-                    <td>{{ cadastro.data }}</td>
-                    <td>{{ cadastro.nome }}</td>
-                    <td>{{ cadastro.tratamento}}</td>
-                    <td>{{ cadastro.preco}}</td>
-                    <td>{{ cadastro.formasPagamento}}</td>
-                    <td>{{ cadastro.status}}</td>
+                    <td>{{ pagamento.data }}, {{ pagamento.hora }}</td>
+                    <td>{{ pagamento.agendamento.paciente.nome }}</td>
+                    <td>{{ pagamento.agendamento.tratamento.nome }}</td>
+                    <td>{{ pagamento.agendamento.valor }}</td>
+                    <td>{{ pagamento.formaDePagamento}}</td>
+                    <td>{{ pagamento.statusPagamento}}</td>
+                    <th>
+                      <button
+                    (click)="editarCadastro(pagamento)"
+                      >
+                        <fa-icon [icon]="faEdit"></fa-icon>
+                      </button>
 
+                      <button
+                      (click)="cancelarCadastro(pagamento)"
+                      >
+                        <fa-icon [icon]="faTrash"></fa-icon>
 
+                     </button>
+
+                    </th>
 
                 </tr>
             </ng-template>

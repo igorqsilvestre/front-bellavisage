@@ -16,7 +16,8 @@ header,main{
   font-family: 'Public Sans';
   font-weight: bold;
   text-transform: uppercase;
-  font-size: x-large;
+  font-size: 1em;
+  text-align: left;
 
 }
 

@@ -7,8 +7,8 @@ import { pacienteResolver } from '../../guards/paciente.resolver';
 
 const routes: Routes = [
   {path: '',component: ListagemPacienteComponent},
-  {path: 'pacientes/novo-paciente', component: PacienteFormComponent, resolve: {paciente: pacienteResolver}},
-  {path: 'pacientes/editar-paciente/:id', component: PacienteFormComponent, resolve: { paciente: pacienteResolver}},
+  {path: 'novo-paciente', component: PacienteFormComponent, resolve: {paciente: pacienteResolver}},
+  {path: 'editar-paciente/:id', component: PacienteFormComponent, resolve: { paciente: pacienteResolver}},
 ];
 
 @NgModule({

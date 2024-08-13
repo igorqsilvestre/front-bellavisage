@@ -7,8 +7,8 @@ import { agendamentoResolver } from '../../guards/agendamento.resolver.';
 
 const routes: Routes = [
   {path: '',component: ListagemAgendamentoComponent},
-  {path: 'agendamentos/novo-agendamento', component: AgendamentoComponent, resolve: {agendamento: agendamentoResolver}},
-  {path: 'agendamentos/editar-agendamento/:id', component: AgendamentoComponent, resolve: {agendamento: agendamentoResolver}},
+  {path: 'novo-agendamento', component: AgendamentoComponent, resolve: {agendamento: agendamentoResolver}},
+  {path: 'editar-agendamento/:id', component: AgendamentoComponent, resolve: {agendamento: agendamentoResolver}},
 ];
 
 @NgModule({

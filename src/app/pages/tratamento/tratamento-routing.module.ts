@@ -6,8 +6,8 @@ import { tratamentoResolver } from '../../guards/tratamento.resolver.';
 
 const routes: Routes = [
   {path: '',component: ListagemTratamentoComponent},
-  {path: 'tratamentos/novo-tratamento', component: TratamentoFormComponent, resolve: {tratamento: tratamentoResolver}},
-  {path: 'tratamentos/editar-tratamento/:id', component: TratamentoFormComponent, resolve: {tratamento: tratamentoResolver}},
+  {path: 'novo-tratamento', component: TratamentoFormComponent, resolve: {tratamento: tratamentoResolver}},
+  {path: 'editar-tratamento/:id', component: TratamentoFormComponent, resolve: {tratamento: tratamentoResolver}},
 
 ];
 

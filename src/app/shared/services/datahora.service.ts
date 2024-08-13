@@ -41,15 +41,21 @@ export class DatahoraService {
   }
 
   formatarDataParaString(data: Date): string {
-    const mes = ('0' + (data.getMonth() + 1)).slice(-2);
-    const dia = ('0' + data.getDate()).slice(-2);
-    const ano = data.getFullYear();
-    return `${mes}/${dia}/${ano}`;
+    if(data){
+      const mes = ('0' + (data.getMonth() + 1)).slice(-2);
+      const dia = ('0' + data.getDate()).slice(-2);
+      const ano = data.getFullYear();
+      return `${mes}/${dia}/${ano}`;
+    }
+   return null;
   }
 
   formatarHoraParaString(tempo: Date): string {
-    const horas = ('0' + tempo.getHours()).slice(-2);
-    const minutos = ('0' + tempo.getMinutes()).slice(-2);
-    return `${horas}:${minutos}`;
+    if(tempo){
+      const horas = ('0' + tempo.getHours()).slice(-2);
+      const minutos = ('0' + tempo.getMinutes()).slice(-2);
+      return `${horas}:${minutos}`;
+    }
+    return null;
   }
 }

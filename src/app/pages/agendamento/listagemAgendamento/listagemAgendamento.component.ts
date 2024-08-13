@@ -27,8 +27,6 @@ export class ListagemAgendamentoComponent implements OnInit{
   modalRef: any;
 
 
-
-
   constructor(private router: Router,
       private agendamentoService: AgendamentoService,
       private modalService: BsModalService) {}
@@ -55,7 +53,7 @@ export class ListagemAgendamentoComponent implements OnInit{
   }
 
   editarCadastro(agendamento: Agendamento) {
-    this.router.navigate(['agendamentos/editar-agendamento', agendamento.id])
+    this.router.navigate(['agendamentos/editar-agendamento', agendamento.id]);
 
   }
 

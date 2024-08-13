@@ -99,8 +99,8 @@ export class PacienteFormComponent implements OnInit{
       let mensagemErro = "Ocorreu um erro ao realizar o cadastro!"
 
       if(this.formulario.value.id){
-        mensagemSucesso = "Alteração realizada com sucesso!"
-        mensagemErro = "Ocorreu um erro ao realizar a edição!"
+        mensagemSucesso = "Alteração realizada com sucesso!";
+        mensagemErro = "Ocorreu um erro ao realizar a edição!";
       }
       this.pacienteService.salvar(this.formulario.value).subscribe(
         () => {

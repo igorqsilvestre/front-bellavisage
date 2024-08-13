@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import { PagamentoService } from './../pagamento.service';
+import { Component, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { Pagamento } from '../Pagamento';
+import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
 
 
 @Component({
@@ -10,72 +15,62 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './listagemPagamentos.component.html',
   styleUrl: './listagemPagamentos.component.css'
 })
-export class ListagemPagamentosComponent {
+export class ListagemPagamentosComponent implements OnInit{
+  pagamentos: Pagamento[] = [];
   faMagnifyingGlass = faMagnifyingGlass;
   faEdit = faEdit;
   faTrash = faTrash;
+  modalRef: any;
 
 
-  constructor(private router: Router) {} // Add the Router to the component's constructor
+  constructor(private router: Router,
+    private pagamentoService: PagamentoService,
+    private modalService: BsModalService
+  ) {}
 
-  cadastro = [
-    {
-      id: 1,
-      data: '01/05/2024',
-      nome: 'Maria Eduarda',
-      tratamento: 'Carboxiterapia',
-      preco: 150.00,
-      formasPagamento: 'Débito',
-      status: 'Pago',
-      avaliacao:4,
-    },
-    {
-      id: 2,
-      data: '03/05/2024',
-      nome: 'João Pedro',
-      tratamento: 'Criolipólise',
-      preco: 150.00,
-      formasPagamento: 'Crédito',
-      status: 'Pago'
-    },
-    {
-      id: 3,
-      data: '10/06/2024',
-      nome: 'Jordana Eduarda',
-      tratamento: 'Harmonização Facial',
-      preco: 1000.00,
-      formasPagamento: 'Crédito',
-      status: 'Aberto'
-    },
-    {
-      id: 4,
-      data: '09/06/2024',
-      nome: 'Fernanda Eduarda',
-      tratamento: 'Carboxiterapia',
-      preco: 150.00,
-      formasPagamento: 'Débito',
-      status: 'Pago'
-    },
 
-  ]
+  ngOnInit(): void {
+    this.atualizarLista();
+  }
+
+  atualizarLista(){
+    this.pagamentoService.obterTodos().subscribe(
+      dados => {
+        if(dados){
+          this.pagamentos = dados;
+        }
+      }
+    )
+  }
 
   applyFilterOnTable(event: any, dtListagemPagamentos: any) {
     console.log(event.target.value)
     return dtListagemPagamentos.filterGlobal(event, 'contains')
   }
 
-  editarCadastro(cadastro: any) {
-    this.router.navigate(['/agendar/novo-agendamento'])
-
+  editarCadastro(pagamento: Pagamento) {
+    this.router.navigate(['pagamentos/editar-pagamento', pagamento.id]);
   }
 
-  cancelarCadastro(cadastro: any) {
+  cancelarCadastro(pagamento: Pagamento) {
 
-    if(confirm('Deseja realmente excluir o cadastro?')){
-      this.cadastro = this.cadastro.filter(item => item.id !== cadastro.id);
+    this.modalRef = this.modalService.show(ConfirmModalComponent, {
+      initialState: {
+        type: 'Confirmação',
+        message: 'Deseja realmente excluir?'
+      }
+    });
 
-      //TODO: Igor, aqui voce implementa a chamada para o backend para excluir o cadastro
-    }
+    this.modalRef.content.confirm.subscribe(() => {
+      this.pagamentoService.excluir(pagamento.id).subscribe(
+        () => {
+          this.atualizarLista();
+        },
+        error => {
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir pagamento!' } });
+        }
+      );
+    });
 
   }
 

@@ -1,0 +1,61 @@
+<header>
+  <app-cabecalho class="cabecalho"></app-cabecalho>
+</header>
+<main>
+  <section class="sessao-principal">
+    <h2 class="titulo">{{ titulo }}</h2>
+    <h3 class="subtitulo">Insira os dados abaixo:</h3>
+
+    <form class="principal-formulario" [formGroup]="formulario">
+      <div class="campos">
+
+        <label for="agendamento">Selecione um agendamento</label>
+        <div class="input-group d-flex align-items-center gap-1 mt-1 mb-1">
+          <div class="input-group-prepend" style="margin-right: 0.1em;">
+            <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
+          </div>
+
+          <select class="form-control" id="agendamento" formControlName="agendamento" >
+            <option value="null" disabled selected hidden>Selecione um agendamento*</option>
+            <option *ngFor="let agendamento of agendamentos" [value]="agendamento.id" >
+              Código: {{agendamento.id}}, Data: {{agendamento.data}}, Hora: {{agendamento.hora}}
+            </option>
+          </select>
+        </div>
+        <app-campo-control-erro-teste *ngIf="formulario.get('agendamento')?.invalid && formulario.get('agendamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'agendamento')"></app-campo-control-erro-teste>
+
+        <label for="especialista">Especialista</label>
+        <input type="text" class="form-control" [value]="especialista" id="especialista" placeholder="Especialista do agendamento*" readonly>
+
+        <label for="paciente">Paciente</label>
+        <input type="text" class="form-control" [value]="paciente" id="paciente" placeholder="Paciente do agendamento*" readonly>
+
+        <label for="tratamento">Tratamento</label>
+        <input type="text" class="form-control" [value]="tratamento" id="tratamento" placeholder="Tratamento do agendamento*" readonly>
+
+        <label for="valor">Valor a pagar</label>
+        <input type="text" class="form-control"  formControlName="valor" placeholder="R$*" readonly>
+
+        <label for="formaDePagamento">Forma de pagamento</label>
+        <select class="form-control" id="formaDePagamento" formControlName="formaDePagamento" >
+          <option value="null" disabled selected hidden>Selecione um pagamento*</option>
+          <option *ngFor="let pagamento of formasDePagamento" [value]="pagamento">{{ pagamento }}</option>
+        </select>
+        <app-campo-control-erro-teste *ngIf="formulario.get('formaDePagamento')?.invalid && formulario.get('formaDePagamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'formaDePagamento')"></app-campo-control-erro-teste>
+      </div>
+
+      <div class="botoes">
+        <p-toast position="top-left" key="toast-error" />
+        <p-toast position="top-right" key="toast-sucess" />
+        <button type="submit"  (click)="(formUtilService.voltarPagina())">Cancelar</button>
+        <button type="submit" (click)="onSubmit()">{{ nomeBotao }}</button>
+      </div>
+
+    </form>
+  </section>
+</main>
+
+<footer>
+  <app-rodape></app-rodape>
+</footer>
+

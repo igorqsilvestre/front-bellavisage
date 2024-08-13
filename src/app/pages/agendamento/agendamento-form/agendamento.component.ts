@@ -26,8 +26,8 @@ export class AgendamentoComponent implements OnInit{
   pacientes!: Paciente[];
   especialistas!: Especialista[];
   tratamentos!: Tratamento[];
-  titulo:string = 'Agendamento do Paciente';
-  nomeBotao:string = 'Agendar';
+  titulo:string = 'Cadastro do agendamento';
+  nomeBotao:string = 'Cadastrar';
   faMagnifyingGlass = faMagnifyingGlass;
 
 
@@ -50,7 +50,7 @@ export class AgendamentoComponent implements OnInit{
     const agendamento: Agendamento = this.route.snapshot.data['agendamento'];
 
     if(agendamento.id){
-      this.titulo = 'Editar agendamento do especialista';
+      this.titulo = 'Editar agendamento';
       this.nomeBotao = 'Atualizar';
     }
 

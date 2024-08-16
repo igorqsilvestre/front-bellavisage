@@ -27,7 +27,7 @@
             </option>
           </select>
         </div>
-        <app-campo-control-erro-teste *ngIf="formulario.get('auxiliarAgendamento')?.invalid && formulario.get('auxiliarAgendamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'auxiliarAgendamento')"></app-campo-control-erro-teste>
+        <app-campo-control-erro-teste *ngIf="formulario.get('agendamento')?.invalid && formulario.get('agendamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'agendamento')"></app-campo-control-erro-teste>
 
         <label for="especialista">Especialista</label>
         <input type="text" class="form-control" [value]="especialista" id="especialista" placeholder="Especialista do agendamento*" readonly>

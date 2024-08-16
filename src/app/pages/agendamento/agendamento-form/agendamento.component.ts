@@ -9,7 +9,6 @@ import { Especialista } from '../../especialista/Especialista';
 import { Paciente } from '../../paciente/Paciente';
 import { Tratamento } from '../../tratamento/Tratamento';
 import { Agendamento } from '../Agendamento';
-import { DatahoraService } from './../../../shared/services/datahora.service';
 import { EspecialistaService } from './../../especialista/especialista.service';
 import { PacienteService } from './../../paciente/paciente.service';
 import { TratamentoService } from './../../tratamento/tratamento.service';
@@ -39,8 +38,7 @@ export class AgendamentoComponent implements OnInit{
     private tratamentoService:TratamentoService,
     private formBuilder:FormBuilder,
     private agendamentoService: AgendamentoService,
-    private dataHoraService: DatahoraService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
 
@@ -52,6 +50,7 @@ export class AgendamentoComponent implements OnInit{
     if(agendamento.id){
       this.titulo = 'Editar agendamento';
       this.nomeBotao = 'Atualizar';
+      agendamento.dataHorario = new Date(agendamento.dataHorario);
     }
 
     this.formulario = this.formBuilder.group({
@@ -59,8 +58,7 @@ export class AgendamentoComponent implements OnInit{
       paciente: [agendamento.paciente, Validators.required],
       especialista: [agendamento.especialista, Validators.required],
       tratamento: [agendamento.tratamento, Validators.required],
-      data: [this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora), [Validators.required, this.validaDataMenorQueAtual()]],
-      hora: [this.dataHoraService.convertaDataHora(agendamento.data, agendamento.hora), Validators.required],
+      dataHorario: [agendamento.dataHorario, [Validators.required, this.validaDataMenorQueAtual()]],
       valor: [agendamento.valor, [Validators.required]],
       status:[agendamento.status],
       avaliacao:[agendamento.avaliacao]
@@ -111,15 +109,12 @@ export class AgendamentoComponent implements OnInit{
   onSubmit(){
 
     if (this.formulario.valid) {
-      this.formulario.patchValue({
-        data: this.dataHoraService.formatarDataParaString(this.formulario.get('data').value),
-        hora: this.dataHoraService.formatarHoraParaString(this.formulario.get('hora').value)
-      })
-
       let mensagemErro = '';
       let mensagemSucesso = '';
 
-      this.agendamentoService.existeDataHora(this.formulario.value).subscribe(dado => {
+      console.log(this.formulario.get('dataHorario').value);
+
+      this.agendamentoService.existsDataEhoraAndEspecialista(this.formulario.value).subscribe(dado => {
         if(dado){
           this.mostrarMensagemErro("Ocorreu um erro pois essa data e hora já existem no sistema!");
         }else{

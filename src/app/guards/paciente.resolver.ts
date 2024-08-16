@@ -21,7 +21,7 @@ export const pacienteResolver: ResolveFn<Observable<Paciente>> = (route, state, 
       numero:null,
       complemento:null,
       cidade:null,
-      estado:''
+      estado:null
     }
   });
 };

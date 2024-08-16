@@ -1,0 +1,36 @@
+<header>
+  <app-cabecalho class="cabecalho"></app-cabecalho>
+</header>
+
+<main>
+  <section class="sessao-principal">
+    <div class="card">
+      <div class="card-title">Faturamento</div>
+
+      <div class="card-body">
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="drop_tratamentos">
+            <label>Tratamentos: </label>
+            <p-dropdown
+            [options]="tratamentos"
+            [(ngModel)]="tratamentoSelecionado"
+            optionLabel="nome"
+            placeholder="Selecione um tratamento"
+            (onChange)="onTratamentoChange($event)"/>
+          </div>
+        </div>
+
+        <div>
+          <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <app-rodape></app-rodape>
+</footer>
+
+
+

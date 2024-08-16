@@ -79,7 +79,7 @@
             </div>
             <div class="col">
               <select class="form-control" id="opcoes" formControlName="estado" >
-                <option value="" disabled selected hidden>Selecione um estado*</option>
+                <option value="null" disabled selected hidden>Selecione um estado*</option>
                 <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
               </select>
             </div>

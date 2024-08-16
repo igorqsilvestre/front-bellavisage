@@ -8,8 +8,7 @@ export interface Agendamento {
       paciente: Paciente[] | Paciente | any;
       especialista: Especialista[] | Especialista | any;
       tratamento: Tratamento[] | Tratamento | any;
-      data: string;
-      hora: string;
+      dataHorario: Date;
       valor: number;
       status: string;
       avaliacao: number;

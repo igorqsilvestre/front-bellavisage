@@ -53,21 +53,21 @@ header,main{
 
 }
 
+span{
+  margin-right: 0.5em;
+}
+
 .principal-formulario .tratamento{
   margin: 0.5em 0;
 }
 
-.principal-formulario .campos .dados-nomes-agendamento{
-  padding: 10px; /* Define o padding interno da div */
-  border-radius: 5px; /* Define bordas arredondadas para a div */
-}
 .principal-formulario .campos .dados-data-horario-agendamento{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  padding-top: 5em;
-  padding-bottom: 2em;
+  margin: 1em 0;
+  gap: 0.5em;
 }
+
 
 .principal-formulario label{
   font-family: 'Public Sans';
@@ -79,17 +79,6 @@ header,main{
   padding: 10px; /* Define o padding interno da div */
   border-radius: 5px; /* Define bordas arredondadas para a div */
   margin: 10px auto; /* Centraliza a div horizontalmente */
-}
-.principal-formulario input {
-  padding: 0.6em 0;
-  margin: 0.7em 0;
-  background-color: #F8F8F8;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.principal-formulario input::placeholder{
-  color: #6B6E71;
-  padding-left: 1em;
 }
 
 .principal-formulario .botoes{

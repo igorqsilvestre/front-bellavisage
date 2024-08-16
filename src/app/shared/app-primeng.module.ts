@@ -6,6 +6,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { CalendarModule } from 'primeng/calendar';
 import { RatingModule } from 'primeng/rating';
+import { ChartModule } from 'primeng/chart';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { RatingModule } from 'primeng/rating';
     InputIconModule,
     IconFieldModule,
     CalendarModule,
-    RatingModule
+    RatingModule,
+    ChartModule
   ]
 })
 export class AppPrimengModule { }

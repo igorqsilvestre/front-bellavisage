@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardFaturamentoComponent } from './dashboard-faturamento/dashboard-faturamento.component';
+import { FaturamentoComponent } from './dashboard-faturamento/faturamento.component';
 
 const routes: Routes = [
-  {path: '', component:DashboardFaturamentoComponent },
-  {path: 'dashbords/financeiro', component:DashboardFaturamentoComponent },
+  {path: '', component:FaturamentoComponent },
+  {path: 'dashbords/financeiro', component:FaturamentoComponent },
 ];
 
 @NgModule({

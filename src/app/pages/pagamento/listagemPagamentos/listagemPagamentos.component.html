@@ -87,7 +87,7 @@
             <ng-template pTemplate="body" let-pagamento  let-editing="editing" let-ri="rowIndex">
 
                 <tr>
-                    <td>{{ pagamento.data }}, {{ pagamento.hora }}</td>
+                    <td>{{ pagamento.dataHorario | date: 'dd/MM/yyyy'}}, {{ pagamento.dataHorario  | date: 'HH:mm' }}</td>
                     <td>{{ pagamento.agendamento.paciente.nome }}</td>
                     <td>{{ pagamento.agendamento.tratamento.nome }}</td>
                     <td>{{ pagamento.agendamento.valor }}</td>

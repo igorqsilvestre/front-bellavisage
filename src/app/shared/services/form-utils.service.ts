@@ -12,7 +12,6 @@ import { Cep, ConsultaCepService } from './consulta-cep.service';
 export class FormUtilsService {
 
   constructor(
-    private cepService: ConsultaCepService,
     private location: Location,
     private route: Router,
   ) { }

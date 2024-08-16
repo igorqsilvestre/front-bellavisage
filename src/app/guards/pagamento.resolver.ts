@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { AgendamentoService } from '../pages/agendamento/agendamento.service';
 import { Pagamento } from '../pages/pagamento/Pagamento';
 
 import type { ResolveFn } from '@angular/router';
@@ -12,10 +11,9 @@ export const pagamentoResolver: ResolveFn<Observable<Pagamento>> = (route, state
     return service.obter(route.params['id']);
   }
   return of({
-    id:null,
-    agendamento:null,
-    data: null,
-    hora: null,
+    id: null,
+    agendamento: null,
+    dataHorario: null,
     valor: null,
     formaDePagamento: null
   })

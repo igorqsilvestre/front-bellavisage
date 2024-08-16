@@ -96,8 +96,8 @@
                 <ng-template pTemplate="body" let-agendamento  let-editing="editing" let-ri="rowIndex">
 
                     <tr [pEditableRow]="agendamento">
-                        <td>{{ agendamento.data }}</td>
-                        <td>{{ agendamento.hora }}</td>
+                        <td>{{ agendamento.dataHorario | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{ agendamento.dataHorario | date: 'HH:mm' }}</td>
                         <td>{{ agendamento.paciente.nome }}</td>
                         <td>{{ agendamento.tratamento.nome }}</td>
                         <td>{{ agendamento.especialista.nome}}</td>
@@ -154,8 +154,6 @@
                         >
                         <fa-icon [icon]="faEdit"></fa-icon>
                         </button>
-
-
                     </tr>
                 </ng-template>
             </p-table>

@@ -46,7 +46,7 @@ export class UsuarioFormComponent implements OnInit{
         bairro: [null, Validators.required],
         logradouro: [null, Validators.required],
         cidade: [null, Validators.required],
-        estado: ['', Validators.required]
+        estado: [null, Validators.required]
       }),
     });
   }

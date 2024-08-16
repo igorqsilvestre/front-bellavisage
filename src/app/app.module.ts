@@ -7,7 +7,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxEchartsModule } from 'ngx-echarts';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 
@@ -47,9 +46,6 @@ registerLocaleData(ptBr);
     CardModule,
     ButtonModule,
     DashboardModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts'), // do grafico de faturamento
-    }),
   ],
   providers: [
     provideAnimationsAsync(),

@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Agendamento } from '../../agendamento/Agendamento';
 import { FormUtilsService } from '../../../shared/services/form-utils.service';
-import { DatahoraService } from '../../../shared/services/datahora.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { Pagamento } from '../Pagamento';
@@ -30,7 +29,6 @@ export class PagamentoFormComponent implements OnInit{
     private route: ActivatedRoute,
     private agendamentoService: AgendamentoService,
     private formBuilder:FormBuilder,
-    private dataHoraService: DatahoraService,
     private messageService: MessageService,
     private pagamentoService: PagamentoService
   ){}
@@ -43,14 +41,14 @@ export class PagamentoFormComponent implements OnInit{
     if(pagamento.id){
       this.titulo = 'Editar pagamento';
       this.nomeBotao = 'Atualizar';
+      pagamento.dataHorario = new Date(pagamento.dataHorario);
     }
 
     this.formulario = this.formBuilder.group({
       id:[pagamento.id],
-      agendamento: [pagamento.agendamento, Validators.required],
+      agendamento: [pagamento.agendamento],
       valor: [pagamento.valor],
-      data: [this.dataHoraService.formatarDataParaString(this.dataHoraService.convertaDataHora(pagamento.data, pagamento.hora))],
-      hora: [this.dataHoraService.formatarHoraParaString(this.dataHoraService.convertaDataHora(pagamento.data, pagamento.hora))],
+      dataHorario: [pagamento.dataHorario],
       formaDePagamento:[pagamento.formaDePagamento, Validators.required],
     });
 
@@ -85,6 +83,7 @@ export class PagamentoFormComponent implements OnInit{
     })
   }
 
+
   onSubmit(){
     if(this.formulario.valid){
       let mensagemSucesso = "Cadastro foi realizado com sucesso!";
@@ -93,13 +92,9 @@ export class PagamentoFormComponent implements OnInit{
       if(this.formulario.value.id){
         mensagemSucesso = "Alteração realizada com sucesso!";
         mensagemErro = "Ocorreu um erro ao realizar a edição!";
-      }
-
-      if(!this.formulario.get('data').value && !this.formulario.get('hora').value){
-        const dataHora = new Date();
+      }else{
         this.formulario.patchValue({
-          data: this.dataHoraService.formatarDataParaString(dataHora),
-          hora: this.dataHoraService.formatarHoraParaString(dataHora)
+          dataHorario: new Date()
         })
       }
 

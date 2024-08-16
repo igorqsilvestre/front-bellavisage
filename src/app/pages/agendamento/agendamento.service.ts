@@ -19,7 +19,7 @@ export class AgendamentoService extends CrudService<Agendamento>{
     return this.http.patch<Agendamento>(`${this.url}/${agendamento.id}`, agendamento).pipe(take(1));
   }
 
-  existeDataHora(agendamento: Agendamento): Observable<boolean>{
+  existsDataEhoraAndEspecialista(agendamento: Agendamento): Observable<boolean>{
     return this.http.post<boolean>(`${this.url}/exists/dataHora`, agendamento).pipe(take(1));
   }
 

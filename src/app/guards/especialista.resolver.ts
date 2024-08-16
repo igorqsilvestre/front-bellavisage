@@ -22,7 +22,7 @@ export const especialistaResolver: ResolveFn<Observable<Especialista>> = (route,
       numero:null,
       complemento:null,
       cidade:null,
-      estado:''
+      estado:null
     }
   })
 };

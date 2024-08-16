@@ -8,7 +8,7 @@
       <h3 class="subtitulo">Insira os dados abaixo:</h3>
 
       <section  class="principal-formulario">
-          <form class="campos" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+          <form class="campos" [formGroup]="formulario">
           <div class="dados-nomes-agendamento">
                   <div>
                     <label for="paciente">Pacientes</label>
@@ -51,35 +51,26 @@
                   </div>
           </div>
         <div class="dados-data-horario-agendamento">
-                <div class="row">
-                <div class="col">
-                  <label for="nome">Data</label>
-                  <div  class="form-control">
-                          <p-calendar formControlName="data" />
-                          <app-campo-control-erro-teste *ngIf="formulario.get('data')?.invalid && formulario.get('data').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'data')"></app-campo-control-erro-teste>
-                    </div>
 
-                </div>
-                <div class="col">
-                  <label for="nome">Horário</label>
-                      <div class="form-control">
-                        <p-calendar
-                        formControlName="hora"
-                        [iconDisplay]="'input'"
-                        [showIcon]="true"
-                        [timeOnly]="true"
-                        inputId="templatedisplay">
-                        </p-calendar>
-                        <app-campo-control-erro-teste *ngIf="formulario.get('hora')?.invalid && formulario.get('hora').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'hora')"></app-campo-control-erro-teste>
-                      </div>
+          <div>
+            <label for="calendar-24h">Data</label>
+            <div class="form-control">
+              <p-calendar
+              inputId="calendar-24h"
+              formControlName="dataHorario"
+              [showTime]="true"
+              [hourFormat]="'24'"
+              selectionMode="single" />
+              <app-campo-control-erro-teste *ngIf="formulario.get('dataHorario')?.invalid && formulario.get('dataHorario').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'dataHorario')"></app-campo-control-erro-teste>
+            </div>
 
-                </div>
-                <div class="col">
-                  <label for="nome">Valor</label>
-                  <input type="text" class="form-control"  formControlName="valor" placeholder="R$" readonly>
-                  <app-campo-control-erro-teste *ngIf="formulario.get('valor')?.invalid && formulario.get('valor').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'valor')"></app-campo-control-erro-teste>
-                </div>
-        </div>
+          </div>
+          <div>
+            <label for="nome">Valor</label>
+            <input type="text" class="form-control"  formControlName="valor" placeholder="R$" readonly>
+            <app-campo-control-erro-teste *ngIf="formulario.get('valor')?.invalid && formulario.get('valor').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'valor')"></app-campo-control-erro-teste>
+          </div>
+
         </div>
         <div class="botoes">
           <p-toast position="top-left" key="toast-error" />

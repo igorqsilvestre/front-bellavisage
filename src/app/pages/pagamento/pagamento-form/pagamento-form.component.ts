@@ -50,6 +50,7 @@ export class PagamentoFormComponent implements OnInit{
       valor: [pagamento.valor],
       dataHorario: [pagamento.dataHorario],
       formaDePagamento:[pagamento.formaDePagamento, Validators.required],
+      statusPagamento:['Pago']
     });
 
     this.atualizaListaDeAgendamentos();

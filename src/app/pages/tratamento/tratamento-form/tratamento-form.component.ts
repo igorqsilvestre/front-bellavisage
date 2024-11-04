@@ -18,6 +18,8 @@ export class TratamentoFormComponent implements OnInit{
   formulario!: FormGroup;
   titulo:string = 'Cadastro do tratamento';
   nomeBotao:string = 'Cadastrar';
+  iconeCarregarImagemOuImagemSelecionada = 'pi pi-upload';
+  labelParaCarregamentoImagemOuImagemJaSelecionada = 'Escolha uma foto para o tratamento';
 
   constructor(
     public formUtilService: FormUtilsService,
@@ -47,6 +49,8 @@ export class TratamentoFormComponent implements OnInit{
       indicacoes: [tratamento.descricao, Validators.required],
       imagem: [tratamento.imagem, Validators.required],
     });
+
+    this.verificaSeImagemEstaCarregada(tratamento);
   }
 
   onSubmit(){
@@ -72,6 +76,8 @@ export class TratamentoFormComponent implements OnInit{
     }
   }
 
+
+
   onUpload(event: { files: File[] }) { // Especifica o tipo correto
     const file = event.files[0];
 
@@ -84,6 +90,13 @@ export class TratamentoFormComponent implements OnInit{
         };
         reader.readAsDataURL(file); // Lê o arquivo como URL de dados
     }
+  }
+
+  verificaSeImagemEstaCarregada(tratamento:Tratamento) {
+   if(tratamento.imagem){
+    this.iconeCarregarImagemOuImagemSelecionada = 'pi pi-image';
+    this.labelParaCarregamentoImagemOuImagemJaSelecionada = 'Imagem Carregada';
+   }
   }
 
   validarTratamentoExiste(formControl: FormControl) {
@@ -105,3 +118,5 @@ export class TratamentoFormComponent implements OnInit{
   }
 
 }
+
+

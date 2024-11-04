@@ -1,0 +1,91 @@
+<header>
+  <app-cabecalho class="cabecalho"></app-cabecalho>
+</header>
+<main>
+  <section class="sessao-principal">
+    <h2 class="titulo">Gerenciar Horarios</h2>
+      <div class="button-direcionamentoCadastrar">
+        <button type="submit" routerLink="novos-horarios">Cadastrar Horarios</button>
+      </div>
+        <div class="campo-horarios">
+
+          <h2 class="titulo-tabela">Listagem do Cadastro</h2>
+
+          <!--
+          <p-table
+            #dtListagemHorarios
+            dataKey="id"
+            [value]="horarios"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [globalFilterFields]="[
+                'name',
+            ]"
+            editMode="row"
+          >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+                <tr>
+                  <th>
+                      <p-columnFilter
+                          type="text"
+                          field="nome"
+                          placeholder="Search by nome"
+                          ariaLabel="Filter Nome" />
+                  </th>
+                  <th>
+                      <p-columnFilter
+                          type="text"
+                          field="descricao"
+                          placeholder="Search by descricao"
+                          ariaLabel="Filter descricao" />
+                  </th>
+                  <th>
+                    <p-columnFilter
+                        type="text"
+                        field="preco"
+                        placeholder="Search by preco"
+                        ariaLabel="Filter preco" />
+                  </th>
+
+
+                  <th></th>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-tratamento  let-editing="editing" let-ri="rowIndex">
+
+                <tr>
+                    <td>{{ tratamento.nome }}</td>
+                    <td>{{ tratamento.descricao }}</td>
+                    <td>{{ tratamento.valor | currency:'BRL'  }}</td>
+                    <th>
+                      <button
+                        (click)="editarCadastro(tratamento)"
+                      >
+                        <fa-icon [icon]="faEdit"></fa-icon>
+                      </button>
+
+                      <button
+                      (click)="cancelarCadastro(tratamento)"
+                      >
+                        <fa-icon [icon]="faTrash"></fa-icon>
+
+                     </button>
+
+                    </th>
+                </tr>
+            </ng-template>
+        </p-table>
+        -->
+
+        </div>
+  </section>
+</main>
+
+<footer>
+  <app-rodape></app-rodape>
+</footer>

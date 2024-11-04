@@ -1,5 +1,5 @@
 export interface Especialista {
-  id:number
+  id:number;
   nome:string;
   especialidade:string;
   registro:string;

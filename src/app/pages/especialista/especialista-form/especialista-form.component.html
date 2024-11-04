@@ -13,7 +13,10 @@
         <app-campo-control-erro-teste *ngIf="formulario.get('nome')?.invalid && formulario.get('nome').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'nome')"></app-campo-control-erro-teste>
 
         <label for="especialidade">Especialidade</label>
-        <input type="text" class="form-control" formControlName="especialidade" id="especialidade" placeholder="Qual é sua especialidade?*">
+        <select class="form-control" id="paciente" formControlName="especialidade">
+          <option value="null" disabled>Escolha uma especialidade*</option>
+          <option *ngFor="let especialidade of especialidades" [value]="especialidade" >{{ especialidade }}</option>
+        </select>
         <app-campo-control-erro-teste *ngIf="formulario.get('especialidade')?.invalid && formulario.get('especialidade').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'especialidade')"></app-campo-control-erro-teste>
 
         <label for="registro">Registro do Conselho Competente</label>
@@ -25,8 +28,13 @@
         <app-campo-control-erro-teste *ngIf="formulario.get('email')?.invalid && formulario.get('email').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'email')"></app-campo-control-erro-teste>
 
         <label for="telefone">Telefone</label>
-        <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX*">
+        <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX*" appTelefoneMask>
         <app-campo-control-erro-teste *ngIf="formulario.get('telefone')?.invalid && formulario.get('telefone').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'telefone')"></app-campo-control-erro-teste>
+
+        <label for="dataNascimento">Data de nascimento</label>
+        <p-calendar formControlName="dataNascimento" class="calendario"/>
+        <app-campo-control-erro-teste *ngIf="formulario.get('dataNascimento')?.invalid && formulario.get('dataNascimento').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'dataNascimento')"></app-campo-control-erro-teste>
+
 
         <div formGroupName="endereco">
           <label for="cep" >Endere&ccedil;o</label>

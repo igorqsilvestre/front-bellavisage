@@ -14,6 +14,8 @@ export const tratamentoResolver: ResolveFn<Observable<Tratamento>> = (route, sta
     nome: null,
     valor: null,
     descricao: null,
+    funcionamento: null,
+    indicacoes: null,
     imagem: null,
   })
 };

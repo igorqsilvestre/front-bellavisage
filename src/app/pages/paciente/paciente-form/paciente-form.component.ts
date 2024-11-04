@@ -12,6 +12,7 @@ import { CpfUtilValidator } from '../../../shared/validators/CpfUtilValidator';
 import { Paciente } from '../Paciente';
 import { Cep } from './../../../shared/services/consulta-cep.service';
 import { PacienteService } from './../paciente.service';
+import { idadeValidator } from '../../../shared/validators/validaIdade';
 
 
 @Component({
@@ -50,10 +51,13 @@ export class PacienteFormComponent implements OnInit{
 
     this.formulario = this.formBuilder.group({
       id:[paciente.id],
-      nome: [paciente.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      cpf: [paciente.cpf, [Validators.required,  Validators.minLength(11), Validators.maxLength(11), CpfUtilValidator.validate()], [this.validarCpfExiste.bind(this)]],
+      nome: [paciente.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      cpf: [paciente.cpf, [Validators.required, CpfUtilValidator.validate()]],
       email: [paciente.email, [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)]],
-      telefone: [paciente.telefone, [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
+      senha: [paciente.senha, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
+      confirmarSenha: [paciente.senha, Validators.required],
+      telefone: [paciente.telefone, [Validators.required, Validators.minLength(15), Validators.maxLength(15)]],
+      dataNascimento: [new Date(paciente.dataNascimento), [ Validators.required, idadeValidator()] ],
       endereco: this.formBuilder.group({
         cep: [paciente.endereco.cep, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
         numero: [paciente.endereco.numero, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)],

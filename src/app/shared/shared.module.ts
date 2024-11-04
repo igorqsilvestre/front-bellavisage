@@ -14,6 +14,8 @@ import { TelefonePipe } from './pipes/telefone.pipe';
 import { RodapeHomeComponent } from './rodape-home/rodape-home.component';
 import { RodapeComponent } from './rodape/rodape.component';
 import { DropdownService } from './services/dropdown.service';
+import { TelefoneMaskDirective } from './directives/telefone-mask.directive';
+import { CpfMaskDirective } from './directives/cpf-mask.directive';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { DropdownService } from './services/dropdown.service';
     ConfirmModalComponent,
     CpfPipe,
     TelefonePipe,
-    CampoControlErroTesteComponent
+    CampoControlErroTesteComponent,
+    TelefoneMaskDirective,
+    CpfMaskDirective,
 
   ],
   imports: [
@@ -44,7 +48,10 @@ import { DropdownService } from './services/dropdown.service';
     AlertModalComponent,
     ModalModule,
     CpfPipe,
-    TelefonePipe
+    TelefonePipe,
+    TelefoneMaskDirective,
+    CpfMaskDirective,
+
   ],
   providers:[
     DropdownService

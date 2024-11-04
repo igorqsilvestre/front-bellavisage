@@ -69,6 +69,10 @@ export class FormUtilsService {
         return 'Data não pode ser menor que a data atual';
       }
 
+      if(campo?.hasError('menorDeIdade')){
+        return 'Não pode ser menor de idade.';
+      }
+
       //Deixar as validações de banco no final
       if(campo?.hasError('emailExiste')){
         return 'Email já existe no banco de dados';

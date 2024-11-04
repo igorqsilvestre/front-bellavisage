@@ -4,5 +4,7 @@ export interface Tratamento {
   nome: string;
   valor: number;
   descricao: string;
-  imagem: string;
+  funcionamento: string;
+  indicacoes: string;
+  imagem: string; // Imagem em Base64
 }

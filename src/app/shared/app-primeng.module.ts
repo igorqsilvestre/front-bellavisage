@@ -7,6 +7,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { CalendarModule } from 'primeng/calendar';
 import { RatingModule } from 'primeng/rating';
 import { ChartModule } from 'primeng/chart';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ChartModule } from 'primeng/chart';
     IconFieldModule,
     CalendarModule,
     RatingModule,
-    ChartModule
+    ChartModule,
+    FileUploadModule
   ]
 })
 export class AppPrimengModule { }

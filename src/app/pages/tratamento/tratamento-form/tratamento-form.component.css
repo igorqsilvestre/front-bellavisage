@@ -76,6 +76,14 @@ header,main{
   background-color: #b13d6d;
 }
 
+:host ::ng-deep .p-fileupload-basic .p-button-icon-left {
+  margin-right: 0.5em !important; /* Garante que o espaço seja mantido sempre */
+}
+
+
+
+
+
 .cabecalho{
   width: 122em;
 }

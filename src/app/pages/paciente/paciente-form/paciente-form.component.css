@@ -43,6 +43,14 @@ header,main{
 
 }
 
+.principal-formulario .calendario{
+  padding: 0.6em 1em;
+  margin: 0.7em 0;
+  background-color: #F8F8F8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
 .principal-formulario label{
   font-family: 'Public Sans';
   color: #950341;

@@ -23,6 +23,7 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
     AppPrimengModule,
     SharedModule,
     LoginRoutingModule,
+
   ],
   providers: [MessageService]
 })

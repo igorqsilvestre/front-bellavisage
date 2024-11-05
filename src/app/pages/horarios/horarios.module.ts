@@ -1,11 +1,13 @@
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { ListagemHorarioComponent } from './listagem-horario/listagem-horario.component';
 import { HorariosFormComponent } from './horarios-form/horarios-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HorariosRoutingModule } from './horarios-routing.module';
+import { AppPrimengModule } from '../../shared/app-primeng.module';
+import { MessageService } from 'primeng/api';
+import { AppAngularModule } from '../../shared/app-angular.module';
+
 
 
 @NgModule({
@@ -14,11 +16,12 @@ import { HorariosRoutingModule } from './horarios-routing.module';
     HorariosFormComponent
   ],
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SharedModule,
-    HorariosRoutingModule
+    AppAngularModule,
+    HorariosRoutingModule,
+    AppPrimengModule,
+    SharedModule
 
-  ]
+  ],
+  providers:[MessageService]
 })
 export class HorariosModule { }

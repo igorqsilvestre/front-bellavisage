@@ -6,5 +6,5 @@ export interface Horario {
   especialista: Especialista[] | Especialista | any;
   tratamento: Tratamento[] | Tratamento | any;
   data: Date;
-  horarios: Date[];
+  horariosEspecialista: Date[];
 }

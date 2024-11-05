@@ -15,6 +15,6 @@ export const horariosResolver: ResolveFn<Observable<Horario>> = (route, state, s
     especialista: null,
     tratamento: null,
     data: null,
-    horarios: null,
+    horariosEspecialista: null,
 })
 };

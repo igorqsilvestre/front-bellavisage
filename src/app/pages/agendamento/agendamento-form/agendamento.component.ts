@@ -112,8 +112,6 @@ export class AgendamentoComponent implements OnInit{
       let mensagemErro = '';
       let mensagemSucesso = '';
 
-      console.log(this.formulario.get('dataHorario').value);
-
       this.agendamentoService.existsDataEhoraAndEspecialista(this.formulario.value).subscribe(dado => {
         if(dado){
           this.mostrarMensagemErro("Ocorreu um erro pois essa data e hora já existem no sistema!");

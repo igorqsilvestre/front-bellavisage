@@ -1,0 +1,22 @@
+<div class="principal">
+  <div class="modal-header">
+    <h5 class="modal-title">{{type}}</h5>
+  </div>
+  <div class="modal-body">
+
+    <form [formGroup]="formulario">
+      <label>Horário</label>
+      <p-calendar
+      formControlName="horario"
+      inputId="calendar-timeonly"
+      [timeOnly]="true" />
+      <app-campo-control-erro-teste *ngIf="formulario.get('horario')?.invalid && formulario.get('horario').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'horario')"></app-campo-control-erro-teste>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onConfirm()">Confirmar</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  </div>
+</div>
+

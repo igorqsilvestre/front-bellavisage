@@ -1,9 +1,8 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Cep, ConsultaCepService } from './consulta-cep.service';
 
 
 @Injectable({
@@ -105,6 +104,7 @@ export class FormUtilsService {
     }
     return true;
   }
+
 
   marcarCamposInvalidosComoTocado(formGroup: FormGroup){
     Object.keys(formGroup.controls).forEach(field => {

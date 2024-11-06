@@ -10,6 +10,7 @@ import { ChartModule } from 'primeng/chart';
 import { FileUploadModule } from 'primeng/fileupload';
 
 
+
 @NgModule({
   exports: [
     ToastModule,
@@ -20,7 +21,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     CalendarModule,
     RatingModule,
     ChartModule,
-    FileUploadModule
+    FileUploadModule,
   ]
 })
 export class AppPrimengModule { }

@@ -6,8 +6,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Tratamento } from '../Tratamento';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TratamentoService } from '../tratamento.service';
-import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { ConfirmModalComponent } from '../../../shared/modals/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from '../../../shared/modals/alert-modal/alert-modal.component';
 
 
 @Component({

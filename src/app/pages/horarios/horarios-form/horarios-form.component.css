@@ -76,6 +76,7 @@ header,main{
   border-radius: 8px;
   padding: 0.7em 7em;
   margin-right: 0.5em;
+  width: 32%;
 }
 
 .principal-formulario button:hover{
@@ -86,6 +87,9 @@ header,main{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap:2em;
+  margin: 1em 0;
 }
 
 .container-divisor .tabela button{
@@ -94,9 +98,9 @@ header,main{
 }
 
 .tabela{
-  margin: 1em 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 
 th{
   padding: 0.3em 0;
@@ -111,11 +115,6 @@ th:last-child{
   width: 20%;
 }
 
-.icone-adicionar{
-  align-self: flex-end;
-  border: 2px solid #950341;
-  padding: 2px;
-}
 
 
 

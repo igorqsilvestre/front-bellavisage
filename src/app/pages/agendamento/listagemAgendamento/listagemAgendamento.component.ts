@@ -7,8 +7,8 @@ import { faCheck, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Agendamento } from '../Agendamento';
 import { AgendamentoService } from '../agendamento.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { ConfirmModalComponent } from '../../../shared/modals/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from '../../../shared/modals/alert-modal/alert-modal.component';
 
 
 @Component({

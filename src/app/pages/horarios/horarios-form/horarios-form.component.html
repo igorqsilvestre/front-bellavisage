@@ -26,10 +26,10 @@
         <app-campo-control-erro-teste *ngIf="formulario.get('data')?.invalid && formulario.get('data').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'data')"></app-campo-control-erro-teste>
 
         <div class="container-divisor">
-          <button type="button">Carregar horários</button>
+          <button style="width: auto;" type="button" (click)="onCarregarHorarios()">Carregar horários</button>
 
 
-              <p-table class="tabela" [value]="horariosEspecialista" [tableStyle]="{ 'min-width': '50rem' }">
+              <p-table class="tabela" [value]="horarios" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Data</th>
@@ -37,12 +37,12 @@
                         <th>Ações</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-horariosEspecialista>
+                <ng-template pTemplate="body" let-horarios>
                     <tr>
-                        <td>{{ horariosEspecialista | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{ horariosEspecialista | date: 'HH:mm'}}</td>
+                        <td>{{ horarios.data | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{ horarios.data | date: 'HH:mm'}}</td>
                         <td>
-                        <button (click)="cancelarCadastro(horariosEspecialista)">
+                        <button (click)="onDeletarHorario(horarios)">
                           <fa-icon [icon]="faTrash"></fa-icon>
                        </button>
                         </td>

@@ -37,7 +37,7 @@
         accept="image/*"
         maxFileSize="1000000"
         (onSelect)="onUpload($event)"
-        [style]="{'margin-top': '0.5em', 'padding': '0.7em 1em' }"/>
+        [style]="{'margin-top': '0.5em', 'padding': '0.5em 1em' }"/>
         <app-campo-control-erro-teste *ngIf="formulario.get('imagem')?.invalid && formulario.get('imagem').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'imagem')"></app-campo-control-erro-teste>
       </div>
 

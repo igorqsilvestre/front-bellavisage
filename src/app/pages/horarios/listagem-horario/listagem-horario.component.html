@@ -11,6 +11,28 @@
 
           <h2 class="titulo-tabela">Listagem do Cadastro</h2>
 
+          <form class="formulario">
+            <div class="container">
+              <label for="tratamento">Tratamento</label>
+              <select class="form-control" id="tratamento">
+                <option *ngFor="let tratamento of tratamentos" [value]="tratamento">{{ tratamento }}</option>
+              </select>
+              <!--
+              <app-campo-control-erro-teste *ngIf="formulario.get('tratamento')?.invalid && formulario.get('tratamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'tratamento')"></app-campo-control-erro-teste>
+              -->
+
+              <span></span>
+              <label for="data">Data</label>
+              <p-calendar class="calendario"/>
+              <!--
+              <app-campo-control-erro-teste *ngIf="formulario.get('data')?.invalid && formulario.get('data').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'data')"></app-campo-control-erro-teste>
+              -->
+            </div>
+
+            <button type="button">Carregar Horários</button>
+          </form>
+
+
           <!--
           <p-table
             #dtListagemHorarios

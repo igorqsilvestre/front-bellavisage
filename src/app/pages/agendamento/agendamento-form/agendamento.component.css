@@ -93,8 +93,9 @@ span{
   font-weight: bold;
   border: none;
   border-radius: 8px;
-  padding: 0.7em 7em;
+  padding: 0.5em 2em;
   margin: 3em 0.5em;
+  width: 32%;
 }
 
 .principal-formulario button:hover{

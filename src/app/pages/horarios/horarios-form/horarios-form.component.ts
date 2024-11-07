@@ -12,6 +12,8 @@ import { Tratamento } from '../../tratamento/Tratamento';
 import { Especialista } from '../../especialista/Especialista';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AddHorarioModalComponent } from '../../../shared/modals/addHorario-modal/addHorario-modal.component';
+import { AlertModalComponent } from '../../../shared/modals/alert-modal/alert-modal.component';
+import { ConfirmModalComponent } from '../../../shared/modals/confirm-modal/confirm-modal.component';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class HorariosFormComponent implements OnInit{
   nomeBotao:string = 'Cadastrar';
   especialistas!: Especialista[];
   tratamentos!: Tratamento[];
-  horariosEspecialista: Date[] = [new Date(), new Date(), new Date];
+  horarios: Horario[];
   faMagnifyingGlass = faMagnifyingGlass;
   faTrash = faTrash;
   faPlus = faPlus;
@@ -102,28 +104,55 @@ export class HorariosFormComponent implements OnInit{
           this.horarioService.salvar(this.formulario.value).subscribe(
             () => {
               this.mostrarMensagemSucesso(mensagemSucesso);
-              this.formUtilService.voltarPagina(2000);
+              this.onCarregarHorarios();
             },() => {
               this.mostrarMensagemErro(mensagemErro);
             }
           );
         }
       });
-
-      /*
-      this.modalRef.content.confirm.subscribe(() => {
-        this.especialistaService.excluir(especialista.id).subscribe(
-          () => {
-            this.atualizarLista();
-          },
-          error => {
-            this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir especialista!' } });
-          }
-        );
-      });*/
     }else{
       this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+  onCarregarHorarios(){
+    if (this.formulario.valid) {
+
+      const idTratamento = this.formulario.get('tratamento').value;
+      const idEspecialista = this.formulario.get('especialista').value;
+      const data = this.formulario.get('data').value;
+
+      this.horarioService.obterTodosApartirDoEspecialistaEtratamentoEData(idTratamento, idEspecialista,data).subscribe((dados:Horario[]) => {
+        if(dados){
+          this.horarios = dados;
+        }}
+      );
+
+    }else{
+      this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
+    }
+  }
+
+  onDeletarHorario(horario:Horario){
+
+    this.modalRef = this.modalService.show(ConfirmModalComponent, {
+      initialState: {
+        type: 'Confirmação',
+        message: 'Deseja realmente excluir?'
+      }
+    });
+
+    this.modalRef.content.confirm.subscribe(() => {
+      this.horarioService.excluir(horario.id).subscribe(
+        () => {
+          this.onCarregarHorarios();
+        },
+        error => {
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir horario!' } });
+        }
+      );
+    });
   }
 
   cancelarCadastro(horariosEspecialista: Date){

@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class ListagemHorarioComponent {
 
+  tratamentos:string[] = ['Massagem', 'Drenagem linfática', 'Carboxila'];
 }

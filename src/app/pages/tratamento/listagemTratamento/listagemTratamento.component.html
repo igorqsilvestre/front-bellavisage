@@ -24,6 +24,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Nome</th>
+                    <th>Imagem</th>
                     <th>Descrição</th>
                     <th>Preço</th>
                     <th>Ações</th>
@@ -36,6 +37,7 @@
                           placeholder="Search by nome"
                           ariaLabel="Filter Nome" />
                   </th>
+                  <th></th>
                   <th>
                       <p-columnFilter
                           type="text"
@@ -59,6 +61,8 @@
 
                 <tr>
                     <td>{{ tratamento.nome }}</td>
+                    <td><img [src]="getImageUrl(tratamento.imagem, tratamento.tipoImagem)"
+                      alt="imagem do tratamento" width="70" height="70" style="border-radius: 5px;" ></td>
                     <td>{{ tratamento.descricao }}</td>
                     <td>{{ tratamento.valor | currency:'BRL'  }}</td>
                     <th>

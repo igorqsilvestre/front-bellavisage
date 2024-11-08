@@ -44,6 +44,10 @@ export class ListagemTratamentoComponent implements OnInit{
     )
   }
 
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
+  }
+
 
   applyFilterOnTable(event: any, dtListagemTratamento: any) {
     console.log(event.target.value)

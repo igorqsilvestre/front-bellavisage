@@ -7,4 +7,5 @@ export interface Tratamento {
   funcionamento: string;
   indicacoes: string;
   imagem: string; // Imagem em Base64
+  tipoImagem?:string;
 }

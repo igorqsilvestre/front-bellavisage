@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormUtilsService } from '../../services/form-utils.service';
 import { MessageService } from 'primeng/api';
@@ -25,7 +25,7 @@ export class AddHorarioModalComponent implements OnInit {
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
-      horario: [null, Validators.required]
+      horario: [null, [Validators.required, this.validaHorarioMenorQueAtual()]]
     })
   }
 
@@ -62,13 +62,27 @@ export class AddHorarioModalComponent implements OnInit {
    return new Date(ano, mes, dia, horas, minutos, segundos, millisegundos);
  }
 
- mostrarMensagemErro(mensagem: string) {
-  this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem, key: 'toast-error' });
-}
+  mostrarMensagemErro(mensagem: string) {
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem, key: 'toast-error' });
+  }
 
-mostrarMensagemSucesso(mensagem: string){
-  this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
-}
+  mostrarMensagemSucesso(mensagem: string){
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
+  }
+
+  validaHorarioMenorQueAtual(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value) {
+        const agora = new Date(); // Hora atual
+        const horario = new Date(control.value); // Horário do campo
+
+        return horario.getTime() < agora.getTime()
+          ? { horarioMenorQueAtual: true }
+          : null;
+      }
+      return null;
+    };
+  }
 }
 
 

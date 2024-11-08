@@ -9,6 +9,7 @@ import { Observable, take } from 'rxjs';
 })
 export class HorariosService extends CrudService<Horario>{
 
+
   private readonly url = "http://localhost:8081/api/v1/horario";
 
   constructor(protected override http: HttpClient) {
@@ -17,6 +18,14 @@ export class HorariosService extends CrudService<Horario>{
 
   obterTodosApartirDoEspecialistaEtratamentoEData(idTratamento:number, idEspecialista:number, data:Date ): Observable<Horario[]>{;
     return this.http.get<Horario[]>(`${this.url}/tratamento/${idTratamento}/especialista/${idEspecialista}/data/${data}`).pipe(take(1));
+  }
+
+  obterTodosApartirtratamentoEData(idTratamento:number, data:Date ): Observable<Horario[]>{;
+    return this.http.get<Horario[]>(`${this.url}/tratamento/${idTratamento}/data/${data}`).pipe(take(1));
+  }
+
+  deletarHorariosAntigosPelaDataAtual() {
+   return this.http.delete<void>(`${this.url}/deletarHorariosAntigos`).pipe(take(1));
   }
 
 }

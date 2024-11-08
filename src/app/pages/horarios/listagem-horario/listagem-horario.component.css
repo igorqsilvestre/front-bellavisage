@@ -77,7 +77,7 @@ select,.calendario{
   width: 30%;
 }
 
-button{
+.formulario button, .button-direcionamentoCadastrar button{
   background-color: #950341;
   color: #FFFFFF;
   font-family: 'Public Sans';
@@ -87,7 +87,7 @@ button{
   padding: 0.5em 2em;
 }
 
-button:hover{
+.formulario button:hover, .button-direcionamentoCadastrar button:hover{
   background-color: #b13d6d;
 }
 

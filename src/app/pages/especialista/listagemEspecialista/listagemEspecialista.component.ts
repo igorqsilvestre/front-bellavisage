@@ -30,6 +30,7 @@ export class ListagemEspecialistaComponent implements OnInit{
 
 
   ngOnInit(): void {
+
     this.atualizarLista();
   }
 

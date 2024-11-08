@@ -11,98 +11,90 @@
 
           <h2 class="titulo-tabela">Listagem do Cadastro</h2>
 
-          <form class="formulario">
+          <form class="formulario" [formGroup]="formulario">
             <div class="container">
               <label for="tratamento">Tratamento</label>
-              <select class="form-control" id="tratamento">
-                <option *ngFor="let tratamento of tratamentos" [value]="tratamento">{{ tratamento }}</option>
+              <select class="form-control" id="tratamento" formControlName="tratamento">
+                <option *ngFor="let tratamento of tratamentos" [value]="tratamento.id">{{ tratamento.nome }}</option>
               </select>
-              <!--
-              <app-campo-control-erro-teste *ngIf="formulario.get('tratamento')?.invalid && formulario.get('tratamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'tratamento')"></app-campo-control-erro-teste>
-              -->
 
               <span></span>
               <label for="data">Data</label>
-              <p-calendar class="calendario"/>
-              <!--
-              <app-campo-control-erro-teste *ngIf="formulario.get('data')?.invalid && formulario.get('data').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'data')"></app-campo-control-erro-teste>
-              -->
+              <p-calendar formControlName="data" class="calendario"/>
             </div>
+            <app-campo-control-erro-teste *ngIf="formulario.get('tratamento')?.invalid && formulario.get('tratamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'tratamento')"></app-campo-control-erro-teste>
+            <app-campo-control-erro-teste *ngIf="formulario.get('data')?.invalid && formulario.get('data').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'data')"></app-campo-control-erro-teste>
 
-            <button type="button">Carregar Horários</button>
+            <button type="button" (click)="onCarregarHorarios()">Carregar Horários</button>
           </form>
 
 
-          <!--
-          <p-table
-            #dtListagemHorarios
-            dataKey="id"
-            [value]="horarios"
-            [tableStyle]="{ 'min-width': '50rem' }"
-            [globalFilterFields]="[
-                'name',
-            ]"
-            editMode="row"
-          >
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Preço</th>
-                    <th>Ações</th>
-                </tr>
-                <tr>
-                  <th>
-                      <p-columnFilter
-                          type="text"
-                          field="nome"
-                          placeholder="Search by nome"
-                          ariaLabel="Filter Nome" />
-                  </th>
-                  <th>
-                      <p-columnFilter
-                          type="text"
-                          field="descricao"
-                          placeholder="Search by descricao"
-                          ariaLabel="Filter descricao" />
-                  </th>
-                  <th>
-                    <p-columnFilter
-                        type="text"
-                        field="preco"
-                        placeholder="Search by preco"
-                        ariaLabel="Filter preco" />
-                  </th>
-
-
-                  <th></th>
-            </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-tratamento  let-editing="editing" let-ri="rowIndex">
-
-                <tr>
-                    <td>{{ tratamento.nome }}</td>
-                    <td>{{ tratamento.descricao }}</td>
-                    <td>{{ tratamento.valor | currency:'BRL'  }}</td>
+          <div class="tabela-bord">
+            <div class="table-container">
+              <p-table
+              #dtListagemHorarios
+              dataKey="id"
+              [value]="horarios"
+              [tableStyle]="{ 'min-width': '50rem' }"
+              [globalFilterFields]="[
+                  'name',
+              ]"
+              editMode="row"
+            >
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Data</th>
+                      <th>Especialista</th>
+                      <th>Horário</th>
+                      <th>Ações</th>
+                  </tr>
+                  <tr>
                     <th>
-                      <button
-                        (click)="editarCadastro(tratamento)"
-                      >
-                        <fa-icon [icon]="faEdit"></fa-icon>
+                        <p-columnFilter
+                            type="text"
+                            field="data"
+                            placeholder="Search by data"
+                            ariaLabel="Filter data" />
+                    </th>
+                    <th>
+                        <p-columnFilter
+                            type="text"
+                            field="especialista"
+                            placeholder="Search by especialista"
+                            ariaLabel="Filter especialista" />
+                    </th>
+                    <th>
+                      <p-columnFilter
+                          type="text"
+                          field="horario"
+                          placeholder="Search by horario"
+                          ariaLabel="Filter horario" />
+                    </th>
+                    <th></th>
+              </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-horarios  let-editing="editing" let-ri="rowIndex">
+
+                  <tr>
+                      <td>{{ horarios.data | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ horarios.especialista.nome }}</td>
+                      <td>{{ horarios.data | date: 'HH:mm'  }}</td>
+                      <th>
+                        <button
+                        (click)="cancelarCadastro(horarios)"
+                        >
+                          <fa-icon [icon]="faTrash"></fa-icon>
+
                       </button>
 
-                      <button
-                      (click)="cancelarCadastro(tratamento)"
-                      >
-                        <fa-icon [icon]="faTrash"></fa-icon>
+                      </th>
+                  </tr>
+              </ng-template>
+            </p-table>
+            </div>
+          </div>
 
-                     </button>
 
-                    </th>
-                </tr>
-            </ng-template>
-        </p-table>
-        -->
 
         </div>
   </section>

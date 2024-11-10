@@ -28,4 +28,8 @@ export class HorariosService extends CrudService<Horario>{
    return this.http.delete<void>(`${this.url}/deletarHorariosAntigos`).pipe(take(1));
   }
 
+  alterarDisponibilidade(id:number, disponibilidade:boolean): Observable<Horario>{;
+    return this.http.patch<Horario>(`${this.url}/${id}/disponibilidade`, disponibilidade).pipe(take(1));
+  }
+
 }

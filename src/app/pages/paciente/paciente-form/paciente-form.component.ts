@@ -52,7 +52,7 @@ export class PacienteFormComponent implements OnInit{
     this.formulario = this.formBuilder.group({
       id:[paciente.id],
       nome: [paciente.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      cpf: [paciente.cpf, [Validators.required, CpfUtilValidator.validate()]],
+      cpf: [paciente.cpf, [Validators.required, CpfUtilValidator.validate()],[this.validarCpfExiste.bind(this)]],
       email: [paciente.email, [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)]],
       senha: [paciente.senha, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
       confirmarSenha: [paciente.senha, Validators.required],

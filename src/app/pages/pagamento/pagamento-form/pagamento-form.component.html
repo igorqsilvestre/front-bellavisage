@@ -19,8 +19,8 @@
             <option value="null" disabled selected hidden>Selecione um agendamento*</option>
             <option *ngFor="let agendamento of agendamentos" [value] = "agendamento.id">
               Código: {{agendamento.id}} -
-              Data: {{agendamento.dataHorario | date: 'dd/MM/yyyy'}} -
-              Horário: {{ agendamento.dataHorario| date: 'HH:mm' }} -
+              Data: {{agendamento.horario.data| date: 'dd/MM/yyyy'}} -
+              Horário: {{ agendamento.horario.data| date: 'HH:mm' }} -
               Paciente: {{ agendamento.paciente.nome }} -
               Especialista: {{ agendamento.especialista.nome }} -
               Valor: {{ agendamento.valor }}

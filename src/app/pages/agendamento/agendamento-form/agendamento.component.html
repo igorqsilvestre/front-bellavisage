@@ -39,9 +39,9 @@
           </div>
         <div class="dados-data-horario-agendamento">
           <div class="container-calendario">
-            <label for="dataHorario">Data</label>
-            <p-calendar formControlName="dataHorario" class="calendario"/>
-            <app-campo-control-erro-teste *ngIf="formulario.get('dataHorario')?.invalid && formulario.get('dataHorario').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'dataHorario')"></app-campo-control-erro-teste>
+            <label for="horario">Data</label>
+            <p-calendar formControlName="horario" class="calendario"/>
+            <app-campo-control-erro-teste *ngIf="formulario.get('horario')?.invalid && formulario.get('horario').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'horario')"></app-campo-control-erro-teste>
           </div>
 
           <div>

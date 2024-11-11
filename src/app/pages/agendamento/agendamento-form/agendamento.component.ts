@@ -59,7 +59,7 @@ export class AgendamentoComponent implements OnInit{
       paciente: [agendamento.paciente, Validators.required],
       especialista: [agendamento.especialista],
       tratamento: [agendamento.tratamento, Validators.required],
-      dataHorario: [agendamento.dataHorario, [Validators.required, this.validaDataMenorQueAtual()]],
+      horario: [agendamento.horario, [Validators.required, this.validaDataMenorQueAtual()]],
       valor: [agendamento.valor, [Validators.required]],
       status:[agendamento.status],
       avaliacao:[agendamento.avaliacao]
@@ -80,55 +80,42 @@ export class AgendamentoComponent implements OnInit{
     })
   }
 
+
+
   onAdicionarAgendamento(horario:Horario){
+    if(this.formulario.valid){
+      this.formulario.patchValue({
+        horario: horario.id,
+        especialista: horario.especialista.id
+      });
 
-    this.formulario.patchValue({
-      dataHorario: horario.data,
-      especialista: horario.especialista.id
-    });
-
-    this.modalRef = this.modalService.show(ConfirmModalComponent, {
-      initialState: {
-        type: 'Confirmação',
-        message: 'Deseja realmente fazer o agendamento?'
-      }
-    });
-
-
-    this.modalRef.content.confirm.subscribe(() => {
-      this.agendamentoService.existsDataEhoraAndEspecialistaAndPaciente(this.formulario.value).subscribe(dado => {
-        if(dado){
-          this.mostrarMensagemErro("Ocorreu um erro pois data e hora já existem no sistema!");
-        }else{
-          if(this.formulario.valid){
-            this.horarioService.alterarDisponibilidade(horario.id, false).subscribe(dado => {
-              if(dado){
-                this.agendamentoService.salvar(this.formulario.value).subscribe(
-                  () => {
-                    this.mostrarMensagemSucesso("Cadastro foi realizado com sucesso!");
-                    this.formUtilService.voltarPagina(2000);
-                  }, () => {
-                    this.mostrarMensagemErro("Ocorreu um erro ao realizar o cadastro!");
-                  }
-                )
-              }else{
-                this.mostrarMensagemErro("Ocorreu um erro ao realizar o cadastro!");
-              }
-            })
-
-          }else{
-            this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
-          }
+      this.modalRef = this.modalService.show(ConfirmModalComponent, {
+        initialState: {
+          type: 'Confirmação',
+          message: 'Deseja realmente fazer o agendamento?'
         }
+      });
+
+      this.modalRef.content.confirm.subscribe(() => {
+        this.agendamentoService.salvar(this.formulario.value).subscribe(
+          () => {
+            this.mostrarMensagemSucesso("Cadastro foi realizado com sucesso!");
+            this.formUtilService.voltarPagina(2000);
+          }, () => {
+            this.mostrarMensagemErro("Ocorreu um erro ao realizar o cadastro!");
+          })
       })
-    })
+    }else{
+      this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
+    }
   }
+
 
 
   onCarregarHorarios(){
     if(this.formulario.valid){
       const idTratamento = this.formulario.get('tratamento').value;
-      const data = this.formulario.get('dataHorario').value;
+      const data = this.formulario.get('horario').value;
 
       this.horarioService.obterTodosApartirtratamentoEData(idTratamento,data).subscribe((dados:Horario[]) => {
         if(dados){

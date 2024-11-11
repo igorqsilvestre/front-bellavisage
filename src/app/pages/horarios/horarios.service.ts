@@ -4,6 +4,7 @@ import { Horario } from './Horario';
 import { HttpClient } from '@angular/common/http';
 import { Observable, take } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +15,7 @@ export class HorariosService extends CrudService<Horario>{
 
   constructor(protected override http: HttpClient) {
     super(http, "http://localhost:8081/api/v1/horario")
+
   }
 
   obterTodosApartirDoEspecialistaEtratamentoEData(idTratamento:number, idEspecialista:number, data:Date ): Observable<Horario[]>{;
@@ -26,10 +28,6 @@ export class HorariosService extends CrudService<Horario>{
 
   deletarHorariosAntigosPelaDataAtual() {
    return this.http.delete<void>(`${this.url}/deletarHorariosAntigos`).pipe(take(1));
-  }
-
-  alterarDisponibilidade(id:number, disponibilidade:boolean): Observable<Horario>{;
-    return this.http.patch<Horario>(`${this.url}/${id}/disponibilidade`, disponibilidade).pipe(take(1));
   }
 
 }

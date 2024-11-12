@@ -43,8 +43,6 @@ export class ListagemHorarioComponent implements OnInit{
     });
 
     this.atualizarListaTratamentos();
-    this.deletarHorariosAntigosPelaDataAtual();
-
   }
 
 
@@ -114,9 +112,5 @@ export class ListagemHorarioComponent implements OnInit{
       }
       return null;
     };
-  }
-
-  deletarHorariosAntigosPelaDataAtual() {
-    this.horarioService.deletarHorariosAntigosPelaDataAtual().subscribe();
   }
 }

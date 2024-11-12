@@ -26,8 +26,4 @@ export class HorariosService extends CrudService<Horario>{
     return this.http.get<Horario[]>(`${this.url}/tratamento/${idTratamento}/data/${data}`).pipe(take(1));
   }
 
-  deletarHorariosAntigosPelaDataAtual() {
-   return this.http.delete<void>(`${this.url}/deletarHorariosAntigos`).pipe(take(1));
-  }
-
 }

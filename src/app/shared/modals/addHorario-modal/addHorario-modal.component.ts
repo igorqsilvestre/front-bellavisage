@@ -25,7 +25,7 @@ export class AddHorarioModalComponent implements OnInit {
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
-      horario: [null, [Validators.required, this.validaHorarioMenorQueAtual()]]
+      horario: [null, [Validators.required]]
     })
   }
 
@@ -68,20 +68,6 @@ export class AddHorarioModalComponent implements OnInit {
 
   mostrarMensagemSucesso(mensagem: string){
     this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: mensagem, key: 'toast-sucess'});
-  }
-
-  validaHorarioMenorQueAtual(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value) {
-        const agora = new Date(); // Hora atual
-        const horario = new Date(control.value); // Horário do campo
-
-        return horario.getTime() < agora.getTime()
-          ? { horarioMenorQueAtual: true }
-          : null;
-      }
-      return null;
-    };
   }
 }
 

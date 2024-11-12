@@ -68,10 +68,6 @@ export class FormUtilsService {
         return 'Data não pode ser menor que a data atual';
       }
 
-      if(campo?.hasError('horarioMenorQueAtual')){
-        return 'O horário não pode ser menor do que o horário atual';
-      }
-
       if(campo?.hasError('menorDeIdade')){
         return 'Não pode ser menor de idade.';
       }

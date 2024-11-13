@@ -52,11 +52,6 @@ export class ListagemAgendamentoComponent implements OnInit{
     return dtListagemAgendamento.filterGlobal(event, 'contains')
   }
 
-  editarCadastro(agendamento: Agendamento) {
-    this.router.navigate(['agendamentos/editar-agendamento', agendamento.id]);
-
-  }
-
   cancelarCadastro(agendamento: Agendamento) {
 
     this.modalRef = this.modalService.show(ConfirmModalComponent, {

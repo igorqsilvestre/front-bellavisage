@@ -9,7 +9,7 @@
     <form class="principal-formulario" [formGroup]="formulario">
       <div class="campos">
         <label for="nome">Nome</label>
-        <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Informe seu nome*">
+        <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Informe seu nome completo*">
         <app-campo-control-erro-teste *ngIf="formulario.get('nome')?.invalid && formulario.get('nome').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'nome')"></app-campo-control-erro-teste>
 
         <label for="cpf">Cpf</label>

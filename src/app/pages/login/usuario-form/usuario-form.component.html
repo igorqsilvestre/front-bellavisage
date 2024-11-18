@@ -27,73 +27,8 @@
 
 
         <label for="telefone">Telefone</label>
-        <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX*">
+        <input type="text" class="form-control" formControlName="telefone" id="telefone" placeholder="(DDD) XXXXX-XXXX*" appTelefoneMask>
         <app-campo-control-erro-teste *ngIf="formulario.get('telefone')?.invalid && formulario.get('telefone').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'telefone')"></app-campo-control-erro-teste>
-
-        <div formGroupName="endereco">
-          <label for="cep" >Endere&ccedil;o</label>
-
-          <div class="row d-flex align-items-center">
-            <div class="col-6 d-flex align-items-center gap-1">
-              <button class="btn btn-primary" (click)="onBuscaCep()"><i class="bi bi-search"></i></button>
-              <input type="text" class="form-control" formControlName="cep" placeholder="CEP*">
-            </div>
-
-            <div class="col-6">
-              <input type="text" class="form-control"  formControlName="logradouro" placeholder="Logradouro*">
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-6">
-              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.cep')?.invalid && formulario.get('endereco.cep').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.cep')"></app-campo-control-erro-teste>
-            </div>
-            <div class="col-6">
-              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.logradouro')?.invalid && formulario.get('endereco.logradouro').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.logradouro')"></app-campo-control-erro-teste>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control"  formControlName="bairro" placeholder="Bairro*">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control"  formControlName="numero" placeholder="Número">
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.bairro')?.invalid && formulario.get('endereco.bairro').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.bairro')"></app-campo-control-erro-teste>
-            </div>
-            <div class="col">
-              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.numero')?.invalid && formulario.get('endereco.numero').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.numero')"></app-campo-control-erro-teste>
-            </div>
-          </div>
-
-          <input type="text" class="form-control"  formControlName="complemento" placeholder="Complemento">
-
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control"  formControlName="cidade" placeholder="Cidade*">
-            </div>
-            <div class="col">
-              <select class="form-control" id="opcoes" formControlName="estado" >
-                <option value="null" disabled selected hidden>Selecione um estado*</option>
-                <option *ngFor="let estado of estados" [value]="estado.nome">{{ estado.nome }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.cidade')?.invalid && formulario.get('endereco.cidade').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.cidade')"></app-campo-control-erro-teste>
-            </div>
-            <div class="col">
-              <app-campo-control-erro-teste *ngIf="formulario.get('endereco.estado')?.invalid && formulario.get('endereco.estado').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'endereco.estado')"></app-campo-control-erro-teste>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="botoes">

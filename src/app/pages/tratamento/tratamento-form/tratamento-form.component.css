@@ -49,6 +49,20 @@ header,main{
   font-weight: bold;
 }
 
+
+.principal-formulario textarea{
+  margin: 0.7em 0;
+  padding: 0.6em 1em;
+  border-radius: 8px;
+  background-color: #F8F8F8;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.principal-formulario textarea::placeholder{
+  color: #6B6E71;
+}
+
 .principal-formulario input, select {
   padding: 0.6em 1em;
   margin: 0.7em 0;
@@ -68,13 +82,19 @@ header,main{
   font-weight: bold;
   border: none;
   border-radius: 8px;
-  padding: 0.7em 7em;
+  padding: 0.5em 2em;
   margin-right: 0.5em;
+  width: 32%;
 }
 
 .principal-formulario button:hover{
   background-color: #b13d6d;
 }
+
+:host ::ng-deep .p-fileupload-basic .p-button-icon-left {
+  margin-right: 0.5em !important; /* Garante que o espaço seja mantido sempre */
+}
+
 
 .cabecalho{
   width: 122em;

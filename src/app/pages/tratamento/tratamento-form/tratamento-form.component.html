@@ -12,19 +12,36 @@
         <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Digite o nome do tratamento*">
         <app-campo-control-erro-teste *ngIf="formulario.get('nome')?.invalid && formulario.get('nome').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'nome')"></app-campo-control-erro-teste>
 
-
         <label for="descricao">Descrição</label>
-        <input type="text" class="form-control" formControlName="descricao" id="descricao" placeholder="Digite a descrição do tratamento*">
+        <textarea formControlName="descricao" id="descricao" rows="4" cols="50" placeholder="Digite a descrição do tratamento*"></textarea>
         <app-campo-control-erro-teste *ngIf="formulario.get('descricao')?.invalid && formulario.get('descricao').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'descricao')"></app-campo-control-erro-teste>
+
+        <label for="funcionamento">Funcionamento</label>
+        <textarea formControlName="funcionamento" id="funcionamento" rows="4" cols="50" placeholder="Digite o funcionamento do tratamento*"></textarea>
+        <app-campo-control-erro-teste *ngIf="formulario.get('funcionamento')?.invalid && formulario.get('funcionamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'funcionamento')"></app-campo-control-erro-teste>
+
+        <label for="indicacoes">Indicacoes</label>
+        <textarea formControlName="indicacoes" id="indicacoes" rows="4" cols="50"
+        placeholder='Digite as indicações do tratamento em forma de lista. Por exemplo: Uma linha uma indicação e na linha abaixo outra indicação*'></textarea>
+        <app-campo-control-erro-teste *ngIf="formulario.get('indicacoes')?.invalid && formulario.get('indicacoes').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'indicacoes')"></app-campo-control-erro-teste>
 
         <label for="valor">Valor</label>
         <input type="text" class="form-control" formControlName="valor" id="valor" placeholder="Informe o valor do tratamento*">
         <app-campo-control-erro-teste *ngIf="formulario.get('valor')?.invalid && formulario.get('valor').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'valor')"></app-campo-control-erro-teste>
 
-        <label for="imagem">Insira a URL da imagem</label>
-        <input type="text" class="form-control" formControlName="imagem" id="imagem" placeholder="https://img.com/fotos/retrato-limpeza-de-pele">
+        <p-fileUpload
+        mode="basic"
+        chooseLabel="{{ labelParaCarregamentoImagemOuImagemJaSelecionada }}"
+        chooseIcon="{{ iconeCarregarImagemOuImagemSelecionada }}"
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000"
+        (onSelect)="onUpload($event)"
+        [style]="{'margin-top': '0.5em', 'padding': '0.5em 1em' }"/>
         <app-campo-control-erro-teste *ngIf="formulario.get('imagem')?.invalid && formulario.get('imagem').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'imagem')"></app-campo-control-erro-teste>
       </div>
+
+
 
       <div class="botoes">
         <p-toast position="top-left" key="toast-error" />

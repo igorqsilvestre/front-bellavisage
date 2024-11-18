@@ -1,0 +1,120 @@
+header,main{
+  margin: 0 10%;
+}
+
+.sessao-principal{
+  background-color: #E7EBEF;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 2em;
+  margin: 1em 0;
+  text-align: center;
+}
+
+.sessao-principal .titulo {
+  color: #339CFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1em;
+  text-align: left;
+
+}
+
+.principal-formulario{
+  margin: 0 10em;
+}
+
+.sessao-principal .subtitulo {
+  color: #950341;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: medium;
+  padding-top: 2em;
+
+}
+
+.principal-formulario .campos{
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+}
+
+.principal-formulario .calendario{
+  padding: 0.6em 1em;
+  margin: 0.7em 0;
+  background-color: #F8F8F8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.principal-formulario label{
+  font-family: 'Public Sans';
+  color: #950341;
+  font-weight: bold;
+}
+
+.principal-formulario input, select {
+  padding: 0.6em 1em;
+  margin: 0.7em 0;
+  background-color: #F8F8F8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.principal-formulario input::placeholder, select, option{
+  color: #6B6E71;
+}
+
+.principal-formulario button{
+  background-color: #950341;
+  color: #FFFFFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 2em;
+  margin-right: 0.5em;
+  width: 32%;
+}
+
+.principal-formulario button:hover{
+  background-color: #b13d6d;
+}
+
+.container-divisor{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:2em;
+  margin: 1em 0;
+}
+
+.container-divisor .tabela button{
+ color: #b13d6d;
+ background: none;
+}
+
+.tabela{
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+th{
+  padding: 0.3em 0;
+}
+
+th,td{
+ border: 1px solid #ddd;
+ text-align: center;
+}
+
+th:last-child{
+  width: 20%;
+}
+
+
+
+

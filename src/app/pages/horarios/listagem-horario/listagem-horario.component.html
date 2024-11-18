@@ -1,0 +1,105 @@
+<header>
+  <app-cabecalho class="cabecalho"></app-cabecalho>
+</header>
+<main>
+  <section class="sessao-principal">
+    <h2 class="titulo">Gerenciar Horarios</h2>
+      <div class="button-direcionamentoCadastrar">
+        <button type="submit" routerLink="novos-horarios">Cadastrar Horarios</button>
+      </div>
+        <div class="campo-horarios">
+
+          <h2 class="titulo-tabela">Listagem do Cadastro</h2>
+
+          <form class="formulario" [formGroup]="formulario">
+            <div class="container">
+              <label for="tratamento">Tratamento</label>
+              <select class="form-control" id="tratamento" formControlName="tratamento">
+                <option *ngFor="let tratamento of tratamentos" [value]="tratamento.id">{{ tratamento.nome }}</option>
+              </select>
+
+              <span></span>
+              <label for="data">Data</label>
+              <p-calendar formControlName="data" class="calendario"/>
+            </div>
+            <app-campo-control-erro-teste *ngIf="formulario.get('tratamento')?.invalid && formulario.get('tratamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'tratamento')"></app-campo-control-erro-teste>
+            <app-campo-control-erro-teste *ngIf="formulario.get('data')?.invalid && formulario.get('data').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'data')"></app-campo-control-erro-teste>
+
+            <button type="button" (click)="onCarregarHorarios()">Carregar Horários</button>
+          </form>
+
+
+          <div class="tabela-bord">
+            <div class="table-container">
+              <p-table
+              #dtListagemHorarios
+              dataKey="id"
+              [value]="horarios"
+              [tableStyle]="{ 'min-width': '50rem' }"
+              [globalFilterFields]="[
+                  'name',
+              ]"
+              editMode="row"
+            >
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Data</th>
+                      <th>Especialista</th>
+                      <th>Horário</th>
+                      <th>Ações</th>
+                  </tr>
+                  <tr>
+                    <th>
+                        <p-columnFilter
+                            type="text"
+                            field="data"
+                            placeholder="Search by data"
+                            ariaLabel="Filter data" />
+                    </th>
+                    <th>
+                        <p-columnFilter
+                            type="text"
+                            field="especialista"
+                            placeholder="Search by especialista"
+                            ariaLabel="Filter especialista" />
+                    </th>
+                    <th>
+                      <p-columnFilter
+                          type="text"
+                          field="horario"
+                          placeholder="Search by horario"
+                          ariaLabel="Filter horario" />
+                    </th>
+                    <th></th>
+              </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-horarios  let-editing="editing" let-ri="rowIndex">
+
+                  <tr>
+                      <td>{{ horarios.data | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ horarios.especialista.nome }}</td>
+                      <td>{{ horarios.data | date: 'HH:mm'  }}</td>
+                      <th>
+                        <button
+                        (click)="cancelarCadastro(horarios)"
+                        >
+                          <fa-icon [icon]="faTrash"></fa-icon>
+
+                      </button>
+
+                      </th>
+                  </tr>
+              </ng-template>
+            </p-table>
+            </div>
+          </div>
+
+
+
+        </div>
+  </section>
+</main>
+
+<footer>
+  <app-rodape></app-rodape>
+</footer>

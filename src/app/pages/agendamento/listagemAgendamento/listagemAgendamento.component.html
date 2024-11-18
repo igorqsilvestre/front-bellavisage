@@ -96,8 +96,8 @@
                 <ng-template pTemplate="body" let-agendamento  let-editing="editing" let-ri="rowIndex">
 
                     <tr [pEditableRow]="agendamento">
-                        <td>{{ agendamento.dataHorario | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{ agendamento.dataHorario | date: 'HH:mm' }}</td>
+                        <td>{{ agendamento.horario.data | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{ agendamento.horario.data | date: 'HH:mm' }}</td>
                         <td>{{ agendamento.paciente.nome }}</td>
                         <td>{{ agendamento.tratamento.nome }}</td>
                         <td>{{ agendamento.especialista.nome}}</td>
@@ -148,11 +148,6 @@
                           >
                             <fa-icon [icon]="faTrash"></fa-icon>
 
-                        </button>
-                        <button
-                        (click)="editarCadastro(agendamento)"
-                        >
-                        <fa-icon [icon]="faEdit"></fa-icon>
                         </button>
                     </tr>
                 </ng-template>

@@ -3,7 +3,9 @@ export interface Paciente {
   cpf:string;
   nome:string;
   email:string;
+  senha: string;
   telefone:string;
+  dataNascimento: Date;
   endereco: {
     cep:string;
     logradouro:string;

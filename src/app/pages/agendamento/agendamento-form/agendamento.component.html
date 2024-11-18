@@ -36,49 +36,53 @@
                       <app-campo-control-erro-teste *ngIf="formulario.get('tratamento')?.invalid && formulario.get('tratamento').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'tratamento')"></app-campo-control-erro-teste>
                     </div>
                   </div>
-
-                  <div>
-                    <label for="especialista">Especialista</label>
-                    <div class="input-group d-flex align-items-center ">
-                      <div class="input-group-prepend" style="margin-right: 0.1em;">
-                        <span class="input-group-text"><img src="../../../../assets/icone-usuariocinza.png"></span>
-                      </div>
-                      <select class="form-control" id="especialista" formControlName="especialista" >
-                        <option *ngFor="let especialista of especialistas" [value]="especialista.id">{{ especialista.nome }}</option>
-                      </select>
-                      <app-campo-control-erro-teste *ngIf="formulario.get('especialista')?.invalid && formulario.get('especialista').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'especialista')"></app-campo-control-erro-teste>
-                    </div>
-                  </div>
           </div>
         <div class="dados-data-horario-agendamento">
-
-          <div>
-            <label for="calendar-24h">Data</label>
-            <div class="form-control">
-              <p-calendar
-              inputId="calendar-24h"
-              formControlName="dataHorario"
-              [showTime]="true"
-              [hourFormat]="'24'"
-              selectionMode="single" />
-              <app-campo-control-erro-teste *ngIf="formulario.get('dataHorario')?.invalid && formulario.get('dataHorario').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'dataHorario')"></app-campo-control-erro-teste>
-            </div>
-
+          <div class="container-calendario">
+            <label for="horario">Data</label>
+            <p-calendar formControlName="horario" class="calendario"/>
+            <app-campo-control-erro-teste *ngIf="formulario.get('horario')?.invalid && formulario.get('horario').touched" [msgErro]="formUtilService.getMensagemErro(formulario,'horario')"></app-campo-control-erro-teste>
           </div>
+
           <div>
             <label for="nome">Valor</label>
             <input type="text" class="form-control"  formControlName="valor" placeholder="R$" readonly>
             <app-campo-control-erro-teste *ngIf="formulario.get('valor')?.invalid && formulario.get('valor').touched" [msgErro]="formUtilService.getMensagemErro(formulario, 'valor')"></app-campo-control-erro-teste>
           </div>
-
         </div>
-        <div class="botoes">
+
+        <!--A parte de listar os especialistas disponiveis para a data-->
+        <div class="container-divisor">
+          <button style="width: auto;"  (click)="onCarregarHorarios()">Carregar horários</button>
+
+            <p-table class="tabela" [value]="horarios" [tableStyle]="{ 'min-width': '60rem' }" >
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Data</th>
+                      <th>Especialista</th>
+                      <th>Horário</th>
+                      <th>Ações</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-horarios >
+                  <tr>
+                      <td>{{ horarios.data | date: 'dd/MM/yyyy'}}</td>
+                      <td>{{ horarios.especialista.nome }}</td>
+                      <td>{{ horarios.data | date: 'HH:mm'}}</td>
+                      <td>
+                      <button (click)="onAdicionarAgendamento(horarios)">
+                        <fa-icon [icon]="faSave"></fa-icon>
+                      </button>
+                      </td>
+                  </tr>
+              </ng-template>
+            </p-table>
+
           <p-toast position="top-left" key="toast-error" />
           <p-toast position="top-right" key="toast-sucess" />
-          <button type="submit"  (click)="(formUtilService.voltarPagina())">Cancelar</button>
-          <button type="submit" (click)="onSubmit()">{{ nomeBotao }}</button>
+          <button (click)="(formUtilService.voltarPagina())">Cancelar</button>
         </div>
-        </form>
+    </form>
       </section>
     </div>
   </section>

@@ -9,6 +9,7 @@ const routes: Routes = [
   {path: 'pacientes', loadChildren: () => import('../app/pages/paciente/paciente.module').then(p => p.PacienteModule), canActivate: [AuthGuard]},
   {path: 'especialistas', loadChildren: () => import('../app/pages/especialista/especialista.module').then(e => e.EspecialistaModule),canActivate: [AuthGuard]},
   {path: 'tratamentos', loadChildren: () => import('../app/pages/tratamento/tratamento.module').then(t => t.TratamentoModule),canActivate: [AuthGuard]},
+  {path: 'horarios', loadChildren: () => import('../app/pages/horarios/horarios.module').then(h => h.HorariosModule),canActivate: [AuthGuard]},
   {path: 'agendamentos', loadChildren: () => import('../app/pages/agendamento/agendamento.module').then(a => a.AgendamentoModule),canActivate: [AuthGuard]},
   {path: 'pagamentos', loadChildren: () => import('../app/pages/pagamento/pagamentos.module').then(p => p.PagamentosModule),canActivate: [AuthGuard]},
   {path: 'dashbords', loadChildren: () => import('../app/pages/dashboard/dashboard.module').then(d => d.DashboardModule),canActivate: [AuthGuard]},

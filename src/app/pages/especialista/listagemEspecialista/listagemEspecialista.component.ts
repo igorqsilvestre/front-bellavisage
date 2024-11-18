@@ -1,14 +1,13 @@
 import { EspecialistaService } from '../especialista.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router'; // Import the Router module
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Especialista } from '../Especialista';
-import { Subscription } from 'rxjs';
-import { ConfirmModalComponent } from '../../../shared/confirm-modal/confirm-modal.component';
-import { AlertModalComponent } from '../../../shared/alert-modal/alert-modal.component';
+import { ConfirmModalComponent } from '../../../shared/modals/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from '../../../shared/modals/alert-modal/alert-modal.component';
 
 
 @Component({
@@ -31,6 +30,7 @@ export class ListagemEspecialistaComponent implements OnInit{
 
 
   ngOnInit(): void {
+
     this.atualizarLista();
   }
 

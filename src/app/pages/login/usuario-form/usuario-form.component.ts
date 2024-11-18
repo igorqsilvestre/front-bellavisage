@@ -25,59 +25,21 @@ export class UsuarioFormComponent implements OnInit{
     private formBuilder: FormBuilder,
     private dropdownService: DropdownService,
     private loginService: LoginService,
-    private messageService: MessageService,
-    private cepService: ConsultaCepService
+    private messageService: MessageService
   ){}
 
 
   ngOnInit(): void {
     this.dropdownService.getEstadosBr().subscribe(dados => {this.estados = dados});
     this.formulario = this.formBuilder.group({
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      email: [null,  [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)], [this.validarEmail.bind(this)]],
       senha: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
       confirmarSenha: [null, Validators.required],
-      perfilsAcesso: [this.formUtilService.perfilDeAcesso, Validators.required],
-      email: [null,  [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)], [this.validarEmail.bind(this)]],
-      telefone: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
-      endereco: this.formBuilder.group({
-        cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
-        numero: [null, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)],
-        complemento: [null],
-        bairro: [null, Validators.required],
-        logradouro: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required]
-      }),
+      telefone: [null, [Validators.required, Validators.minLength(15), Validators.maxLength(15)]],
     });
   }
 
-  onBuscaCep(){
-    const campoCep = this.formulario.get('endereco.cep');
-    if(campoCep.valid){
-      this.cepService.consultaCEP(campoCep.value).subscribe(dados => {
-       if(dados){
-        this.insereDadosEndereco(dados);
-       }else{
-        this.mostrarMensagemErro('Erro ao buscar o cep')
-       }
-      })
-    }
-  }
-
-
-  insereDadosEndereco(dados:Cep){
-    this.dropdownService.getEstadoBySigla(dados.uf).subscribe(estado => {
-      this.formulario.patchValue({
-        endereco: {
-          logradouro: dados.logradouro,
-          complemento: dados.complemento,
-          bairro: dados.bairro,
-          cidade: dados.localidade,
-          estado: estado.nome
-        }
-      })
-    });
-  }
 
   onSubmit(){
     if (this.formulario.valid) {

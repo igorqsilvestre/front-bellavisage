@@ -18,6 +18,8 @@ export class TratamentoFormComponent implements OnInit{
   formulario!: FormGroup;
   titulo:string = 'Cadastro do tratamento';
   nomeBotao:string = 'Cadastrar';
+  iconeCarregarImagemOuImagemSelecionada = 'pi pi-upload';
+  labelParaCarregamentoImagemOuImagemJaSelecionada = 'Escolha uma foto para o tratamento';
 
   constructor(
     public formUtilService: FormUtilsService,
@@ -43,8 +45,12 @@ export class TratamentoFormComponent implements OnInit{
       nome: [tratamento.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(255)], [this.validarTratamentoExiste.bind(this)]],
       valor: [tratamento.valor, [Validators.required, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
       descricao: [tratamento.descricao, Validators.required],
-      imagem: [tratamento.imagem],
+      funcionamento: [tratamento.descricao, Validators.required],
+      indicacoes: [tratamento.descricao, Validators.required],
+      imagem: [tratamento.imagem, Validators.required],
     });
+
+    this.verificaSeImagemEstaCarregada(tratamento);
   }
 
   onSubmit(){
@@ -56,6 +62,7 @@ export class TratamentoFormComponent implements OnInit{
         mensagemSucesso = "Alteração realizada com sucesso!"
         mensagemErro = "Ocorreu um erro ao realizar a edição!"
       }
+
       this.tratamentoService.salvar(this.formulario.value).subscribe(
         () => {
           this.mostrarMensagemSucesso(mensagemSucesso);
@@ -67,6 +74,29 @@ export class TratamentoFormComponent implements OnInit{
     }else{
       this.formUtilService.marcarCamposInvalidosComoTocado(this.formulario);
     }
+  }
+
+
+
+  onUpload(event: { files: File[] }) { // Especifica o tipo correto
+    const file = event.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            // Captura a string Base64, que inclui o prefixo
+            const base64Image = e.target.result; // Isso será algo como "data:image/jpeg;base64,..."
+            this.formulario.get('imagem')?.setValue(base64Image); // Define o valor no formulário
+        };
+        reader.readAsDataURL(file); // Lê o arquivo como URL de dados
+    }
+  }
+
+  verificaSeImagemEstaCarregada(tratamento:Tratamento) {
+   if(tratamento.imagem){
+    this.iconeCarregarImagemOuImagemSelecionada = 'pi pi-image';
+    this.labelParaCarregamentoImagemOuImagemJaSelecionada = 'Imagem Carregada';
+   }
   }
 
   validarTratamentoExiste(formControl: FormControl) {
@@ -88,3 +118,5 @@ export class TratamentoFormComponent implements OnInit{
   }
 
 }
+
+

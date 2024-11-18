@@ -1,0 +1,112 @@
+
+header,main{
+  margin: 0 10%;
+}
+
+
+.sessao-principal{
+  background-color: #E7EBEF;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 2em;
+  margin: 1em 0;
+  text-align: center;
+  position:relative;
+}
+
+/* titulo azul */
+.sessao-principal .titulo {
+  color: #339CFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  text-align: left;
+  margin: 20px 5px 30px 20px;
+
+}
+
+.tabela-bord{
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5em;
+  margin: 1em 0;
+  text-align: center;
+  position:relative;
+  width: 100%;
+
+}
+.table-container {
+  height: 290px;
+  overflow: auto;
+}
+
+.titulo-tabela {
+  color: #339CFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1em;
+  text-align: left;
+  margin: 50px 15px 30px 50px;
+}
+
+.button-direcionamentoCadastrar button{
+  top: 40px;
+  font-size: 16px;
+  display: flex;
+  margin: 50px 15px 100px 50px;
+}
+
+.button-icon {
+  width: 16px;
+  height: 12px;
+}
+
+ label{
+  font-family: 'Public Sans';
+  color: #950341;
+  font-weight: bold;
+}
+
+select,.calendario{
+  padding: 0.6em 0 0.5em 0.6em;
+  background-color: #F8F8F8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 30%;
+}
+
+.formulario button, .button-direcionamentoCadastrar button{
+  background-color: #950341;
+  color: #FFFFFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 2em;
+}
+
+.formulario button:hover, .button-direcionamentoCadastrar button:hover{
+  background-color: #b13d6d;
+}
+
+.cabecalho{
+  width: 122em;
+}
+
+.formulario{
+  align-items: center;
+  padding: 0 20%;
+}
+
+.formulario .container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 3em;
+}
+
+
+

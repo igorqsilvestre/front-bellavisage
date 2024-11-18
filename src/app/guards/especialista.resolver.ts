@@ -15,6 +15,7 @@ export const especialistaResolver: ResolveFn<Observable<Especialista>> = (route,
     registro:null,
     email:null,
     telefone:null,
+    dataNascimento:null,
     endereco: {
       cep:null,
       logradouro:null,

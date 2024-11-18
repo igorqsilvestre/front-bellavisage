@@ -10,6 +10,7 @@ import { DropdownService } from '../../../shared/services/dropdown.service';
 import { FormUtilsService } from '../../../shared/services/form-utils.service';
 import { Especialista } from '../Especialista';
 import { EspecialistaService } from '../especialista.service';
+import { idadeValidator } from '../../../shared/validators/validaIdade';
 
 @Component({
   selector: 'app-especialista-form',
@@ -22,6 +23,7 @@ export class EspecialistaFormComponent implements OnInit{
   estados!: EstadoBr[];
   titulo:string = 'Cadastro do especialista';
   nomeBotao:string = 'Cadastrar';
+  especialidades: string[] = ['Dermatologista', 'Esteticista','Fisioterapeuta'];
 
   constructor(
     public formUtilService: FormUtilsService,
@@ -46,11 +48,12 @@ export class EspecialistaFormComponent implements OnInit{
 
     this.formulario = this.formBuilder.group({
       id:[especialista.id],
-      nome: [especialista.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      nome: [especialista.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       especialidade: [especialista.especialidade, Validators.required],
       registro: [especialista.registro, [Validators.required, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)], [this.validarRegistroExiste.bind(this)]],
       email: [especialista.email, [Validators.required, Validators.pattern(this.formUtilService.patternValidaEmail)]],
-      telefone: [especialista.telefone, [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
+      telefone: [especialista.telefone, [Validators.required, Validators.minLength(15), Validators.maxLength(15)]],
+      dataNascimento: [new Date(especialista.dataNascimento), [ Validators.required, idadeValidator()] ],
       endereco: this.formBuilder.group({
         cep: [especialista.endereco.cep, [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)]],
         numero: [especialista.endereco.numero, Validators.pattern(this.formUtilService.patternPermiteSomenteNumeros)],

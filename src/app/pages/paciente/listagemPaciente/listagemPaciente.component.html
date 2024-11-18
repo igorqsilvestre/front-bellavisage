@@ -28,6 +28,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>CPF</th>
+                    <th>Email</th>
                     <th>Telefone</th>
                     <th>Endereço</th>
                     <th>Ações</th>
@@ -40,12 +41,21 @@
                           placeholder="Search by nome"
                           ariaLabel="Filter Nome" />
                   </th>
+
                   <th>
                       <p-columnFilter
                           type="text"
                           field="cpf"
                           placeholder="Search by cpf"
                           ariaLabel="Filter cpf" />
+                  </th>
+
+                  <th>
+                    <p-columnFilter
+                        type="text"
+                        field="email"
+                        placeholder="Search by email"
+                        ariaLabel="Filter email" />
                   </th>
 
                   <th>
@@ -71,6 +81,7 @@
                 <tr>
                     <td>{{ pacientes.nome }}</td>
                     <td>{{ pacientes.cpf | cpfFormat }}</td>
+                    <td>{{ pacientes.email }}</td>
                     <td>{{ pacientes.telefone | telefoneFormat }}</td>
                     <td>Cep: {{ pacientes.endereco.cep}} - {{pacientes.endereco.cidade}}</td>
                     <th>

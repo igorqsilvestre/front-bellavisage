@@ -1,11 +1,14 @@
 <header class="cabecalho">
-  <img src="../../assets/logo-pequeno-bellavisage.png" alt="logo da bellavisage">
+  <a href="/">
+    <img src="../../assets/logo-pequeno-bellavisage.png" alt="logo da bellavisage">
+  </a>
+
   <nav class="cabecalho-nav" [hidden]="!verificaUsuarioLogado()">
     <ul class="cabecalho-lista">
-      <a href="/"><li>Início</li></a>
       <a href="/pacientes"> <li>Pacientes</li></a>
       <a href="/especialistas"> <li>Especialistas</li></a>
       <a href="/tratamentos"> <li>Tratamentos</li></a>
+      <a href="/horarios"> <li>Horarios</li></a>
       <a href="/agendamentos"> <li>Agendar</li></a>
       <a href="/pagamentos"> <li>Pagamentos</li></a>
       <a href="/dashbords/financeiro"><li>Dashboard</li></a>

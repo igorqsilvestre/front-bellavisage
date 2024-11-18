@@ -15,7 +15,7 @@ export const agendamentoResolver: ResolveFn<Observable<Agendamento>> = (route, s
     paciente: null,
     especialista: null,
     tratamento: null,
-    dataHorario: null,
+    horario: null,
     valor: null,
     status: null,
     avaliacao: null,

@@ -74,7 +74,16 @@ span{
   color: #950341;
   font-weight: bold;
 }
-.form-control{
+
+.container-calendario{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+
+
+.form-control,::ng-deep .calendario .p-inputtext {
   width: 13em;  /* Define a largura da div */
   padding: 10px; /* Define o padding interno da div */
   border-radius: 5px; /* Define bordas arredondadas para a div */
@@ -93,9 +102,11 @@ span{
   font-weight: bold;
   border: none;
   border-radius: 8px;
-  padding: 0.7em 7em;
+  padding: 0.5em 2em;
   margin: 3em 0.5em;
+  width: 32%;
 }
+
 
 .principal-formulario button:hover{
   background-color: #b13d6d;
@@ -103,4 +114,36 @@ span{
 
 .cabecalho{
   width: 122em;
+}
+
+.container-divisor{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.container-divisor .tabela button{
+ color: #b13d6d;
+ background: none;
+ margin:0;
+}
+
+.tabela{
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+th{
+  padding: 0.3em 0;
+}
+
+th, td{
+ border: 1px solid #ddd;
+ text-align: center;
+}
+
+th:last-child{
+  width: 20%;
 }

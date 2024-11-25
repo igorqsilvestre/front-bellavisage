@@ -39,7 +39,7 @@ export class ListagemHorarioComponent implements OnInit{
 
     this.formulario = this.formBuilder.group({
       tratamento: [null, Validators.required],
-      data: [null, [Validators.required, this.validaDataMenorQueAtual()]],
+      data: [null, [Validators.required]],
     });
 
     this.atualizarListaTratamentos();
@@ -97,20 +97,5 @@ export class ListagemHorarioComponent implements OnInit{
         this.formulario.patchValue({ tratamento: dados[0].id });
       }
     });
-  }
-
-  validaDataMenorQueAtual(): ValidatorFn{
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value) {
-        const dataHoje = new Date();
-        const data = new Date(control.value);
-
-        dataHoje.setHours(0, 0, 0, 0);
-        data.setHours(0, 0, 0, 0);
-
-        return data.getTime() < dataHoje.getTime() ? { dataMenorQueAtual: true } : null;
-      }
-      return null;
-    };
   }
 }

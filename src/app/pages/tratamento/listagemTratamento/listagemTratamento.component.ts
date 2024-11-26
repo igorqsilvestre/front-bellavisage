@@ -73,7 +73,7 @@ export class ListagemTratamentoComponent implements OnInit{
           this.atualizarLista();
         },
         error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir tratamento!' } });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir tratamento! Pois ja existe vinculo com horario ou agendamento ' } });
         }
       );
     });

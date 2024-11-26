@@ -67,7 +67,7 @@ export class ListagemPacienteComponent implements OnInit{
           this.atualizarLista();
         },
         error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir paciente!' } });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir paciente! Pois ja existe vinculo com agendamento' } });
         }
       );
     });

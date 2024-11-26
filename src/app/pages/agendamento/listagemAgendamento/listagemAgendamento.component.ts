@@ -67,7 +67,7 @@ export class ListagemAgendamentoComponent implements OnInit{
           this.atualizarLista();
         },
         error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir agendamento!' } });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir agendamento! Pois ja existe vinculo com pagamento' } });
         }
       );
     });

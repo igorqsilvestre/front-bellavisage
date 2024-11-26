@@ -68,7 +68,7 @@ export class ListagemEspecialistaComponent implements OnInit{
           this.atualizarLista();
         },
         error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir especialista!' } });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir especialista! Pois ja existe vinculo com  horario ou agendamento' } });
         }
       );
     });

@@ -83,7 +83,7 @@ export class ListagemHorarioComponent implements OnInit{
           this.onCarregarHorarios();
         },
         error => {
-          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir horario!' } });
+          this.modalRef = this.modalService.show(AlertModalComponent, { initialState: { type: 'Erro!', message: 'Erro ao excluir horario! Pois ja existe vinculo com agendamento' } });
         }
       );
     });

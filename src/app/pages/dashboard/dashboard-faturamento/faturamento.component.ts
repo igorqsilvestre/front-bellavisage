@@ -91,7 +91,7 @@ export class FaturamentoComponent implements OnInit{
 
   onTratamentoChange(evento: DropdownChangeEvent){
    const tratamento = evento.value as Tratamento;
-   this.atualizarFaturamento(tratamento.id, 2024);
+   this.atualizarFaturamento(tratamento.id, new Date().getFullYear());
   }
 
 

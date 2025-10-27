@@ -13,7 +13,6 @@ import { HomeComponent } from './home.component';
   imports: [
     CommonModule,
     SharedModule,
-
   ]
 })
 export class HomeModule { }

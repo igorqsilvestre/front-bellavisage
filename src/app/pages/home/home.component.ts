@@ -1,14 +1,36 @@
-import { Component } from '@angular/core';
+import { Tratamento } from '../tratamento/Tratamento';
+import { TratamentoService } from './../tratamento/tratamento.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-[x: string]: any;
+export class HomeComponent implements OnInit {
 
-  nomeCards: string[] = ['Agendar Atendimento', 'Gerenciar Agendamentos', 'Gerenciar Pagamentos', 'Gerenciar Especialista', 'Gerenciar Clínica',
-    'Faturamento', 'Gerenciar Tratamentos', 'Agendar Atendimento', 'Avalie o serviço'
-  ];
+  tratamentos: Tratamento[] = []
+
+  constructor(
+    private tratamentoService: TratamentoService
+  ){}
+
+  ngOnInit(): void {
+   this.atualizarListaDeTratamentos();
+  }
+
+  private atualizarListaDeTratamentos() {
+   this.tratamentoService.obterTodos().subscribe(
+      dados => {
+        if(dados){
+          this.tratamentos = dados;
+        }
+      }
+    )
+  }
+
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
+  }
+
 }

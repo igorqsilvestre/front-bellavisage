@@ -1,6 +1,10 @@
-<p-card header="Radio Frequência Facial" name="radiofrequenciafacial"  class='card-primeiro' [style]="{ width: '360px' }">
+<p-card class='card' [style]="{ width: '360px' }">
   <ng-template pTemplate="header">
-      <img alt="Card" src="../../../assets/tratamento/Radiofrequencia-facial.jpeg" />
+      <img alt="Imagem do tratamento" [src]="imagem" class="card-img"/>
   </ng-template>
-    <a href="/tratamento/radiofrequenciafacial">Saiba mais</a>
+  <h2 class=" texto-titulo">{{ header }}</h2>
+  <p  class="descricao-ellipsis">{{ descricao }}</p>
+  <ng-template  pTemplate="footer">
+      <small ><b>Valor: {{ valor | currency:'BRL' }}</b></small>
+  </ng-template>
 </p-card>

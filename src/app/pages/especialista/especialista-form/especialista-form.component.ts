@@ -23,7 +23,7 @@ export class EspecialistaFormComponent implements OnInit{
   estados!: EstadoBr[];
   titulo:string = 'Cadastro do especialista';
   nomeBotao:string = 'Cadastrar';
-  especialidades: string[] = ['Dermatologista', 'Esteticista','Fisioterapeuta'];
+  especialidades: string[] = ['Biomédico','Dermatologista', 'Esteticista','Fisioterapeuta','Odontologista'];
 
   constructor(
     public formUtilService: FormUtilsService,

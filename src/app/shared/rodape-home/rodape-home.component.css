@@ -5,13 +5,11 @@
   color: #FFFFFF;
   text-align: left;
   padding: 3em;
-  margin-top: 2em;
   font-family: 'Sansation Light';
   font-weight: italic;
   text-transform: uppercase;
   border-radius: 8px;
   border: 1px solid #ddd;
-  width: 122em;
 }
 .conteiner-footer-home
 {
@@ -30,13 +28,10 @@
 }
 .footer-home-mapasite
 {
-  gap: 1em;
-  margin: 0.5em;
-  justify-content: center;
-  padding: 1em;
-  text-decoration: none;
-  outline: none;
-
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   gap:1em
 }
 
 .footer-home-faleconosco

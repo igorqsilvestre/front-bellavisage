@@ -3,6 +3,24 @@
   display: flex;
 }
 
+.principal .imagem-fundo-esquerdo{
+  background-image: url('../../../../assets/fundo-esq-bellavisage.png');
+  background-repeat: repeat-y;
+  background-position: left top;
+  background-size: auto;
+  width: 300px;
+  height: 100vh;
+}
+
+.principal .imagem-fundo-direito{
+  background-image: url('../../../../assets/fundo-dir-bellavisage.png');
+  background-repeat: repeat-y;
+  background-position: right top;
+  background-size: auto;
+  width: 300px;
+  height: 100vh;
+}
+
 .principal-login{
   width: 80%;
   text-align: center;

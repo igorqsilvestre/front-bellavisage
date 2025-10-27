@@ -11,7 +11,9 @@
 
           <h2 class="titulo-tabela">Listagem dos Pagamentos</h2>
 
-          <p-table
+          <div class="tabela-bord">
+              <div class="table-container">
+                 <p-table
             #dtListagemPagamentos
             dataKey="id"
             [value]="pagamentos"
@@ -111,8 +113,9 @@
 
                 </tr>
             </ng-template>
-        </p-table>
-
+                </p-table>
+              </div>
+          </div>
         </div>
   </section>
 </main>

@@ -1,16 +1,3 @@
-.header .main{
-  height: 100vh;
-  width: 122em;
-  margin: 2rem auto;
-  padding: 1rem;
-  text-align: center;
-
-
-}
-
-.imagem_mulher{
-  max-width: 100%;
-}
 
 .barra-vermelha{
   background-color: #950341;
@@ -50,23 +37,8 @@
 {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  padding-top: 2em;
-  width: 122em;
-}
-.conteiner-header{
-  display: flex;
-  justify-content: space-between;
-  padding: 1em;
-  width: 122em;
-}
-.conteiner-header-entrar
-{
-  display: flex;
-  padding: 1em;
-
+  justify-content: center;
+  gap: 4rem;
+  padding: 2em 0;
 }
 
-.cabecalho{
-  width: 122em;
-}

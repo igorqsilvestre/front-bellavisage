@@ -18,8 +18,14 @@ export class CabecalhoComponent {
 
   verificaUsuarioLogado(){
     const usuario = this.authService.usuarioEstaAutenticado();
-    if(usuario) return true;
-    return false;
+    if(usuario) {
+      this.verLinkSair = true;
+      return true;
+    }else{
+      this.verLinkSair = false;
+      return false;
+    }
+
   }
 
   deslogar() {

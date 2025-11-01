@@ -2,4 +2,5 @@ Este é um projeto web fictício de uma clinica chamada Bellavisage que faz proc
 pacientes, especialistas, tratamentos, horarios dos especialistas, agendamentos, pagamentos, dashboard do faturamento(Um gráfico onde é possível ver o faturamento do ano atual para cada mês de um determinado tratamento). 
 O projeto foi feito utilizando o angular para a parte de front-end e na parte de back-end foi utilizado o spring boot com o java (O projeto back-end está no repositório: https://github.com/igorqsilvestre/back-bellavisage).
 Nesse projeto web utilizo além do framework do angular para componentes e estilizações o bootstrap e primeng.
+Vídeo demonstrativo do projeto: https://www.youtube.com/watch?v=lwM59e92tRM
 Também tem a parte mobile do projeto que foi pensada para o paciente que acessa e realiza agendamentos, verifica histórico, altera seus dados. Mais detalhes no repositório: https://github.com/igorqsilvestre/mobile-bellavisage.
